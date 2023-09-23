@@ -4,11 +4,9 @@ import { useState } from "react";
 import { redirect } from "next/navigation";
 
 //components
-import InputProduct from "@/app/components/InputProduct";
-import InputProductDesc from "@/app/components/InputProductDesc";
-import InputListCategory from "@/app/components/InputListCategory";
-import InputPrice from "@/app/components/InputPrice";
-import SaveButton from "@/app/components/SaveButton";
+import { InputWithLabel } from "@/app/components/InputWithLabel";
+import { TextareaWithLabel } from "@/app/components/TextareaWithLabel";
+import { Button } from "@/components/ui/button";
 
 export default function ProductForm() {
   const [productName, setProductName] = useState("");
@@ -22,7 +20,7 @@ export default function ProductForm() {
       productName,
       description,
       price,
-      // image,
+      // image
     };
 
     await axios.post("/api/product", data);
@@ -39,19 +37,60 @@ export default function ProductForm() {
     <>
       {/* //globalcss */}
       <h1>New Product</h1>
-      <form onSubmit={createProduct}>
-        <InputProduct
-          productName={productName}
-          setProductName={setProductName}
+      <p className="text-muted-foreground text-sm">create a new product</p>
+
+      <br />
+      <hr />
+      <br />
+
+      <form
+        onSubmit={createProduct}
+        //this className need change
+        className="grid w-full max-w-sm items-center gap-2"
+      >
+        <InputWithLabel
+          label="Product Name"
+          inputProps={{
+            id: "productName",
+            type: "text",
+            placeholder: "Enter product name",
+          }}
+          className="mt-1"
+          value={productName}
+          onChange={(event) => setProductName(event.target.value)}
+          isRequired={true}
         />
-        <InputProductDesc
-          description={description}
-          setDescription={setDescription}
+        <TextareaWithLabel
+          label="Product Description"
+          inputProps={{
+            id: "description",
+            type: "text",
+            placeholder: "enter your product description..",
+            required: true,
+          }}
+          className="mt-1"
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+          isRequired={true}
         />
-        <InputPrice price={price} setPrice={setPrice} />
-        <InputListCategory />{" "}
-        {/* Are you planning to use this component later? */}
-        <SaveButton onSubmit={createProduct} />
+
+        <InputWithLabel
+          label="Price"
+          inputProps={{
+            id: "price",
+            type: "number",
+            placeholder: "ex. 38.22€ ",
+            required: true,
+          }}
+          className="mt-1 w-1/2"
+          value={price}
+          onChange={(event) => setPrice(event.target.value)}
+          isRequired={true}
+        />
+
+        <Button variant="signIn" size="create" onSubmit={createProduct}>
+          Save
+        </Button>
       </form>
     </>
   );
