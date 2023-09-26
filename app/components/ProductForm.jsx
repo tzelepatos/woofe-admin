@@ -7,19 +7,27 @@ import { redirect } from "next/navigation";
 import { InputWithLabel } from "@/app/components/InputWithLabel";
 import { TextareaWithLabel } from "@/app/components/TextareaWithLabel";
 import { Button } from "@/components/ui/button";
+import { SelectDropDown } from "@/app/components/SelectDropDown";
+
+const options = ["Grooming", "Services", "Supplies"];
 
 export default function ProductForm() {
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
   const [goToProducts, setGoToProducts] = useState(false);
+
+  //the function creates a new product with the data from the input form and then redirects to the product page
 
   async function createProduct(event) {
     event.preventDefault();
+
     const data = {
       productName,
       description,
       price,
+      category,
       // image
     };
 
@@ -86,6 +94,29 @@ export default function ProductForm() {
           value={price}
           onChange={(event) => setPrice(event.target.value)}
           isRequired={true}
+        />
+        {/* <InputWithLabel
+          label="Category"
+          inputProps={{
+            id: "category",
+            type: "string",
+            placeholder: "Category ",
+            required: true,
+          }}
+          className="mt-1 w-1/2"
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+          isRequired={true}
+        /> */}
+        <SelectDropDown
+          label="Category"
+          className="mt-1 w-1/2"
+          value={category}
+          onChange={(event) => {
+            setCategory(event);
+          }}
+          isRequired={true}
+          options={options}
         />
 
         <Button variant="signIn" size="create" onSubmit={createProduct}>

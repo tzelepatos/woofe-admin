@@ -5,6 +5,7 @@ const groomingSchema = new Schema(
     productName: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number },
+    category: { type: String }, // new field for category
     newPrice: { type: Number },
     address: { type: String },
     zipCode: { type: Number },

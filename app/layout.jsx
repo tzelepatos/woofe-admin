@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import Loading from "./Loading";
+import { Toaster } from "@/components/ui/toaster";
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);
@@ -25,6 +25,7 @@ export default async function RootLayout({ children }) {
             disableTransitionOnChange
           >
             {children}
+            <Toaster />
           </ThemeProvider>
         </NextAuthProvider>
       </body>
