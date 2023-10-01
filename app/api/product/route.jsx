@@ -20,10 +20,12 @@ export async function POST(request) {
   // Creating a new document using the GroomingModel
   try {
     await GroomingModel.create({ ...jsonbody });
-    return Response.json(jsonbody);
+    return new Response(JSON.stringify(jsonbody), { status: 200 });
   } catch (error) {
     console.error("Error creating product:", error);
-    return Response.status(500).json({ error: "Error creating product" });
+    return new Response(JSON.stringify({ error: "Error creating product" }), {
+      status: 500,
+    });
   }
 }
 //GET

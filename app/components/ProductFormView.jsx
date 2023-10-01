@@ -11,7 +11,7 @@ import SaveButton from "@/app/components/SaveButton";
 import InputImages from "./InputImages";
 import Alert from "@/app/components/Alert";
 
-export default function ProductFormEdit({
+export default function ProductFormView({
   _id,
   productName: existingTitle,
   description: existingDescription,

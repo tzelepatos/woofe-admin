@@ -1,9 +1,9 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ProductFormEdit from "/app/components/ProductFormEdit.jsx";
+import ProductFormView from "../../../../components/ProductFormView";
 
-export default function EditPage({ params }) {
+export default function ViewPage({ params }) {
   const idUrl = params.id;
   const [product, setProduct] = useState(null);
 
@@ -23,8 +23,8 @@ export default function EditPage({ params }) {
 
   return (
     <div>
-      <h1 className="text-jimOrange  text-2xl">Edit Product</h1>
-      {product && <ProductFormEdit {...product} />}
+      <h1 className="text-jimOrange  text-2xl">View Product</h1>
+      {product && <ProductFormView {...product} />}
     </div>
   );
 }
