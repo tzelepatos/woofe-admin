@@ -6,9 +6,13 @@ export default async function Settings() {
 
   return (
     <section>
-      <h1>Home</h1>
-      <h1>Server Side Rendered</h1>
-      <pre>{JSON.stringify(session)}</pre>
+      <h1 className="text-jimOrange pb-2">Settings</h1>
+      <h3>Server Side Rendered</h3>
+      {/* //add an empty line here */}
+
+      <div className="overflow-x-auto">
+        <pre className="whitespace-pre-wrap">{JSON.stringify(session)}</pre>
+      </div>
       <h1>Client Side Rendered</h1>
     </section>
   );

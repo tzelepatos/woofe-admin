@@ -5,18 +5,19 @@ const groomingSchema = new Schema(
     //main fields
     productName: { type: String, required: true },
     description: { type: String, required: true },
-    price: { type: Number },
+    price: { type: String },
     category: { type: String },
-    newPrice: { type: Number },
+    newPrice: { type: String },
     services: [String],
     info: { type: String },
     images: [String],
 
     //address
     address: [String],
-    zipCode: { type: Number },
-    mapCordA: { type: Number }, // Latitude
-    mapCordB: { type: Number }, // Longitude
+    city: { type: String },
+    zipCode: { type: String },
+    latitude: { type: String }, // Latitude
+    longitude: { type: String }, // Longitude
     phoneNumber: [String],
 
     //contact
@@ -24,10 +25,15 @@ const groomingSchema = new Schema(
     website: { type: String },
 
     //secondary fields
-    openingHours: {
-      type: Map,
-      of: String,
-    },
+    openingClosingHours: [
+      {
+        day: { type: String, required: true }, // The day of the week (e.g., "Monday")
+        openingTimeEarly: { type: String, required: true }, // Opening time pm
+        closingTimeEarly: { type: String, required: true }, // Closing time pm
+        openingTimeLate: { type: String, required: true }, // Opening time mm
+        closingTimeLate: { type: String, required: true }, // Closing time mm
+      },
+    ],
 
     //rating
     favourite: { type: Boolean },

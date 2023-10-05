@@ -1,13 +1,14 @@
 import React from "react";
 import { ReactSortable } from "react-sortablejs";
-import FullImageModal from "@/app/components/FullImageModal";
 import Spinner from "./Spinner";
 import { useState } from "react";
 import axios from "axios";
+//compoments
+import FullImageModal from "@/app/components/FullImageModal";
 import { Input } from "@/components/ui/input";
 
-const UploadImages = ({ onValueChange }) => {
-  const [images, setImages] = useState([]);
+const UploadImages = ({ onValueChange, defaultValue, viewMode }) => {
+  const [images, setImages] = useState(defaultValue || []);
   const [isUploading, setIsUploading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [goToProducts, setGoToProducts] = useState(false);
@@ -39,6 +40,7 @@ const UploadImages = ({ onValueChange }) => {
     }
     setIsUploading(false);
   }
+
   function updateImagesOrder(images) {
     setImages(images);
     onValueChange(images); // Call onValueChange with the updated images
@@ -62,22 +64,24 @@ const UploadImages = ({ onValueChange }) => {
         console.error("Error deleting image:", error);
       });
   }
+
   return (
     <div>
-      <label className=" mt-2 text-md font-medium  text-slate-700">
+      {/* <label className=" mt-2 text-md font-medium  text-slate-700">
         Photos
-      </label>
-      {images.length > 1 && (
+      </label> */}
+
+      {!viewMode && images.length > 1 && (
         <p className="mt-2 italic text-xs mb-2 text-slate-500">
           *You can re-order by drag and drop
         </p>
       )}
-
       <div className="mb-4 gap-3 flex flex-wrap ">
         <ReactSortable
           list={images}
           setList={updateImagesOrder}
           className="flex flex-wrap gap-3 "
+          disabled={viewMode}
         >
           {!!images?.length &&
             images.map((link) => (
@@ -86,25 +90,27 @@ const UploadImages = ({ onValueChange }) => {
                 className="h-24 relative"
                 onClick={() => setSelectedImage(link)}
               >
-                <button
-                  onClick={(event) => removeUpLoad(event, link)}
-                  className="absolute w-4 h-4  -top-1 -right-1 m-2 bg-gray-200 opacity-85 rounded-3xl text-gray-700 hover:text-[#ff8000]"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-4 h-4 "
+                {!viewMode && (
+                  <button
+                    onClick={(event) => removeUpLoad(event, link)}
+                    className="absolute w-4 h-4  -top-1 -right-1 m-2 bg-gray-200 opacity-85 rounded-3xl text-gray-700 hover:text-[#ff8000]"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-4 h-4 "
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                )}
                 {/* <AlertDelete removeUpLoad={removeUpLoad} link={link} /> */}
 
                 <img
@@ -129,36 +135,40 @@ const UploadImages = ({ onValueChange }) => {
             <Spinner />
           </div>
         )}
-        <label
-          className="w-24 h-24 border text-center flex flex-col items-center justify-center hover:border-orange-400 hover:text-orange-400
+        {!viewMode && (
+          <>
+            <label
+              className="w-24 h-24 border text-center flex flex-col items-center justify-center hover:border-orange-400 hover:text-orange-400
     text-sm gap-1 text-gray-500 rounded-lg bg-gray-50 cursor-pointer"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-            />
-          </svg>
-          Upload
-          <div>
-            <Input
-              multiple
-              type="file"
-              onChange={(e) => {
-                upLoad(e);
-              }}
-              className="hidden"
-            ></Input>
-          </div>
-        </label>{" "}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                />
+              </svg>
+              Upload
+              <div>
+                <Input
+                  multiple
+                  type="file"
+                  onChange={(e) => {
+                    upLoad(e);
+                  }}
+                  className="hidden"
+                ></Input>
+              </div>
+            </label>{" "}
+          </>
+        )}
       </div>
     </div>
   );

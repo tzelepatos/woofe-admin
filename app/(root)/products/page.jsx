@@ -36,7 +36,6 @@ export default function Products() {
   }, []);
   return (
     <>
-      {/* <AddProductsButton /> */}
       <Link href={"/products/newproduct"}>
         <Button className="mb-5" variant="signIn" size="lg" type="button">
           <Icons.add className="mr-2 h- w-6" />
@@ -47,25 +46,39 @@ export default function Products() {
       <Table>
         <TableCaption>A list of your recent products.</TableCaption>
         <TableHeader>
-          <TableRow className="w-[100px]">
+          <TableRow>
             <TableHead>Product name</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Description</TableHead>
-            {/* <TableHead className="text-right">buttons</TableHead> */}
+            <TableHead>Images</TableHead>
+            <TableHead>Services</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {products.map((product) => (
             <TableRow key={product._id}>
-              <TableCell className="font-medium">
+              <TableCell>
                 <Link href={"/products/view/" + product._id}>
                   {product.productName}
                 </Link>
-              </TableCell>{" "}
+              </TableCell>
               <TableCell>{product.price}</TableCell>
               <TableCell>{product.category}</TableCell>
-              <TableCell>{product.description}</TableCell>
+              <TableCell
+                className="truncate"
+                style={{
+                  maxWidth: "10px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {product.description}
+              </TableCell>
+
+              <TableCell>{product.images.length}</TableCell>
+              <TableCell>{product.services.join(", ")}</TableCell>
+
               <TableCell className="text-right">
                 <div className="container flex flex-col">
                   <Link href={"/products/edit/" + product._id}>

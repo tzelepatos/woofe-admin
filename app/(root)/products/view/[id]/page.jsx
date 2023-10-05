@@ -1,7 +1,9 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ProductFormView from "../../../../components/ProductFormView";
+
+//compoments
+import ProductFormNew from "@/app/components/ProductFormNew";
 
 export default function ViewPage({ params }) {
   const idUrl = params.id;
@@ -17,14 +19,17 @@ export default function ViewPage({ params }) {
         (product) => product._id === idUrl
       );
       setProduct(selectedProduct);
-      // console.log("Selected Product:", selectedProduct);
     });
   }, [idUrl]);
 
   return (
     <div>
-      <h1 className="text-jimOrange  text-2xl">View Product</h1>
-      {product && <ProductFormView {...product} />}
+      <h1 className="text-jimOrange text-2xl">View Product</h1>
+      {product ? (
+        <ProductFormNew defaultValues={...product} viewMode={true} />
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }
