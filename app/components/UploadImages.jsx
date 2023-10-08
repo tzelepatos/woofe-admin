@@ -1,17 +1,23 @@
-import React from "react";
 import { ReactSortable } from "react-sortablejs";
 import Spinner from "./Spinner";
-import { useState } from "react";
 import axios from "axios";
+import React, { useRef, useState } from "react";
 //compoments
 import FullImageModal from "@/app/components/FullImageModal";
 import { Input } from "@/components/ui/input";
+import { Icons } from "@/components/ui/icons";
+import { Button } from "@/components/ui/button";
 
-const UploadImages = ({ onValueChange, defaultValue, viewMode }) => {
+const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
   const [images, setImages] = useState(defaultValue || []);
   const [isUploading, setIsUploading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [goToProducts, setGoToProducts] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleButtonClick = (event) => {
+    event.preventDefault(); // Prevent the default button behavior
+    fileInputRef.current.click();
+  };
 
   async function upLoad(event) {
     event.preventDefault();
@@ -66,12 +72,44 @@ const UploadImages = ({ onValueChange, defaultValue, viewMode }) => {
   }
 
   return (
-    <div>
-      {/* <label className=" mt-2 text-md font-medium  text-slate-700">
-        Photos
-      </label> */}
+    <div className="  space-y-3 text-background bg-jimGrayLight container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
+      <div className="flex items-center justify-between">
+        <h1 className="flex items-center justify-center sm:justify-start text-foreground text-sm xl:text-2xl">
+          {disabled ? (
+            <>
+              View&nbsp;
+              <strong>Images</strong>
+              <Icons.image className="ml-2 h-5 w-5" />
+            </>
+          ) : (
+            <>
+              Add&nbsp;
+              <strong>Images</strong>
+              <Icons.image className="ml-2 h-5 w-5" />
+            </>
+          )}
+        </h1>
+        {/* button-input */}
+        {!disabled ? (
+          <div>
+            <Input
+              ref={fileInputRef}
+              multiple
+              type="file"
+              onChange={(e) => {
+                upLoad(e);
+              }}
+              className="hidden"
+            ></Input>
+            <Button variant="signIn" size="cancel" onClick={handleButtonClick}>
+              <Icons.upLoad className=" h-5 w-5 mr-3 " />
+              Upload
+            </Button>
+          </div>
+        ) : null}
+      </div>
 
-      {!viewMode && images.length > 1 && (
+      {!disabled && images.length > 1 && (
         <p className="mt-2 italic text-xs mb-2 text-slate-500">
           *You can re-order by drag and drop
         </p>
@@ -81,7 +119,7 @@ const UploadImages = ({ onValueChange, defaultValue, viewMode }) => {
           list={images}
           setList={updateImagesOrder}
           className="flex flex-wrap gap-3 "
-          disabled={viewMode}
+          disabled={disabled}
         >
           {!!images?.length &&
             images.map((link) => (
@@ -90,25 +128,12 @@ const UploadImages = ({ onValueChange, defaultValue, viewMode }) => {
                 className="h-24 relative"
                 onClick={() => setSelectedImage(link)}
               >
-                {!viewMode && (
+                {!disabled && (
                   <button
                     onClick={(event) => removeUpLoad(event, link)}
                     className="absolute w-4 h-4  -top-1 -right-1 m-2 bg-gray-200 opacity-85 rounded-3xl text-gray-700 hover:text-[#ff8000]"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-4 h-4 "
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <Icons.removeUpLoad />
                   </button>
                 )}
                 {/* <AlertDelete removeUpLoad={removeUpLoad} link={link} /> */}
@@ -135,9 +160,9 @@ const UploadImages = ({ onValueChange, defaultValue, viewMode }) => {
             <Spinner />
           </div>
         )}
-        {!viewMode && (
+        {!disabled && (
           <>
-            <label
+            {/* <label
               className="w-24 h-24 border text-center flex flex-col items-center justify-center hover:border-orange-400 hover:text-orange-400
     text-sm gap-1 text-gray-500 rounded-lg bg-gray-50 cursor-pointer"
             >
@@ -166,7 +191,7 @@ const UploadImages = ({ onValueChange, defaultValue, viewMode }) => {
                   className="hidden"
                 ></Input>
               </div>
-            </label>{" "}
+            </label>{" "} */}
           </>
         )}
       </div>

@@ -1,5 +1,34 @@
 import * as z from "zod";
 
+export const defaultValues = {
+  productName: "Grooming Store-" + Math.random().toString(36).substr(2, 9),
+
+  description: "A Brand new Grooming Store that..",
+  category: "Grooming",
+  price: "6.00",
+  newPrice: "5.00",
+  services: [],
+  info: "Info about the store..",
+  images: [],
+  address: ["plataiwn 125"],
+  city: "Athens",
+  zipCode: "12345",
+  email: ["xaliamoutra@woofe.com"],
+  phoneNumber: ["6986666666", "2105912822"],
+  website: "www.woofe.com",
+  latitude: "37.983810",
+  longitude: "23.727539",
+  openingClosingHours: [
+    {
+      day: "Monday",
+      openingTimeEarly: "09:00",
+      closingTimeEarly: "14:00",
+      openingTimeLate: "17:00",
+      closingTimeLate: "21:00",
+    },
+  ],
+};
+
 export const ProductFormSchema = z.object({
   productName: z
     .string()
@@ -42,12 +71,7 @@ export const ProductFormSchema = z.object({
     }),
 
   services: z
-    .array(
-      z
-        .string()
-        .min(3, { message: "You must add at least 3 characters on services" })
-        .max(15, { message: "You can add up to 15 characters on services" })
-    )
+    .any()
 
     .optional(),
   info: z

@@ -4,6 +4,17 @@
 
 @layer base {
   :root {
+    --groomingPink1: 320, 51%, 68%;
+    --groomingPink2: 318, 57%, 55%;
+    --groomingPink3: 312, 70%, 42%;
+    --groomingPink4: 298, 41%, 55%;
+    --groomingPink5: 320, 47%, 61%;
+    --groomingPink6: 300, 33%, 63%;
+    --groomingPink7: 294, 30%, 46%;
+    --groomingPink8: 316, 34%, 56%;
+    --groomingPink9: 299, 70%, 42%;
+    --groomingPink10: 302, 47%, 61%;
+
     --jimOrange: 33, 93%, 54%;
     --jimGray: 0, 0%, 89%;
     --jimGrayLight: 0, 0%, 93%;
