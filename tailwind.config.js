@@ -13,8 +13,17 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
-        "2sm": "400px",
+        // "9xl": "3200px",
+        // "8xl": "3000px",
+        // "7xl": "2600px",
+        // "6xl": "2400px",
+        // "5xl": "2100px",
+        // "4xl": "1800px",
+        // "3xl": "1600px",
+        // "2xl": "1400px",
+        // "1xl": "1200px",
+        // "10xl": "955px",
+        // "2sm": "400px",
       },
     },
 
@@ -44,6 +53,8 @@ module.exports = {
         groomingPink8: "hsl(var(--groomingPink8))",
         groomingPink9: "hsl(var(--groomingPink9))",
         groomingPink10: "hsl(var(--groomingPink10))",
+
+        groomingGreen: "hsl(var(--groomingGreen))",
 
         bgCustom: "hsl(var(--bgCustom))",
 

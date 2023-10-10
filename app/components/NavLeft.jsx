@@ -12,8 +12,8 @@ const NavLeft = () => {
   const pathname = usePathname();
 
   return (
-    <aside className=" p-4 bg-jimGrayLight ">
-      <Link
+    <aside className="p-8 bg-jimGrayLight min-h-screen ">
+      {/* <Link
         href={"/"}
         className={`flex gap-2 mb-6 p-1  ${
           pathname === "/" ? activeLink : inactiveLink
@@ -28,9 +28,9 @@ const NavLeft = () => {
         >
           <path d="M7.55.53a2.25 2.25 0 012.9 0l6.75 5.692c.507.428.8 1.057.8 1.72v9.31a1.75 1.75 0 01-1.75 1.75h-3.5a1.75 1.75 0 01-1.75-1.75v-5.007a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25v5.007a1.75 1.75 0 01-1.75 1.75h-3.5A1.75 1.75 0 010 17.252v-9.31c0-.663.293-1.292.8-1.72L7.55.53zm1.933 1.147a.75.75 0 00-.966 0l-6.75 5.692a.75.75 0 00-.267.573v9.31c0 .138.112.25.25.25h3.5a.25.25 0 00.25-.25v-5.007c0-.967.784-1.75 1.75-1.75h3.5c.966 0 1.75.783 1.75 1.75v5.007c0 .138.112.25.25.25h3.5a.25.25 0 00.25-.25v-9.31a.75.75 0 00-.267-.573l-6.75-5.692z"></path>
         </svg>
-        Woof-e Admin
-      </Link>
-      <nav className="flex flex-col gap-2">
+        Admin
+      </Link> */}
+      <nav className="flex flex-col space-y-6">
         <Link
           href={"/home"}
           className={`${
@@ -52,7 +52,7 @@ const NavLeft = () => {
         <Link
           href={"/products"}
           className={`${
-            pathname === "/products" ? activeLink : inactiveLink
+            pathname.includes("/products") ? activeLink : inactiveLink
           } ${hoverLink}`}
         >
           <svg

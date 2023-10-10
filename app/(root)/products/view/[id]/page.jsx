@@ -40,7 +40,7 @@ export default function ViewPage({ params }) {
 
   return (
     <div>
-      <h1 className="text-jimOrange text-2xl">View Product</h1>
+      <h1 className="text-jimOrange text-2xl"></h1>
       {product ? (
         <ProductFormNew defaultValues={...product} viewMode={true} />
       ) : (

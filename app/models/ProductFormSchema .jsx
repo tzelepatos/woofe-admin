@@ -13,8 +13,10 @@ export const defaultValues = {
   address: ["plataiwn 125"],
   city: "Athens",
   zipCode: "12345",
-  email: ["xaliamoutra@woofe.com"],
-  phoneNumber: ["6986666666", "2105912822"],
+  email: "xaliamoutra@woofe.com",
+  email2: "tsoumelekis@woofe.com",
+  phoneNumber: "2105912822",
+  mobileNumber: "6940000000",
   website: "www.woofe.com",
   latitude: "37.983810",
   longitude: "23.727539",
@@ -74,47 +76,42 @@ export const ProductFormSchema = z.object({
     .any()
 
     .optional(),
-  info: z
-    .string()
-    .max(160, {
-      message: "Info must not be longer than 160 characters.",
-    })
-    .min(10, {
-      message: "Info must be at least 10 characters.",
-    }),
 
   images: z.any().optional(),
 
   address: z
-    .array(
-      z
-        .string()
-        .min(3, { message: "You must add at least 3 characters on address" })
-        .max(20, { message: "You can add up to 20 characters on address" })
-    )
 
-    .optional(),
+    .string()
+    .min(5, { message: "You must add at least 5 characters on address" })
+    .max(25, { message: "You can add up to 25 characters on address" }),
   city: z
     .string()
     .trim()
-    .min(2, {
-      message: "City must be at least 2 characters.",
+    .min(3, {
+      message: "City must be at least 3 characters.",
     })
     .max(20, {
       message: "City must not be longer than 20 characters.",
     }),
+
   zipCode: z.coerce
     .string()
     .regex(/^\d{1,5}$/, { message: "Zip code must be max 5 digits." })
     .nonempty({ message: "Zip code is required." }),
   //on zod validation check for sublicates
-  email: z.array(
-    z
-      .string()
-      .email({ message: "Please enter a valid email address." })
-      .trim()
-      .toLowerCase()
-  ),
+  email: z
+
+    .string()
+    .email({ message: "Please enter a valid email address." })
+    .trim()
+    .toLowerCase(),
+  email2: z
+
+    .string()
+    .email({ message: "Please enter a valid email address." })
+    .trim()
+    .toLowerCase()
+    .optional(),
   // .refine(
   //   (emails) => {
   //     // console.log("emails: ", emails);
@@ -127,16 +124,22 @@ export const ProductFormSchema = z.object({
   //   }
   // ),
   //on zod validation check for sublicates
-  phoneNumber: z.array(
-    z
-      .string()
-      .trim()
-      // .min(10, { message: "You must add at least 10 characters on phone" })
-      .regex(/^\d{0,10}$/, { message: "phone accepts only numbers ." })
-      .length(10, { message: "max length phone number must be 10 digits" })
-      .optional()
-  ),
+  phoneNumber: z
 
+    .string()
+    .trim()
+    // .min(10, { message: "You must add at least 10 characters on phone" })
+    .regex(/^\d{0,10}$/, { message: "phone accepts only numbers ." })
+    .length(10, { message: "max length phone number must be 10 digits" })
+    .optional(),
+  mobileNumber: z
+
+    .string()
+    .trim()
+    // .min(10, { message: "You must add at least 10 characters on phone" })
+    .regex(/^\d{0,10}$/, { message: "phone accepts only numbers ." })
+    .length(10, { message: "max length phone number must be 10 digits" })
+    .optional(),
   website: z
     .string()
     .trim()

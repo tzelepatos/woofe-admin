@@ -72,9 +72,9 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
   }
 
   return (
-    <div className="  space-y-3 text-background bg-jimGrayLight container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
+    <div className=" ">
       <div className="flex items-center justify-between">
-        <h1 className="flex items-center justify-center sm:justify-start text-foreground text-sm xl:text-2xl">
+        <h1 className="flex items-center  text-foreground text-sm xl:text-2xl">
           {disabled ? (
             <>
               View&nbsp;
@@ -101,8 +101,13 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
               }}
               className="hidden"
             ></Input>
-            <Button variant="signIn" size="cancel" onClick={handleButtonClick}>
-              <Icons.upLoad className=" h-5 w-5 mr-3 " />
+            <Button
+              variant="signIn"
+              size="cancel"
+              onClick={handleButtonClick}
+              className="text-sm sm:text-base"
+            >
+              <Icons.upLoad className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3" />
               Upload
             </Button>
           </div>
@@ -159,40 +164,6 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
           >
             <Spinner />
           </div>
-        )}
-        {!disabled && (
-          <>
-            {/* <label
-              className="w-24 h-24 border text-center flex flex-col items-center justify-center hover:border-orange-400 hover:text-orange-400
-    text-sm gap-1 text-gray-500 rounded-lg bg-gray-50 cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-                />
-              </svg>
-              Upload
-              <div>
-                <Input
-                  multiple
-                  type="file"
-                  onChange={(e) => {
-                    upLoad(e);
-                  }}
-                  className="hidden"
-                ></Input>
-              </div>
-            </label>{" "} */}
-          </>
         )}
       </div>
     </div>

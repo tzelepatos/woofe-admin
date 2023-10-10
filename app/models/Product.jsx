@@ -16,12 +16,14 @@ const groomingSchema = new Schema(
     address: [String],
     city: { type: String },
     zipCode: { type: String },
-    latitude: { type: String }, // Latitude
-    longitude: { type: String }, // Longitude
-    phoneNumber: [String],
+    latitude: { type: String },
+    longitude: { type: String },
+    phoneNumber: { type: String }, //new
+    mobileNumber: { type: String }, //new
 
     //contact
-    email: [String],
+    email: { type: String }, //new
+    email2: { type: String }, //new
     website: { type: String },
 
     //secondary fields
