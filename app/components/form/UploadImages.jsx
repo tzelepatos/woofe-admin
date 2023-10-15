@@ -1,9 +1,9 @@
 import { ReactSortable } from "react-sortablejs";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 //compoments
-import FullImageModal from "@/app/components/FullImageModal";
+import FullImageModal from "@/app/components/form/FullImageModal";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
@@ -74,7 +74,7 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
   return (
     <div className=" ">
       <div className="flex items-center justify-between">
-        <h1 className="flex items-center  text-foreground text-sm xl:text-2xl">
+        <h1 className="flex items-center  text-foreground text-md xl:text-2xl">
           {disabled ? (
             <>
               View&nbsp;

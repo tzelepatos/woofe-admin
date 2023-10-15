@@ -10,7 +10,7 @@ export const defaultValues = {
   services: [],
   info: "Info about the store..",
   images: [],
-  address: ["plataiwn 125"],
+  address: "plataiwn125",
   city: "Athens",
   zipCode: "12345",
   email: "xaliamoutra@woofe.com",
@@ -20,6 +20,7 @@ export const defaultValues = {
   website: "www.woofe.com",
   latitude: "37.983810",
   longitude: "23.727539",
+
   openingClosingHours: [
     {
       day: "Monday",
@@ -27,6 +28,56 @@ export const defaultValues = {
       closingTimeEarly: "14:00",
       openingTimeLate: "17:00",
       closingTimeLate: "21:00",
+      openOrClosed: true,
+    },
+    {
+      day: "Tuesday",
+      openingTimeEarly: "09:00",
+      closingTimeEarly: "14:00",
+      openingTimeLate: "17:00",
+      closingTimeLate: "21:00",
+      openOrClosed: true,
+    },
+
+    {
+      day: "Wednesday",
+      openingTimeEarly: "",
+      closingTimeEarly: "",
+      openingTimeLate: "",
+      closingTimeLate: "",
+      openOrClosed: true,
+    },
+    {
+      day: "Thursday",
+      openingTimeEarly: "",
+      closingTimeEarly: "",
+      openingTimeLate: "",
+      closingTimeLate: "",
+      openOrClosed: true,
+    },
+    {
+      day: "Friday",
+      openingTimeEarly: "",
+      closingTimeEarly: "",
+      openingTimeLate: "",
+      closingTimeLate: "",
+      openOrClosed: true,
+    },
+    {
+      day: "Saturday",
+      openingTimeEarly: "",
+      closingTimeEarly: "",
+      openingTimeLate: "",
+      closingTimeLate: "",
+      openOrClosed: true,
+    },
+    {
+      day: "Sunday",
+      openingTimeEarly: "",
+      closingTimeEarly: "",
+      openingTimeLate: "",
+      closingTimeLate: "",
+      openOrClosed: true,
     },
   ],
 };
@@ -80,7 +131,6 @@ export const ProductFormSchema = z.object({
   images: z.any().optional(),
 
   address: z
-
     .string()
     .min(5, { message: "You must add at least 5 characters on address" })
     .max(25, { message: "You can add up to 25 characters on address" }),
@@ -159,13 +209,7 @@ export const ProductFormSchema = z.object({
     .min(-180, { message: "Longitude must be between -180 and 180." })
     .max(180, { message: "Longitude must be between -180 and 180." }),
 
-  // openingClosingHours: z.object({
-  //   day: z.string().min(1).max(10), // Adjust the max length as needed
-  //   openingTimeEarl: z.string().min(1).max(5), // Adjust the max length as needed
-  //   closingTimeEarly: z.string().min(1).max(5), // Adjust the max length as needed
-  //   openingTimeLate: z.string().min(1).max(5), // Adjust the max length as needed
-  //   closingTimeLate: z.string().min(1).max(5), // Adjust the max length as needed
-  // }),
+  openingClosingHours: z.any().optional(),
 
   // pattern(/^\d{5}-\d{3}$/),
 

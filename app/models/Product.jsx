@@ -1,4 +1,5 @@
 import { Schema, models, model } from "mongoose";
+import { boolean } from "zod";
 
 const groomingSchema = new Schema(
   {
@@ -13,7 +14,7 @@ const groomingSchema = new Schema(
     images: [String],
 
     //address
-    address: [String],
+    address: { type: String },
     city: { type: String },
     zipCode: { type: String },
     latitude: { type: String },
@@ -29,11 +30,12 @@ const groomingSchema = new Schema(
     //secondary fields
     openingClosingHours: [
       {
-        day: { type: String, required: true }, // The day of the week (e.g., "Monday")
-        openingTimeEarly: { type: String, required: true }, // Opening time pm
-        closingTimeEarly: { type: String, required: true }, // Closing time pm
-        openingTimeLate: { type: String, required: true }, // Opening time mm
-        closingTimeLate: { type: String, required: true }, // Closing time mm
+        day: { type: String }, // The day of the week (e.g., "Monday")
+        openingTimeEarly: { type: String }, // Opening time pm
+        closingTimeEarly: { type: String }, // Closing time pm
+        openingTimeLate: { type: String }, // Opening time mm
+        closingTimeLate: { type: String }, // Closing time mm
+        openOrClosed: { type: Boolean }, // Open or Closed
       },
     ],
 
