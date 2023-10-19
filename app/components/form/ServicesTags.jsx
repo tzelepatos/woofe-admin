@@ -32,20 +32,31 @@ const serviceColorMap = {
   Balls: "bg-groomingPink10",
 };
 
-const ServicesTags = ({ form, viewMode, defaultValues, edit }) => {
-  const [activeServices, setActiveServices] = useState([]);
+const ServicesTags = ({
+  form,
+  defaultValues,
+  createMode,
+  viewMode,
+  editMode,
+}) => {
+  // console.log("defaultValues:", defaultValues);
+  const [activeServices, setActiveServices] = useState(
+    defaultValues?.services || []
+  );
 
-  //tags function
-  const toggleService = (service) => {
-    setActiveServices((prevServices) => {
-      const updatedServices = prevServices.includes(service)
-        ? prevServices.filter((s) => s !== service)
-        : [...prevServices, service];
+  const handleCreateEdit = (service) => {
+    // console.log(`Create Mode: Clicked ${service}`);
+    // console.log("Previous active services:", activeServices);
 
-      form.setValue("services", updatedServices);
-      return updatedServices;
-    });
+    const updatedServices = activeServices.includes(service)
+      ? activeServices.filter((s) => s !== service)
+      : [...activeServices, service];
+    // console.log("Updated active services:", updatedServices);
+
+    form.setValue("services", updatedServices);
+    setActiveServices(updatedServices);
   };
+
   return (
     <div className=" space-y-5 text-background bg-jimGrayLight container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
       <FormLabel>
@@ -86,20 +97,11 @@ const ServicesTags = ({ form, viewMode, defaultValues, edit }) => {
               variant="outline"
               size="lg"
               className={`${
-                viewMode || edit
-                  ? defaultValues?.services?.includes(service)
-                    ? serviceColorMap[service]
-                    : "bg-gray-300"
-                  : activeServices.includes(service)
+                activeServices.includes(service)
                   ? serviceColorMap[service]
                   : "bg-gray-300"
               }`}
-              onClick={() => {
-                console.log("Clicked:", service);
-                if (!viewMode || !edit) {
-                  toggleService(service);
-                }
-              }}
+              onClick={() => handleCreateEdit(service)}
             >
               {service}
             </Button>

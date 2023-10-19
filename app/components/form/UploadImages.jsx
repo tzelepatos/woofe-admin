@@ -2,6 +2,7 @@ import { ReactSortable } from "react-sortablejs";
 import Spinner from "../Spinner";
 import axios from "axios";
 import React, { useRef, useState } from "react";
+import Image from "next/image";
 //compoments
 import FullImageModal from "@/app/components/form/FullImageModal";
 import { Input } from "@/components/ui/input";

@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 //shadcn
+import Alert from "@/app/components/Alert";
+import AlertAction from "@/app/components/AlertAction";
 import { toast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,8 +26,8 @@ import CreateNewProduct from "./form/CreateNewProduct";
 import PlaceInfo from "./form/PlaceInfo";
 import ContactInfo from "./form/ContactInfo";
 
-function ProductFormNew({ defaultValues, viewMode, edit }) {
-  // console.log("defaultValues:", defaultValues);
+function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
+  // console.log("createMode:", createMode);
   const router = useRouter();
 
   //tags
@@ -76,20 +78,27 @@ function ProductFormNew({ defaultValues, viewMode, edit }) {
     <>
       <Form {...form}>
         <form
+          id="product-form"
           onSubmit={form.handleSubmit(onSubmit)}
           // className="grid  grid-cols-1 md:grid-cols-2 gap-4 "
           className=" flex flex-col gap-4 pr-2 pl-2 items-stretch "
         >
           {/* New Product*/}
           <div className="flex flex-col lg:flex-row gap-4">
-            <CreateNewProduct form={form} viewMode={viewMode} edit={edit} />
+            <CreateNewProduct
+              form={form}
+              createMode={createMode}
+              viewMode={viewMode}
+              editMode={editMode}
+            />
 
             {/* services */}
             <ServicesTags
               form={form}
-              viewMode={viewMode}
               defaultValues={defaultValues}
-              edit={edit}
+              createMode={createMode}
+              viewMode={viewMode}
+              editMode={editMode}
             />
           </div>
 
@@ -106,7 +115,7 @@ function ProductFormNew({ defaultValues, viewMode, edit }) {
                         onValueChange={field.onChange} //onValueChange={...field.onChange}
                         defaultValue={defaultValues.images} //defaultValue={...defaultValues.images}
                         disabled={viewMode}
-                        edit={edit}
+                        editMode={editMode}
                       />
                     </FormControl>
                   </FormItem>
@@ -117,11 +126,11 @@ function ProductFormNew({ defaultValues, viewMode, edit }) {
 
           {/* Place Info*/}
           <div className="flex flex-col lg:flex-row gap-4">
-            <PlaceInfo form={form} viewMode={viewMode} edit={edit} />
+            <PlaceInfo form={form} viewMode={viewMode} editMode={editMode} />
 
             {/* Contact info */}
 
-            <ContactInfo form={form} viewMode={viewMode} edit={edit} />
+            <ContactInfo form={form} viewMode={viewMode} editMode={editMode} />
           </div>
 
           {/* Opening Hours */}
@@ -135,7 +144,7 @@ function ProductFormNew({ defaultValues, viewMode, edit }) {
                     form={form}
                     viewMode={viewMode}
                     {...field}
-                    edit={edit}
+                    editMode={editMode}
                   />
                 </FormControl>
                 <FormMessage />
@@ -144,15 +153,32 @@ function ProductFormNew({ defaultValues, viewMode, edit }) {
           />
 
           <div>
-            {!viewMode && (
-              <Button
-                className="justify-self-end"
-                variant="signIn"
-                size="create"
-                type="submit"
-              >
-                Save
-              </Button>
+            {editMode ? (
+              <>
+                {/* <Button
+                  className="justify-self-end"
+                  variant="signIn"
+                  size="create"
+                  type="submit"
+                >
+                  Update
+                </Button> */}
+                {/* <Alert /> */}
+                <AlertAction actionType="update" />
+              </>
+            ) : (
+              <>
+                {createMode && ( // Add a condition for createMode
+                  <Button
+                    className="justify-self-end"
+                    variant="signIn"
+                    size="create"
+                    type="submit"
+                  >
+                    Create
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </form>

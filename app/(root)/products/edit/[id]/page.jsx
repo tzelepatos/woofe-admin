@@ -25,7 +25,7 @@ export default function EditPage({ params }) {
     <div>
     <h1 className="text-jimOrange text-2xl"></h1>
     {product ? (
-      <ProductFormNew defaultValues={...product} viewMode={false} edit={true}  />
+      <ProductFormNew defaultValues={...product} createMode={false} viewMode={false} editMode={true}  />
     ) : (
       <p>Loading...</p>
     )}

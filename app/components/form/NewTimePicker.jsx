@@ -29,7 +29,7 @@ const NewTimePicker = ({ form, viewMode, ...field }) => {
     const updatedOpeningClosingHours = [...openingClosingHours];
     updatedOpeningClosingHours[index].openOrClosed =
       !updatedOpeningClosingHours[index].openOrClosed;
-    setOpeningClosingHours(updatedOpeningClosingHours);
+    setOpeningClosingHours(updatedOpeningClosingHours); 
   };
 
   // console.log("viewMode", viewMode);

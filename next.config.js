@@ -7,6 +7,12 @@ const nextConfig = {
       "www.facebook.com",
       "platform-lookaside.fbsbx.com",
     ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
   },
 };
 

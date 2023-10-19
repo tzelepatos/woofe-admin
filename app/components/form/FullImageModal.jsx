@@ -1,7 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const FullImageModal = ({ imageUrl, onClose }) => {
+  //object=>string
+  const imageUrlString =
+    typeof imageUrl === "object" ? JSON.stringify(imageUrl) : imageUrl;
+  const parsedUrl = JSON.parse(imageUrlString);
+
   const modalRef = useRef(null);
 
   const handleClickOutside = (event) => {
@@ -25,16 +31,27 @@ const FullImageModal = ({ imageUrl, onClose }) => {
           animate={{ opacity: 1, scale: 1 }} // Transition to full size and opacity
           exit={{ opacity: 0, scale: 0.5 }} // Exit with small size and opacity
           transition={{ duration: 0.2, ease: "easeOut" }} // Adjust duration and ease
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
         >
-          <div className="max-w-3xl mx-auto relative" ref={modalRef}>
-            <img
+          <div className="max-w-3xl mx-auto relative " ref={modalRef}>
+            <Image
+              className="rounded-2xl"
+              src={parsedUrl}
+              alt="Full Image"
+              placeholder="blur"
+              blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8PkV2EwAGjgJcxJL0VgAAAABJRU5ErkJggg=="
+              width={500}
+              height={375}
+              sizes="(max-width: 768px) 100vw" //?????
+            />
+            {/* <img
               src={imageUrl}
               alt="Full Image"
               className="max-w-full max-h-full rounded-md"
-            />
+            /> */}
+
             <button
-              className="absolute top-0 right-0 m-4 text-white hover:text-[#FFA500]"
+              className="absolute top-1 right-0 m-1  text-white hover:text-[#FFA500]"
               onClick={onClose}
             >
               <svg

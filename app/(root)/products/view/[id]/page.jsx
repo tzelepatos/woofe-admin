@@ -42,7 +42,7 @@ export default function ViewPage({ params }) {
     <div>
       <h1 className="text-jimOrange text-2xl"></h1>
       {product ? (
-        <ProductFormNew defaultValues={...product} viewMode={true} />
+        <ProductFormNew defaultValues={...product} createMode={false} viewMode={true} editMode={false}   />
       ) : (
         <p>Loading...</p>
       )}

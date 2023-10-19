@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const PlaceInfo = ({ form, viewMode }) => {
+const PlaceInfo = ({ form, viewMode, editMode }) => {
   return (
     <div className="space-y-4 bg-jimGray container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
       <h1 className="flex items-center justify-start  text-foreground text-md xl:text-2xl">

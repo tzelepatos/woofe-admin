@@ -21,11 +21,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 const options = ["Grooming", "Services", "Supplies"];
 
-const CreateNewProduct = ({ form, viewMode, edit }) => {
+const CreateNewProduct = ({ form, viewMode, editMode }) => {
   return (
     <div className="space-y-5  text-background bg-jimOrange container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
       <h1 className="flex items-center justify-start text-foreground text-lg xl:text-2xl">
-        {edit ? (
+        {editMode ? (
           <>
             Edit&nbsp;
             <strong>your Product</strong>
