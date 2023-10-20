@@ -25,23 +25,26 @@ const buttonVariants = cva(
         logIn:
           " text-lg font-bold border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         signIn:
-          "bg-jimOrange shadow-xl border-white border-[2px] text-lg font-bold    hover:bg-gray-700 text-white  ",
+          "bg-jimOrange shadow-xl border-background border-[2px] text-lg font-bold    hover:bg-gray-700 text-background  ",
         create:
           " shadow-xl border-black border-[2px] text-lg font-bold    hover:text-white bg-white text-jimOrange hover:border-white hover:bg-gray-700 ",
 
         jim: " text-white bg-jimOrange p-2 px-5 rounded-md hover:bg-jimOrange active:bg-orange-700 focus:outline-none focus:ring focus:ring-orange-300",
         navBar: "text-foreground bg-transparent hover:bg-background",
+        edit: " text-lg font-bold border border-input bg-jimGrayLight shadow-sm hover:bg-jimGray hover:text-accent-foreground",
       },
       size: {
         default: "h-7 px-4 py-2",
         sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
+        lg: "h-10 rounded-md px-4 ",
         icon: "h-9 w-9",
         icon2: "h-7 w-7",
         md: "h-9 rounded-md ",
         cancel: "h-9 px-2",
         create: "h-10 rounded-xl w-[110px] ",
         logIn: "h-10 rounded-xl w-[350px]",
+        addNewProduct:
+          "md:h-10 md:px-2 md:text-lg rounded-lg px-2 h-10 text-xs",
       },
     },
     defaultVariants: {

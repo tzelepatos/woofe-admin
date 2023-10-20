@@ -8,6 +8,8 @@ export default function DeleteProductPage({ params }) {
   const [productName, setProductName] = useState(null);
   const idProduct = params.id;
 
+  console.log("idProduct:", idProduct);
+
   useEffect(() => {
     if (!productName) {
       // Fetch the product details based on the ID
@@ -56,7 +58,10 @@ export default function DeleteProductPage({ params }) {
         Do you really want to delete " {productName}" ?
       </h1>
       <div className="flex gap-2 justify-center">
-        <button className="btn-red" onClick={deleteProduct}>
+        <button
+          className="btn-red" // DELETE PRODUCT
+          onClick={deleteProduct}
+        >
           Yes{" "}
         </button>
         <button className="btn-default" onClick={goBack}>

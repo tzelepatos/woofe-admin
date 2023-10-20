@@ -11,8 +11,15 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/ui/icons";
 
-export default function AlertAction({ actionType }) {
+export default function AlertAction({ actionType, productId, deleteProduct }) {
+  const handleDelete = () => {
+    if (actionType === "delete") {
+      deleteProduct(productId);
+    }
+  };
+
   const actions = [
     {
       buttonText: "Delete",
@@ -32,9 +39,16 @@ export default function AlertAction({ actionType }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="justify-self-end" variant="signIn" size="create">
-          {action.buttonText}
-        </Button>
+        {actionType === "delete" ? (
+          <Button variant="logIn" size="icon2" type="button">
+            <Icons.delete className=" h-4 w-4 text-red-600 fill-background" />
+            {/* {action.buttonText} */}
+          </Button>
+        ) : (
+          <Button className="bg-jimOrange" variant="signIn" size="create">
+            {action.buttonText}
+          </Button>
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -48,6 +62,7 @@ export default function AlertAction({ actionType }) {
             size="create"
             type="submit"
             form="product-form"
+            onClick={handleDelete}
           >
             {action.buttonText}
           </AlertDialogAction>

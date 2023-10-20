@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 const NavLeft = () => {
   const inactiveLink = "flex gap-1 p-1";
   const activeLink =
-    inactiveLink + "  bg-background text-jimOrange rounded-md text-orange-500";
+    inactiveLink + "  bg-background text-jimOrange rounded-md font-bold";
   const hoverLink = "hover:bg-background rounded-md";
   const pathname = usePathname();
 

@@ -4,6 +4,10 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 //compoments
+import {
+  showDeletedFailImageToast,
+  showDeletedSuccesfullImageToast,
+} from "@/app/components/Toasters";
 import FullImageModal from "@/app/components/form/FullImageModal";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/ui/icons";
@@ -66,8 +70,10 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
 
         const updatedImages = images.filter((val) => val !== link);
         onValueChange(updatedImages); // Call onValueChange with the updated images
+        showDeletedSuccesfullImageToast(link);
       })
       .catch((error) => {
+        showDeletedFailImageToast(error);
         console.error("Error deleting image:", error);
       });
   }

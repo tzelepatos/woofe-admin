@@ -5,9 +5,6 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 //shadcn
-import Alert from "@/app/components/Alert";
-import AlertAction from "@/app/components/AlertAction";
-import { toast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,6 +15,12 @@ import {
 } from "@/components/ui/form";
 
 //compoments
+import {
+  showUpdateToast,
+  showSuccessToast,
+  showFailToast,
+} from "@/app/components/Toasters";
+import AlertAction from "@/app/components/AlertAction";
 import { ProductFormSchema } from "@/app/models/ProductFormSchema ";
 import UploadImages from "@/app/components/form/UploadImages";
 import NewTimePicker from "./form/NewTimePicker";
@@ -37,10 +40,6 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
     mode: "onChange",
   });
 
-  // const { fields: addressFields, append: appendAddress, remove: removeAddress } = useFieldArray({
-  //   name: "address", // Second form's fields will be managed under the "address" name
-  //   control: form.control,
-  // });
   //update or create
   async function onSubmit(data) {
     const randomString = Math.random().toString(36).substr(2, 9);
@@ -54,9 +53,11 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
           _id: defaultValues._id,
         });
         if (response.status === 200) {
+          showUpdateToast(data);
           router.push("/products");
         }
       } catch (error) {
+        showFailToast(error);
         console.error("Error updating form:", error);
       }
     } else {
@@ -64,9 +65,11 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
       try {
         const response = await axios.post("/api/product", data);
         if (response.status === 200) {
+          showSuccessToast(data);
           router.push("/products");
         }
       } catch (error) {
+        showFailToast(error);
         console.error("Error submitting form:", error);
       }
     }

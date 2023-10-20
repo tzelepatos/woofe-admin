@@ -29,7 +29,34 @@ export async function POST(request) {
   }
 }
 //GET
+//add pagination
 export async function GET() {
+  //add pagination to Get() function
+  // const { page = 1, limit = 10 } = request.query;
+  // const startIndex = (page - 1) * limit;
+  // const endIndex = page * limit;
+  // const results = {};
+  // if (endIndex < (await GroomingModel.countDocuments().exec())) {
+  //   results.next = {
+  //     page: page + 1,
+  //     limit: limit,
+  //   };
+  // }
+  // if (startIndex > 0) {
+  //   results.previous = {
+  //     page: page - 1,
+  //     limit: limit,
+  //   };
+  // }
+  // try {
+  //   results.results = await GroomingModel.find().limit(limit).skip(startIndex).exec();
+  //   res.paginatedResults = results;
+  //   next();
+  // } catch (e) {
+  //   res.status(500).json({ message: e.message });
+  // }
+  // return Response.json(await GroomingModel.find().skip(startIndex).limit(limit));
+
   return Response.json(await GroomingModel.find());
 }
 //PUT
