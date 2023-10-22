@@ -29,36 +29,44 @@ export async function POST(request) {
   }
 }
 //GET
-//add pagination
-export async function GET() {
-  //add pagination to Get() function
-  // const { page = 1, limit = 10 } = request.query;
-  // const startIndex = (page - 1) * limit;
-  // const endIndex = page * limit;
-  // const results = {};
-  // if (endIndex < (await GroomingModel.countDocuments().exec())) {
-  //   results.next = {
-  //     page: page + 1,
-  //     limit: limit,
-  //   };
-  // }
-  // if (startIndex > 0) {
-  //   results.previous = {
-  //     page: page - 1,
-  //     limit: limit,
-  //   };
-  // }
-  // try {
-  //   results.results = await GroomingModel.find().limit(limit).skip(startIndex).exec();
-  //   res.paginatedResults = results;
-  //   next();
-  // } catch (e) {
-  //   res.status(500).json({ message: e.message });
-  // }
-  // return Response.json(await GroomingModel.find().skip(startIndex).limit(limit));
+// export async function GET() {
+//   //add pagination to Get() function with axios
 
-  return Response.json(await GroomingModel.find());
+//   // const postPerPage = 5;
+//   // const totalPosts = await GroomingModel.countDocuments();
+//   // const totalPages = Math.ceil(totalPosts / postPerPage);
+//   // const posts = await GroomingModel.find()
+//   //   // .sort({ createdAt: -1 })
+//   //   .skip((page - 1) * postPerPage)
+//   //   .limit(postPerPage);
+//   // // console.log("posts:", posts);
+//   // // console.log("totalPages:", totalPages);
+//   // // console.log("totalPosts:", totalPosts);
+//   // return Response.json(posts);
+
+//   return Response.json(await GroomingModel.find());
+// }
+export async function GET(Request) {
+  const url = new URL(Request.url);
+  const page = url.searchParams.get("page");
+  const perPage = url.searchParams.get("perPage");
+
+  if (!page) {
+    console.log("No page number found. Returning all posts");
+    return Response.json(await GroomingModel.find());
+  }
+
+  const postPerPage = perPage ? parseInt(perPage, 10) : 5; // Use perPage from URL, or default to 5 if not provided
+  const totalPosts = await GroomingModel.countDocuments();
+  const totalPages = Math.ceil(totalPosts / postPerPage);
+  const posts = await GroomingModel.find()
+    .skip((page - 1) * postPerPage)
+    .limit(postPerPage);
+
+  console.log("Returning paginated posts");
+  return Response.json({ posts, totalPages, totalPosts });
 }
+
 //PUT
 // export async function PUT(request) {
 //   const jsonBody = await request.json();

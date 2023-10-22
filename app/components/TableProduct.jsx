@@ -1,7 +1,11 @@
 "use client";
+
+import { useSearchParams } from "next/navigation";
+import React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
 
 //components
 import {
@@ -9,7 +13,7 @@ import {
   showDeletedSuccesfullToast,
 } from "@/app/components/Toasters";
 import { Icons } from "@/components/ui/icons";
-import { Button } from "@/components/ui/button";
+
 import {
   Table,
   TableBody,
@@ -19,19 +23,58 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import AlertAction from "../../components/AlertAction";
+import AlertAction from "@/app/components/AlertAction";
 
-export default function Products() {
+export const TableProduct = ({ params }) => {
   const [products, setProducts] = useState([]);
-  // console.log("products:", products);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const postPerPage = 6; // Number of records per page
+  const [totalProducts, setTotalProducts] = useState(0); // Added state for total products
+  // Fetch the products from the backend with pagination
 
-  //fetch data
+  // useEffect(() => {
+  //   async function fetchProducts() {
+  //     try {
+  //       const response = await axios.get("/api/product");
+  //       setProducts(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching products:", error);
+  //     }
+  //   }
+  //   fetchProducts();
+  // }, []);
+
+  const fetchPage = async (page) => {
+    try {
+      const response = await axios.get(
+        `/api/product?page=${page}&perPage=${postPerPage}`,
+        {
+          params: {
+            page: page,
+            perPage: postPerPage,
+          },
+        }
+      );
+
+      if (response.data.posts) {
+        setProducts(response.data.posts);
+      } else {
+        setProducts(response.data);
+      }
+      setTotalPages(response.data.totalPages);
+      setTotalProducts(response.data.totalPosts); // Update total products
+      console.log("total pages", response.data.totalPages);
+      console.log("total posts", response.data.totalPosts);
+      setCurrentPage(page); // Update the current page
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
-    axios.get("/api/product").then((response) => {
-      // console.log(response.data); // Log the data retrieved from the API
-      setProducts(response.data);
-    });
-  }, []);
+    fetchPage(currentPage);
+  }, [currentPage]);
 
   //delete
   async function deleteProduct(productId) {
@@ -64,7 +107,17 @@ export default function Products() {
       }
     }
   }
+  const nextPage = () => {
+    const nextPage = currentPage + 1;
+    if (nextPage <= totalPages) {
+      fetchPage(nextPage);
+    }
+  };
 
+  const prevPage = () => {
+    const prevPage = currentPage - 1;
+    fetchPage(prevPage);
+  };
   return (
     <>
       <Link href={"/products/newproduct"}>
@@ -78,9 +131,9 @@ export default function Products() {
           Add New Product
         </Button>
       </Link>
-
       <Table className="overflow-auto justify-end">
         <TableCaption>A list of your recent products.</TableCaption>
+
         <TableHeader>
           <TableRow>
             <TableHead>Product name</TableHead>
@@ -123,16 +176,16 @@ export default function Products() {
                     </Button>
                   </Link>
                   {/* <Link href={"/products/delete/" + product._id}>
-                    <Button
-                      className=""
-                      variant="logIn"
-                      size="sm"
-                      type="button"
-                    >
-                      <Icons.delete className="mr-2 h-4 w-4 text-red-600 fill-background" />
-                      Delete
-                    </Button>
-                  </Link> */}
+                        <Button
+                          className=""
+                          variant="logIn"
+                          size="sm"
+                          type="button"
+                        >
+                          <Icons.delete className="mr-2 h-4 w-4 text-red-600 fill-background" />
+                          Delete
+                        </Button>
+                      </Link> */}
                   <AlertAction
                     actionType="delete"
                     productId={product._id}
@@ -144,6 +197,26 @@ export default function Products() {
           ))}
         </TableBody>
       </Table>
+      <div className="flex justify-center">
+        <div className="mr-2">{totalProducts} products</div>
+        <Button onClick={prevPage} disabled={currentPage === 1}>
+          <Link
+            href={`/product?page=${currentPage - 1}&perPage=${postPerPage}`}
+          >
+            Next Page
+          </Link>
+        </Button>
+        <div>
+          {currentPage}/{totalPages}
+        </div>
+        <Button onClick={nextPage} disabled={currentPage === totalPages}>
+          <Link
+            href={`/product?page=${currentPage + 1}&perPage=${postPerPage}`}
+          >
+            Next Page
+          </Link>
+        </Button>
+      </div>
     </>
   );
-}
+};

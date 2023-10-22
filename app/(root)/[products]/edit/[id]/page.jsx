@@ -5,6 +5,7 @@ import ProductFormNew from "/app/components/ProductFormNew.jsx";
 
 export default function EditPage({ params }) {
   const idUrl = params.id;
+  console.log("idUrl:", idUrl);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
