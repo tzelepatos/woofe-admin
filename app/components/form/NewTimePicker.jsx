@@ -29,7 +29,7 @@ const NewTimePicker = ({ form, viewMode, ...field }) => {
     const updatedOpeningClosingHours = [...openingClosingHours];
     updatedOpeningClosingHours[index].openOrClosed =
       !updatedOpeningClosingHours[index].openOrClosed;
-    setOpeningClosingHours(updatedOpeningClosingHours); 
+    setOpeningClosingHours(updatedOpeningClosingHours);
   };
 
   // console.log("viewMode", viewMode);
@@ -82,7 +82,7 @@ const NewTimePicker = ({ form, viewMode, ...field }) => {
                     size="lg"
                     className={`${
                       !dayData.openOrClosed
-                        ? "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90"
+                        ? "line-through  bg-destructive text-destructive-foreground/20 shadow-sm hover:bg-destructive/90"
                         : "bg-gray-300 " // Change bg-blue-500 to your desired default color
                     } text-background font-bold py-2 px-4 rounded`}
                   >

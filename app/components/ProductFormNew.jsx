@@ -54,7 +54,8 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
         });
         if (response.status === 200) {
           showUpdateToast(data);
-          router.push("/products");
+          router.refresh(); //i dont  like it, i must change it
+          router.replace("/products");
         }
       } catch (error) {
         showFailToast(error);
@@ -66,7 +67,8 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
         const response = await axios.post("/api/product", data);
         if (response.status === 200) {
           showSuccessToast(data);
-          router.push("/products");
+          router.refresh(); //i dont  like it, i must change it
+          router.replace("/products");
         }
       } catch (error) {
         showFailToast(error);

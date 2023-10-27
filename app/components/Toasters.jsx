@@ -42,7 +42,7 @@ export const showFailToast = (error) => {
   });
 };
 
-export const showDeletedSuccesfullToast = ({ product }) => {
+export const showDeletedSuccesfullToast = (product) => {
   toast({
     action: (
       <ToastAction altText="success">

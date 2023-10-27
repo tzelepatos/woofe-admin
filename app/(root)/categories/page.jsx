@@ -1,7 +1,9 @@
-export default function Categories() {
+export default function Categories({ params }) {
+  console.log("params", params);
   return (
-    <>
-      <h1>Categories</h1>
-    </>
+    <div>
+      <h1>Categories Page</h1>
+      <p>params: {JSON.stringify(params)}</p>
+    </div>
   );
 }

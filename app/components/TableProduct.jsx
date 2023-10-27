@@ -1,19 +1,15 @@
 "use client";
-
-import { useSearchParams } from "next/navigation";
 import React from "react";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-
+import { useRouter } from "next/navigation";
 //components
 import {
   showDeletedFailToast,
   showDeletedSuccesfullToast,
 } from "@/app/components/Toasters";
 import { Icons } from "@/components/ui/icons";
-
 import {
   Table,
   TableBody,
@@ -24,57 +20,37 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AlertAction from "@/app/components/AlertAction";
+import PaginationNav from "@/app/components/PaginationNav";
 
-export const TableProduct = ({ params }) => {
-  const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const postPerPage = 6; // Number of records per page
-  const [totalProducts, setTotalProducts] = useState(0); // Added state for total products
-  // Fetch the products from the backend with pagination
+export const TableProduct = ({
+  products,
+  page,
+  totalPages,
+  totalPosts,
+  postPerPage,
+}) => {
+  const router = useRouter();
+  const startIndex = (page - 1) * postPerPage;
 
-  // useEffect(() => {
-  //   async function fetchProducts() {
-  //     try {
-  //       const response = await axios.get("/api/product");
-  //       setProducts(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching products:", error);
-  //     }
-  //   }
-  //   fetchProducts();
-  // }, []);
+  const tableHeaders = [
+    "#",
+    "Product name",
+    "Price",
+    "Category",
+    "Images",
+    "Services",
+    "Created At",
+    "Actions",
+  ];
 
-  const fetchPage = async (page) => {
-    try {
-      const response = await axios.get(
-        `/api/product?page=${page}&perPage=${postPerPage}`,
-        {
-          params: {
-            page: page,
-            perPage: postPerPage,
-          },
-        }
-      );
+  const createdAtDate = new Date(products.createdAt);
+  const formattedDate =
+    createdAtDate instanceof Date && !isNaN(createdAtDate)
+      ? createdAtDate.toLocaleString().split(",")[0].replace(/\//g, "-")
+      : "";
+  console.log("createdAtDate", createdAtDate);
 
-      if (response.data.posts) {
-        setProducts(response.data.posts);
-      } else {
-        setProducts(response.data);
-      }
-      setTotalPages(response.data.totalPages);
-      setTotalProducts(response.data.totalPosts); // Update total products
-      console.log("total pages", response.data.totalPages);
-      console.log("total posts", response.data.totalPosts);
-      setCurrentPage(page); // Update the current page
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPage(currentPage);
-  }, [currentPage]);
+  console.log("formattedDates", formattedDate);
 
   //delete
   async function deleteProduct(productId) {
@@ -82,42 +58,42 @@ export const TableProduct = ({ params }) => {
       // Fetch the product details, including image links
       const response = await axios.get(`/api/product?id=${productId}`);
       const product = response.data.find((item) => item._id === productId);
-      console.log("product:", product.productName);
+
+      // Check if product has images
+      if (product.images && product.images.length > 0) {
+        // Delete each image associated with the product from S3
+        for (const imageLink of product.images) {
+          console.log(`Deleting image ${imageLink}`);
+          const response = await axios.delete("/api/deleteImage", {
+            data: { link: imageLink },
+          });
+
+          console.log(`Image ${imageLink} deleted successfully`);
+        }
+      }
 
       // Delete the product from the backend
-      await axios.delete(`/api/product`, { data: { _id: productId } });
+      const deleteResponse = await axios.delete(`/api/product`, {
+        data: { _id: productId },
+      });
 
-      // Delete each image associated with the product from S3
-      for (const imageLink of product.images) {
-        await axios.delete("/api/deleteImage", { data: { link: imageLink } });
+      if (deleteResponse.status === 200) {
+        showDeletedSuccesfullToast(product);
+        router.refresh(); //i dont  like it, i must change it
       }
-      showDeletedSuccesfullToast(product);
-      console.log("Product and images deleted successfully");
 
-      // Update the products state to remove the deleted product
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product._id !== productId)
-      );
+      console.log("Product and images deleted successfully");
     } catch (error) {
       showDeletedFailToast(error);
+      router.refresh(); //i dont  like it, i must change it
       console.error("Error deleting product:", error);
+      console.error("Error updating form:", error); // Log both errors
       if (error.response) {
-        showDeletedFailToast(error);
         console.log("Response Data:", error.response.data);
       }
     }
   }
-  const nextPage = () => {
-    const nextPage = currentPage + 1;
-    if (nextPage <= totalPages) {
-      fetchPage(nextPage);
-    }
-  };
 
-  const prevPage = () => {
-    const prevPage = currentPage - 1;
-    fetchPage(prevPage);
-  };
   return (
     <>
       <Link href={"/products/newproduct"}>
@@ -132,37 +108,54 @@ export const TableProduct = ({ params }) => {
         </Button>
       </Link>
       <Table className="overflow-auto justify-end">
-        <TableCaption>A list of your recent products.</TableCaption>
+        <TableCaption>
+          <PaginationNav
+            page={page}
+            totalPages={totalPages}
+            postPerPage={postPerPage}
+            totalPosts={totalPosts}
+          />
+        </TableCaption>
 
-        <TableHeader>
+        <TableHeader className="lg:text-sm text-xs">
           <TableRow>
-            <TableHead>Product name</TableHead>
-            <TableHead className=" text-center ">Price</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead className=" text-center ">Images</TableHead>
-            <TableHead className=" text-center ">Services</TableHead>
+            {tableHeaders.map((header, index) => (
+              <TableHead
+                key={index}
+                className={index === 0 ? "font-bold" : "text-center font-bold"}
+              >
+                {header}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {products.map((product) => (
-            <TableRow key={product._id}>
-              <TableCell>
+        <TableBody className="lg:text-sm text-xs">
+          {products.map((product, index) => (
+            <TableRow key={product._id} className="text-center">
+              <TableCell className="text-start">
+                {startIndex + index + 1}
+              </TableCell>
+              <TableCell className="text-center">
                 <Link href={"/products/view/" + product._id}>
                   {product.productName}
                 </Link>
               </TableCell>
 
-              <TableCell className="text-center ">€{product.price}</TableCell>
+              <TableCell>€{product.price}</TableCell>
               <TableCell>{product.category}</TableCell>
-              <TableCell className=" text-center ">
-                {product.images.length}
-              </TableCell>
-              <TableCell className=" text-center ">
+              <TableCell>{product.images.length}</TableCell>
+              <TableCell>
                 <span title={product.services.join(", ")}>
                   ({product.services.length})
                 </span>
               </TableCell>
-              <TableCell className="flex justify-end ">
+              <TableCell>
+                {product.createdAt.slice(0, 10)}
+                {" - "}
+                {product.createdAt.slice(11, 19)}
+              </TableCell>
+
+              <TableCell className="flex justify-center ">
                 <div className="flex space-x-2">
                   <Link href={"/products/edit/" + product._id}>
                     <Button
@@ -175,17 +168,7 @@ export const TableProduct = ({ params }) => {
                       {/* Edit */}
                     </Button>
                   </Link>
-                  {/* <Link href={"/products/delete/" + product._id}>
-                        <Button
-                          className=""
-                          variant="logIn"
-                          size="sm"
-                          type="button"
-                        >
-                          <Icons.delete className="mr-2 h-4 w-4 text-red-600 fill-background" />
-                          Delete
-                        </Button>
-                      </Link> */}
+
                   <AlertAction
                     actionType="delete"
                     productId={product._id}
@@ -197,26 +180,6 @@ export const TableProduct = ({ params }) => {
           ))}
         </TableBody>
       </Table>
-      <div className="flex justify-center">
-        <div className="mr-2">{totalProducts} products</div>
-        <Button onClick={prevPage} disabled={currentPage === 1}>
-          <Link
-            href={`/product?page=${currentPage - 1}&perPage=${postPerPage}`}
-          >
-            Next Page
-          </Link>
-        </Button>
-        <div>
-          {currentPage}/{totalPages}
-        </div>
-        <Button onClick={nextPage} disabled={currentPage === totalPages}>
-          <Link
-            href={`/product?page=${currentPage + 1}&perPage=${postPerPage}`}
-          >
-            Next Page
-          </Link>
-        </Button>
-      </div>
     </>
   );
 };

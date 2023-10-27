@@ -49,10 +49,10 @@ export async function POST(request) {
 export async function GET(Request) {
   const url = new URL(Request.url);
   const page = url.searchParams.get("page");
-  const perPage = url.searchParams.get("perPage");
+  const perPage = url.searchParams.get("postPerPage");
 
   if (!page) {
-    console.log("No page number found. Returning all posts");
+    // console.log("No page number found. Returning all posts");
     return Response.json(await GroomingModel.find());
   }
 
@@ -63,7 +63,7 @@ export async function GET(Request) {
     .skip((page - 1) * postPerPage)
     .limit(postPerPage);
 
-  console.log("Returning paginated posts");
+  // console.log("Returning paginated posts");
   return Response.json({ posts, totalPages, totalPosts });
 }
 

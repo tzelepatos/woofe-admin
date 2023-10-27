@@ -23,7 +23,7 @@ const options = ["Grooming", "Services", "Supplies"];
 
 const CreateNewProduct = ({ form, viewMode, editMode }) => {
   return (
-    <div className="space-y-5  text-background bg-jimOrange container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
+    <div className="space-y-6  text-background bg-jimOrange container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
       <h1 className="flex items-center justify-start text-foreground text-lg xl:text-2xl">
         {editMode ? (
           <>
@@ -69,7 +69,7 @@ const CreateNewProduct = ({ form, viewMode, editMode }) => {
         )}
       />
       {/* Description */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4  ">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8  ">
         <div className="col-span-2 ">
           <FormField
             control={form.control}
@@ -81,7 +81,7 @@ const CreateNewProduct = ({ form, viewMode, editMode }) => {
                   <Textarea
                     placeholder="Tell us a little bit about your product..."
                     className="resize-none md:rows-15"
-                    rows={8}
+                    rows={10}
                     disabled={viewMode}
                     {...field}
                   />
@@ -91,7 +91,7 @@ const CreateNewProduct = ({ form, viewMode, editMode }) => {
             )}
           />
         </div>
-        <div className="flex flex-col  justify-between">
+        <div className="flex flex-col  justify-between gap-4 ">
           {/* category */}
           <FormField
             control={form.control}
