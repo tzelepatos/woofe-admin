@@ -13,7 +13,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 
-export default function AlertAction({ actionType, productId, deleteProduct }) {
+export default function AlertAction({
+  actionType,
+  productId,
+  deleteProduct,
+  isLoading,
+}) {
+  console.log("alert loadinmg ", isLoading);
   const handleDelete = () => {
     if (actionType === "delete") {
       deleteProduct(productId);
@@ -45,7 +51,15 @@ export default function AlertAction({ actionType, productId, deleteProduct }) {
             {/* {action.buttonText} */}
           </Button>
         ) : (
-          <Button className="bg-jimOrange" variant="signIn" size="create">
+          <Button
+            className="bg-jimOrange"
+            variant="signIn"
+            size="create"
+            disabled={isLoading}
+          >
+            {isLoading && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
             {action.buttonText}
           </Button>
         )}

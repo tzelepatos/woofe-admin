@@ -13,8 +13,8 @@ import { signOut } from "next-auth/react";
 export function SheetNav() {
   const inactiveLink = "flex gap-1 p-1";
   const activeLink =
-    inactiveLink + "  bg-background text-jimOrange rounded-md text-orange-500";
-  const hoverLink = "hover:bg-jimGrayLight rounded-md";
+    inactiveLink + "  bg-background text-jimOrange rounded-md text-orange-500 ";
+  const hoverLink = "hover:bg-jimGrayLight rounded-md pl-2";
   const pathname = usePathname();
 
   return (
@@ -86,13 +86,24 @@ export function SheetNav() {
           </Link>
         </SheetClose>
         <SheetClose asChild>
+          <Link
+            href={"/contact"}
+            className={`${
+              pathname === "/contact" ? activeLink : inactiveLink
+            } ${hoverLink}`}
+          >
+            <Icons.emailOpen />
+            Contact
+          </Link>
+        </SheetClose>
+        <SheetClose asChild>
           <button
             onClick={() => signOut()}
             className={`${
               pathname === "/logout" ? activeLink : inactiveLink
             } ${hoverLink}`}
           >
-            <Icons.logOut />
+            <Icons.logOut className="-ml-2 mr-1 w-6 h-6" />
             Logout
           </button>
         </SheetClose>

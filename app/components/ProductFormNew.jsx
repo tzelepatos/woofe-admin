@@ -3,8 +3,10 @@ import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 //shadcn
+import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -31,8 +33,10 @@ import ContactInfo from "./form/ContactInfo";
 
 function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
   // console.log("createMode:", createMode);
-  const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  console.log("isLoading:", isLoading);
   //tags
   const form = useForm({
     resolver: zodResolver(ProductFormSchema),
@@ -42,6 +46,11 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
 
   //update or create
   async function onSubmit(data) {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
     const randomString = Math.random().toString(36).substr(2, 9);
     form.setValue("productName", `Grooming Store-${randomString}`);
 
@@ -169,7 +178,7 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
                   Update
                 </Button> */}
                 {/* <Alert /> */}
-                <AlertAction actionType="update" />
+                <AlertAction actionType="update" isLoading={isLoading} />
               </>
             ) : (
               <>
@@ -179,7 +188,11 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
                     variant="signIn"
                     size="create"
                     type="submit"
+                    disabled={isLoading}
                   >
+                    {isLoading && (
+                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     Create
                   </Button>
                 )}

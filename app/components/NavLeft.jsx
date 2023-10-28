@@ -8,8 +8,8 @@ import { usePathname } from "next/navigation";
 const NavLeft = () => {
   const inactiveLink = "flex gap-1 p-1";
   const activeLink =
-    inactiveLink + "  bg-background text-jimOrange rounded-md font-bold";
-  const hoverLink = "hover:bg-background rounded-md";
+    inactiveLink + "  bg-background text-jimOrange rounded-md font-bold w-32 ";
+  const hoverLink = "hover:bg-background rounded-md pl-2";
   const pathname = usePathname();
 
   return (
@@ -59,6 +59,15 @@ const NavLeft = () => {
         >
           <Icons.settings />
           Settings
+        </Link>
+        <Link
+          href={"/contact"}
+          className={`${
+            pathname === "/contact" ? activeLink : inactiveLink
+          } ${hoverLink}`}
+        >
+          <Icons.emailOpen />
+          Contact
         </Link>
         <button
           onClick={() => signOut()}

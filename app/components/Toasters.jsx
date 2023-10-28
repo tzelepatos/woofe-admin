@@ -93,3 +93,28 @@ export const showDeletedFailImageToast = (error) => {
     description: `Error:  "${error}" .`,
   });
 };
+
+export const showSuccessToastEmail = () => {
+  toast({
+    action: (
+      <ToastAction altText="success">
+        <Icons.success className=" h-5 w-5 font-bold" />
+      </ToastAction>
+    ),
+    variant: "success",
+    title: "Email sent.",
+    description: `Your email has been sent successfully.`,
+  });
+};
+export const showFailToastEmail = (error) => {
+  toast({
+    action: (
+      <ToastAction altText="destructive">
+        <Icons.failed className=" h-5 w-5 font-bold" />
+      </ToastAction>
+    ),
+    variant: "destructive",
+    title: "Something happened...",
+    description: `Error:  "${error}" .`,
+  });
+};
