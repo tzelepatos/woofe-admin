@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { UserAuthForm } from "@/app/(log-in)/sign-up/UserAuthForm";
 
-export default function AuthenticationPage() {
+export default function RegisterPage() {
   return (
     <>
       <div className="sm:w-[550px] md:w-[750px] relative h-[500px] w-[400px] flex-col items-center flex justify-center bg-jimOrange ">

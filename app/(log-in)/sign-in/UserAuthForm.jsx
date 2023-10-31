@@ -5,50 +5,79 @@ import { cn } from "@/lib/utils";
 import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { redirect } from "next/navigation";
+import {
+  showFailUserNamePassword,
+  showSuccessToastLogin,
+} from "@/app/Components/Toasters";
+import { useRouter } from "next/navigation";
 
 export function UserAuthForm({ className, ...props }) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  async function onSubmit(event) {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  async function loginUser(event) {
+    setError(null);
     event.preventDefault();
     setIsLoading(true);
 
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
-  }
 
-  async function handleLoginButtonClick(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    await signIn("google", { callbackUrl: "/home" }); //?????
-  }
-  const session = useSession();
-  if (session?.status === "authenticated") {
-    redirect("/home");
+    if (!data.email || !data.password) {
+      const newError = "All fields are required !";
+      setError(newError);
+      showFailUserNamePassword(newError);
+      return;
+    }
+    try {
+      const res = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+      if (res.error) {
+        const newError = "Invalid Username or Password !";
+        showFailUserNamePassword(newError);
+
+        return;
+      }
+      console.log("data.email ", data);
+      showSuccessToastLogin(data.email); // Show success toast
+      router.replace("/home");
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+    // router.push("/home");
   }
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          <div className="grid gap-3">
-            <Label className="sr-only" htmlFor="email"></Label>
-
+      <form onSubmit={loginUser}>
+        <div className="grid gap-6">
+          <div className="flex-col items-center  flex  justify-center">
             <Input
-              className="bg-white mb-4 h-[45px]  rounded-xl"
-              id="Username"
+              className="bg-background mb-4 h-[45px] w-2/3 md:w-full rounded-xl"
+              id="email"
               placeholder="Username or email"
-              type="username"
+              type="email"
               autoCapitalize="none"
-              autoComplete="username"
+              autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
+              value={data.email}
+              onChange={(event) => {
+                setData({ ...data, email: event.target.value });
+              }}
             />
             <Input
-              className="bg-white mt-2 mb-4 h-[45px] rounded-xl "
+              className="bg-background mt-2 mb-4 h-[45px] w-2/3 md:w-full rounded-xl "
               id="password"
               placeholder="Password"
               type="password"
@@ -56,10 +85,19 @@ export function UserAuthForm({ className, ...props }) {
               autoComplete="password"
               autoCorrect="off"
               disabled={isLoading}
+              value={data.password}
+              onChange={(event) => {
+                setData({ ...data, password: event.target.value });
+              }}
             />
           </div>
           <div className="flex-col items-center  flex  justify-center">
-            <Button variant="signIn" size="create" disabled={isLoading}>
+            <Button
+              variant="signIn"
+              size="create"
+              disabled={isLoading}
+              type="submit" //zod? or forms?
+            >
               {isLoading && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}

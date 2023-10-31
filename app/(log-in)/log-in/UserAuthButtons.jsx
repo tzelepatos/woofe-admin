@@ -9,6 +9,8 @@ import Link from "next/link";
 
 export function UserAuthButtons({ className, ...props }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
+  const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -22,11 +24,21 @@ export function UserAuthButtons({ className, ...props }) {
   async function handleLoginButtonClick(event) {
     event.stopPropagation();
     event.preventDefault();
+    setIsLoadingGoogle(true);
+
+    setTimeout(() => {
+      setIsLoadingGoogle(false);
+    }, 3000);
     await signIn("google", { callbackUrl: "/home" }); //?????
   }
   async function handleLoginButtonClickFacebook(event) {
     event.stopPropagation();
     event.preventDefault();
+    setIsLoadingFacebook(true);
+
+    setTimeout(() => {
+      setIsLoadingFacebook(false);
+    }, 3000);
     await signIn("facebook", { callbackUrl: "/home" }); //?????
   }
   const session = useSession();
@@ -41,7 +53,7 @@ export function UserAuthButtons({ className, ...props }) {
           <div className="flex-col items-center  flex  justify-center mb-12 ">
             <Link href="/sign-in">
               <Button
-                className="mb-5"
+                className="mb-5 "
                 variant="logIn"
                 size="logIn"
                 type="button"
@@ -62,9 +74,9 @@ export function UserAuthButtons({ className, ...props }) {
               variant="logIn"
               size="logIn"
               type="button"
-              disabled={isLoading}
+              disabled={isLoadingGoogle}
             >
-              {isLoading ? (
+              {isLoadingGoogle ? (
                 <Icons.google className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <Icons.google className="mr-2 h-4 w-4" />
@@ -76,12 +88,12 @@ export function UserAuthButtons({ className, ...props }) {
               variant="logIn"
               size="logIn"
               type="button"
-              disabled={isLoading}
+              disabled={isLoadingFacebook}
             >
-              {isLoading ? (
+              {isLoadingFacebook ? (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               ) : (
-                <Icons.facebook className="mr-2 h-4 w-4" />
+                <Icons.facebook className="mr-2 h-4 w-4 " />
               )}{" "}
               FACEBOOK
             </Button>

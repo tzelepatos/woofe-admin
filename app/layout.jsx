@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
+import { useSession } from "next-auth/react";
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);

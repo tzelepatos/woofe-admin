@@ -1,5 +1,3 @@
-"use client";
-import { useSession } from "next-auth/react";
 import {
   Card,
   CardContent,
@@ -11,19 +9,23 @@ import {
 
 //components
 import UserInfo from "@/app/components/UserInfo";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export default function Home() {
-  const { data: session } = useSession();
+export default async function Home() {
+  const session = await getServerSession({ ...authOptions });
+  // console.log(session);
+
   if (!session) return;
   return (
     <>
       <div className="flex justify-between font-sans text-xl text-primary ">
         <h2>
-          Wellcome, <b>{session?.user?.name} !</b>
+          Wellcome, <b>{session?.user?.name || session?.user?.email} !</b>
         </h2>
 
         <div className="bg-jimGrayLight rounded-lg  text-black  ">
-          <UserInfo />
+          <UserInfo session={session} />
         </div>
       </div>
       <Card>

@@ -118,3 +118,38 @@ export const showFailToastEmail = (error) => {
     description: `Error:  "${error}" .`,
   });
 };
+export const showSuccessToastLogin = (data) => {
+  toast({
+    action: (
+      <ToastAction altText="success">
+        <Icons.success className=" h-5 w-5 font-bold" />
+      </ToastAction>
+    ),
+    variant: "success",
+    title: "Login Success.",
+    description: `Wellcome "${data}" `,
+  });
+};
+export const showFailUserNamePassword = (error) => {
+  toast({
+    action: (
+      <ToastAction altText="destructive">
+        <Icons.failed className=" h-5 w-5 font-bold" />
+      </ToastAction>
+    ),
+    variant: "destructive",
+    title: `  "${error}" `,
+  });
+};
+export const showSuccessToastSignUp = (userInfo) => {
+  toast({
+    action: (
+      <ToastAction altText="success">
+        <Icons.success className=" h-5 w-5 font-bold" />
+      </ToastAction>
+    ),
+    variant: "success",
+    title: "User created.",
+    description: `User "${userInfo.email}" has been created successfully.`,
+  });
+};

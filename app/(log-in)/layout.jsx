@@ -1,8 +1,11 @@
 "use client";
+import "@/app/globals.css";
+import logoLight from "@/assets/images/Logo-white.svg";
+import logoDark from "@/assets/images/Logo-dark.svg";
+import { useTheme } from "next-themes";
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import logo from "@/app/assest/images/Frame.svg";
 import { ModeToggle } from "@/app/components/ModeToggle";
 
 const pageTransition = {
@@ -12,28 +15,30 @@ const pageTransition = {
 };
 
 function LayoutLogin({ children }) {
+  const { theme } = useTheme();
+  console.log(theme);
   return (
-    <motion.main
-      className="flex flex-col items-center justify-center   min-h-screen "
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      variants={pageTransition}
-    >
-      {" "}
-      <ModeToggle />
-      <div className="  items-center justify-center flex m-auto ">
-        <Image
-          priority
-          src={logo}
-          alt="woooffff"
-          width={350}
-          height={350}
-          quality={90}
-        />
-      </div>
-      <div className=" m-auto">{children}</div>
-    </motion.main>
+    <>
+      <motion.main
+        // className="items-center justify-center flex flex-col space-y-24 p-2 "
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={pageTransition}
+      >
+        <div className="  items-center justify-center flex flex-col space-y-24 p-2">
+          <ModeToggle />
+          {theme === "light" ? (
+            <Image src={logoLight} width={300} height={300} alt="light" />
+          ) : (
+            <Image src={logoDark} width={300} height={300} alt="dark" />
+          )}
+        </div>
+        <div className="flex items-center justify-center mt-6 pt-4">
+          <main>{children}</main>
+        </div>
+      </motion.main>
+    </>
   );
 }
 

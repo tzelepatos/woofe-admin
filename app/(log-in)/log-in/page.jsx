@@ -1,33 +1,34 @@
 import { UserAuthForm } from "@/app/(log-in)/log-in/UserAuthForm";
 import { UserAuthButtons } from "@/app/(log-in)/log-in/UserAuthButtons";
 
-export default function AuthenticationPage() {
+export default function LogInPage(children) {
   return (
     <>
-      <div className="m-2 overflow-hidden rounded-3xl shadow-lg">
-        <div className="sm:w-[550px] md:w-[750px] relative h-[350px] w-[400px] flex-col items-center flex justify-center bg-jimOrange ">
-          <div className="mx-auto flex flex-col justify-center space-y-12 w-[350px]">
-            <div className="flex flex-col space-y-4 text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-white font-sans">
+      <div className="lg:w-[650px] md:w-[500px] w-[360px] shadow-2xl  rounded-2xl ">
+        <div className=" justify-center shadow-2xl text-background bg-jimOrange container  rounded-t-2xl p-4  ">
+          <div className=" space-y-8 ">
+            <div className="space-y-8  ">
+              {/* h1 */}
+              <h1 className="flex  justify-center  md:text-4xl text-2xl font-bold tracking-tight text-white font-sans">
                 Create an account
               </h1>
-              <p className="text-sm text-muted-foreground text-white font-ubuntu">
+              {/* p */}
+              {/* <p className="flex  justify-center md:text-lg text-sm  text-white ">
                 enter your email
-              </p>
+              </p> */}
             </div>
+            {/* button-input */}
             <UserAuthForm />
           </div>
         </div>
 
         {/* Gray div with buttons */}
-        <div className="sm:w-[550px] md:w-[750px] relative h-[350px] w-[400px] flex-col items-center flex justify-center bg-jimGrayLight ">
-          <div className=" flex flex-col justify-center space-y-10 w-[350px]">
-            <div className="flex flex-col  text-center ">
-              <h1 className="text-4xl font-bold tracking-tight text-black font-sans mb-10">
-                Or sign in with
-              </h1>
-              <UserAuthButtons />
-            </div>
+        <div className="  text-foreground bg-jimGray container   rounded-b-2xl p-4  ">
+          <div className=" space-y-8 ">
+            <h1 className="flex  justify-center md:text-3xl text-2xl font-bold tracking-tight text-BACKGROUND font-sans">
+              Or sign in with
+            </h1>
+            <UserAuthButtons />
           </div>
         </div>
       </div>

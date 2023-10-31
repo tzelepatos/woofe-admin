@@ -42,7 +42,7 @@ const buttonVariants = cva(
         md: "h-9 rounded-md ",
         cancel: "h-9 px-2",
         create: "h-10 rounded-xl w-[110px] ",
-        logIn: "h-10 rounded-xl w-[350px]",
+        logIn: "h-9 rounded-xl lg:w-[300px] md:w-[220px] w-[180px] ",
         addNewProduct:
           "md:h-10 md:px-2 md:text-lg rounded-lg px-2 h-10 text-xs",
       },

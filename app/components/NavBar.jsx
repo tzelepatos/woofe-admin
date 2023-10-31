@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 
 //images
-import logoLight from "../assest/images/Logo-white.svg";
-import logoDark from "../assest/images/Logo-dark.svg";
+import logoLight from "@/assets/images/Logo-white.svg";
+import logoDark from "@/assets/images/Logo-dark.svg";
 
 //components
 import { Button } from "@/components/ui/button";
