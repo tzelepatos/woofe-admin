@@ -1,9 +1,13 @@
-export default function Categories({ params }) {
-  console.log("params", params);
+import React from "react";
+import CardDemo from "@/app/components/form/CardDemo";
+import Slider from "@/app/components/Slider";
+export default function Categories() {
   return (
-    <div>
-      <h1>Categories Page</h1>
-      <p>params: {JSON.stringify(params)}</p>
-    </div>
+    <>
+      <div>
+        {/* <CardDemo /> */}
+        <Slider />
+      </div>
+    </>
   );
 }

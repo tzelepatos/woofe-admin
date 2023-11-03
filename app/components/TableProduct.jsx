@@ -5,10 +5,11 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 //components
+import CardDemo from "@/app/components/form/CardDemo";
 import {
   showDeletedFailToast,
   showDeletedSuccesfullToast,
-} from "@/app/components/Toasters";
+} from "@/app/components/ToastersCustom";
 import { Icons } from "@/components/ui/icons";
 import {
   Table,
@@ -29,6 +30,7 @@ export const TableProduct = ({
   totalPosts,
   postPerPage,
 }) => {
+  // console.log("products", products);
   const router = useRouter();
   const startIndex = (page - 1) * postPerPage;
 
@@ -43,14 +45,14 @@ export const TableProduct = ({
     "Actions",
   ];
 
-  const createdAtDate = new Date(products.createdAt);
-  const formattedDate =
-    createdAtDate instanceof Date && !isNaN(createdAtDate)
-      ? createdAtDate.toLocaleString().split(",")[0].replace(/\//g, "-")
-      : "";
-  console.log("createdAtDate", createdAtDate);
+  // const createdAtDate = new Date(products.createdAt);
+  // const formattedDate =
+  //   createdAtDate instanceof Date && !isNaN(createdAtDate)
+  //     ? createdAtDate.toLocaleString().split(",")[0].replace(/\//g, "-")
+  //     : "";
+  // console.log("createdAtDate", createdAtDate);
 
-  console.log("formattedDates", formattedDate);
+  // console.log("formattedDates", formattedDate);
 
   //delete
   async function deleteProduct(productId) {
@@ -96,17 +98,36 @@ export const TableProduct = ({
 
   return (
     <>
-      <Link href={"/products/newproduct"}>
-        <Button
-          className="mb-5"
-          variant="signIn"
-          size="addNewProduct"
-          type="button"
-        >
-          <Icons.add className="mr-2 h- w-6" />
-          Add New Product
-        </Button>
-      </Link>
+      <div className="flex justify-between items-center">
+        {/* add new product */}
+        <Link href={"/products/newproduct"}>
+          <Button
+            className="mb-5"
+            variant="signIn"
+            size="addNewProduct"
+            type="button"
+          >
+            <Icons.add className="mr-2 h- w-6" />
+            Add New Product
+          </Button>
+        </Link>
+        {/* view */}
+
+        <div className="flex space-x-2 p-3 ">
+          <span title="List">
+            <Button className="" variant="logIn" size="icon2" type="button">
+              <Icons.orders className=" h-4 w-4" />
+            </Button>
+          </span>
+          <span title="Cards">
+            <Button className="" variant="logIn" size="icon2" type="button">
+              <Icons.categories className=" h-4 w-4" />
+            </Button>
+          </span>
+        </div>
+      </div>
+
+      {/* render table */}
       <Table className="overflow-auto justify-end">
         <TableCaption>
           <PaginationNav
@@ -158,15 +179,17 @@ export const TableProduct = ({
               <TableCell className="flex justify-center ">
                 <div className="flex space-x-2">
                   <Link href={"/products/edit/" + product._id}>
-                    <Button
-                      className=""
-                      variant="logIn"
-                      size="icon2"
-                      type="button"
-                    >
-                      <Icons.edit className=" h-4 w-4" />
-                      {/* Edit */}
-                    </Button>
+                    <span title="Edit">
+                      <Button
+                        className=""
+                        variant="logIn"
+                        size="icon2"
+                        type="button"
+                      >
+                        <Icons.edit className=" h-4 w-4" />
+                        {/* Edit */}
+                      </Button>
+                    </span>
                   </Link>
 
                   <AlertAction
@@ -180,6 +203,8 @@ export const TableProduct = ({
           ))}
         </TableBody>
       </Table>
+      {/* render cardList */}
+      <CardDemo product={products} />
     </>
   );
 };

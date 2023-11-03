@@ -7,7 +7,7 @@ import Image from "next/image";
 import {
   showDeletedFailImageToast,
   showDeletedSuccesfullImageToast,
-} from "@/app/components/Toasters";
+} from "@/app/Components/ToastersCustom";
 import FullImageModal from "@/app/components/form/FullImageModal";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/ui/icons";

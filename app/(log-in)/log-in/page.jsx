@@ -1,7 +1,7 @@
 import { UserAuthForm } from "@/app/(log-in)/log-in/UserAuthForm";
 import { UserAuthButtons } from "@/app/(log-in)/log-in/UserAuthButtons";
 
-export default function LogInPage(children) {
+export default function LogInPage() {
   return (
     <>
       <div className="lg:w-[650px] md:w-[500px] w-[360px] shadow-2xl  rounded-2xl ">

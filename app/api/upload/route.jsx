@@ -1,7 +1,6 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 export async function POST(req) {
-  //define the client
   const mys3client = new S3Client({
     region: "eu-north-1",
     credentials: {
@@ -12,13 +11,19 @@ export async function POST(req) {
 
   const formData = await req.formData();
   const links = [];
+
   for (const fileInfo of formData) {
     const file = fileInfo[1];
-    const name = Date.now().toString() + file.name;
+    const originalName = file.name;
+    const sanitizedFileName = originalName.replace(/\s/g, "_"); // Replace spaces with underscores
+
+    const name = Date.now().toString() + sanitizedFileName;
     const chunks = [];
+
     for await (const chunk of file.stream()) {
       chunks.push(chunk);
     }
+
     const buffer = Buffer.concat(chunks);
 
     await mys3client.send(
@@ -30,7 +35,9 @@ export async function POST(req) {
         ContentType: file.type,
       })
     );
+
     links.push("https://woffe-upload.s3.amazonaws.com/" + name);
   }
+
   return Response.json(links);
 }

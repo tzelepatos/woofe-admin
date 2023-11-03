@@ -7,7 +7,7 @@ import axios from "axios";
 import {
   showDeletedFailToast,
   showDeletedSuccesfullToast,
-} from "@/app/components/Toasters";
+} from "@/app/components/ToastersCustom";
 import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import {

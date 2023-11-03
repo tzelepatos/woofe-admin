@@ -27,7 +27,7 @@ import { ContactFormSchema } from "@/app/models/ContactFormSchema";
 import {
   showFailToastEmail,
   showSuccessToastEmail,
-} from "@/app/components/Toasters";
+} from "@/app/components/ToastersCustom";
 
 export default function ContactCard() {
   const [isLoading, setIsLoading] = useState(false);

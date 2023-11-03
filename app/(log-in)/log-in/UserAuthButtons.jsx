@@ -1,10 +1,9 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export function UserAuthButtons({ className, ...props }) {
@@ -12,16 +11,7 @@ export function UserAuthButtons({ className, ...props }) {
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
   const [isLoadingFacebook, setIsLoadingFacebook] = useState(false);
 
-  async function onSubmit(event) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }
-
-  async function handleLoginButtonClick(event) {
+  async function handleLoginButtonClickGoogle(event) {
     event.stopPropagation();
     event.preventDefault();
     setIsLoadingGoogle(true);
@@ -41,65 +31,59 @@ export function UserAuthButtons({ className, ...props }) {
     }, 3000);
     await signIn("facebook", { callbackUrl: "/home" }); //?????
   }
-  const session = useSession();
-  if (session?.status === "authenticated") {
-    redirect("/home");
-  }
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          <div className="flex-col items-center  flex  justify-center mb-12 ">
-            <Link href="/sign-in">
-              <Button
-                className="mb-5 "
-                variant="logIn"
-                size="logIn"
-                type="button"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Icons.email className="mr-2 h-4 w-4" />
-                )}{" "}
-                EMAIL
-              </Button>
-            </Link>
-
+      <div className="grid gap-2">
+        <div className="flex-col items-center  flex  justify-center mb-12 ">
+          <Link href="/sign-in">
             <Button
-              onClick={handleLoginButtonClick}
-              className="mb-5"
+              className="mb-5 "
               variant="logIn"
               size="logIn"
               type="button"
-              disabled={isLoadingGoogle}
+              disabled={isLoading}
             >
-              {isLoadingGoogle ? (
-                <Icons.google className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Icons.google className="mr-2 h-4 w-4" />
-              )}{" "}
-              GOOGLE
-            </Button>
-            <Button
-              onClick={handleLoginButtonClickFacebook}
-              variant="logIn"
-              size="logIn"
-              type="button"
-              disabled={isLoadingFacebook}
-            >
-              {isLoadingFacebook ? (
+              {isLoading ? (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               ) : (
-                <Icons.facebook className="mr-2 h-4 w-4 " />
+                <Icons.email className="mr-2 h-4 w-4" />
               )}{" "}
-              FACEBOOK
+              EMAIL
             </Button>
-          </div>
+          </Link>
+
+          <Button
+            onClick={handleLoginButtonClickGoogle}
+            className="mb-5"
+            variant="logIn"
+            size="logIn"
+            type="button"
+            disabled={isLoadingGoogle}
+          >
+            {isLoadingGoogle ? (
+              <Icons.google className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Icons.google className="mr-2 h-4 w-4" />
+            )}{" "}
+            GOOGLE
+          </Button>
+          <Button
+            onClick={handleLoginButtonClickFacebook}
+            variant="logIn"
+            size="logIn"
+            type="button"
+            disabled={isLoadingFacebook}
+          >
+            {isLoadingFacebook ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Icons.facebook className="mr-2 h-4 w-4 " />
+            )}{" "}
+            FACEBOOK
+          </Button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

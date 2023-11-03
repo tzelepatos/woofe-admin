@@ -19,7 +19,7 @@ export default function AlertAction({
   deleteProduct,
   isLoading,
 }) {
-  console.log("alert loadinmg ", isLoading);
+  // console.log("alert loadinmg ", isLoading);
   const handleDelete = () => {
     if (actionType === "delete") {
       deleteProduct(productId);
@@ -46,10 +46,12 @@ export default function AlertAction({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         {actionType === "delete" ? (
-          <Button variant="logIn" size="icon2" type="button">
-            <Icons.delete className=" h-4 w-4 text-red-600 fill-background" />
-            {/* {action.buttonText} */}
-          </Button>
+          <span title="Delete">
+            <Button variant="logIn" size="icon2" type="button">
+              <Icons.delete className=" h-4 w-4 text-red-600 fill-background" />
+              {/* {action.buttonText} */}
+            </Button>
+          </span>
         ) : (
           <Button
             className="bg-jimOrange"

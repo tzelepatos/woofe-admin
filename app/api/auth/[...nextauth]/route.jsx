@@ -38,7 +38,7 @@ export const authOptions = {
           id: profile.id,
           name: profile.name,
           email: profile.email,
-          image: profile.picture.data.url,
+          image: profile.picture.data.url, //????
           role: profile.email === ADMIN_EMAIL ? "admin" : "user", // Check if the email is admin's email
         };
       },
@@ -89,8 +89,8 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }) {
-      session.role = token.role;
-      session.name = token.name;
+      session.user.role = token.role;
+
       return session;
     },
   },
@@ -99,7 +99,7 @@ export const authOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
 
-  debug: process.env.NODE_ENV === "development",
+  // debug: process.env.NODE_ENV === "development",
 };
 
 const handler = NextAuth(authOptions);

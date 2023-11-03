@@ -18,7 +18,9 @@ export default function UserInfo({ session }) {
         alt="User avatar"
       />
       <div className="text-sm mt-2 md:mt-0 md:ml-4">
-        <div className="font-semibold">{session?.user?.name || "Guest"}</div>
+        <div className="font-semibold">
+          {session?.user?.name || "Update your name"}
+        </div>
         <div>{session?.user?.email || "No email provided"}</div>
         <div>Role: {userRole}</div>
       </div>
