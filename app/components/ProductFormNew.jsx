@@ -36,7 +36,7 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  console.log("isLoading:", isLoading);
+  // console.log("isLoading:", isLoading);
   //tags
   const form = useForm({
     resolver: zodResolver(ProductFormSchema),

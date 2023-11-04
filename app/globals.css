@@ -4,8 +4,10 @@
 
 @layer base {
   :root {
+    /* main */
     --groomingGreen: 94, 49%, 54%;
-
+    --groomingPink: 314, 35%, 66%;
+    /* services */
     --groomingPink1: 320, 51%, 68%;
     --groomingPink2: 318, 57%, 55%;
     --groomingPink3: 312, 70%, 42%;

@@ -32,6 +32,7 @@ module.exports = {
         // jimOrange: "#f7941d",
         // jimGray: "#e3e3e3",
         // jimGrayLight: "#ececec",
+        // groomingPink: "C689B8"
         // groomingPink1: "#d784bc",
         // groomingPink2: "#ce4da7",
         // groomingPink3: "#b62098",
@@ -43,6 +44,7 @@ module.exports = {
         // groomingPink9: "#b420b6",
         // groomingPink10: "#ca6cc7",
 
+        groomingPink: "hsl(var(--groomingPink1))",
         groomingPink1: "hsl(var(--groomingPink1))",
         groomingPink2: "hsl(var(--groomingPink2))",
         groomingPink3: "hsl(var(--groomingPink3))",

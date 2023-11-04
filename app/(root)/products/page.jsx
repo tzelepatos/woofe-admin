@@ -1,5 +1,5 @@
 //components
-import { TableProduct } from "app/components/TableProduct";
+import { TableProduct } from "app/components/table/TableProduct";
 //imports
 import axios from "axios";
 import { redirect } from "next/navigation";
