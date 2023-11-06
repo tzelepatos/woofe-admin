@@ -1,5 +1,4 @@
 "use client";
-import React, { useState } from "react";
 
 import Link from "next/link";
 import axios from "axios";
@@ -23,6 +22,8 @@ import {
 } from "@/components/ui/table";
 import AlertAction from "@/app/components/AlertAction";
 import PaginationNav from "@/app/components/PaginationNav";
+import { TableViewModeContext } from "@/app/context/TableViewModeContext";
+import { useTableViewModeContext } from "@/app/context/TableViewModeContext";
 
 export const TableProduct = ({
   products,
@@ -31,12 +32,9 @@ export const TableProduct = ({
   totalPosts,
   postPerPage,
 }) => {
-  const [viewMode, setViewMode] = useState("list");
+  const { viewMode, toggleView } =
+    useTableViewModeContext(TableViewModeContext);
 
-  const toggleView = (mode) => {
-    setViewMode(mode);
-  };
-  // console.log("products", products);
   const router = useRouter();
   const startIndex = (page - 1) * postPerPage;
 
@@ -218,7 +216,7 @@ export const TableProduct = ({
           </TableBody>
         </Table>
       ) : (
-        <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-8 ">
+        <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-8 ">
           {products.map((product, index) => (
             <CardView
               key={product._id}

@@ -48,13 +48,13 @@ const NewTimePicker = ({ form, viewMode, ...field }) => {
           {viewMode ? (
             <>
               <strong>Opening Hours</strong>
-              <Icons.tag className="ml-2 h-5 w-5" />
+              <Icons.time className="ml-2 h-5 w-5" />
             </>
           ) : (
             <>
               Add&nbsp;
               <strong>Opening Hours</strong>
-              <Icons.tag className="ml-2 h-5 w-5" />
+              <Icons.time className="ml-2 h-5 w-5" />
             </>
           )}
         </h1>

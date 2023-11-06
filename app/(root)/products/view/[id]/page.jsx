@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
+ import { Icons } from "@/components/ui/icons";
 
 //compoments
 import ProductFormNew from "@/app/components/ProductFormNew";
@@ -41,11 +42,7 @@ export default function ViewPage({ params }) {
   return (
     <div>
       <h1 className="text-jimOrange text-2xl"></h1>
-      {product ? (
-        <ProductFormNew defaultValues={...product} createMode={false} viewMode={true} editMode={false}   />
-      ) : (
-        <p>Loading...</p>
-      )}
+      {product && <ProductFormNew defaultValues={...product} createMode={false} viewMode={true} editMode={false} />}
     </div>
   );
 }

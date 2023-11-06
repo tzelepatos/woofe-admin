@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ProductFormNew from "/app/components/ProductFormNew.jsx";
+import { Icons } from "@/components/ui/icons";
 
 export default function EditPage({ params }) {
   const idUrl = params.id;
@@ -25,11 +26,9 @@ export default function EditPage({ params }) {
   return (
     <div>
     <h1 className="text-jimOrange text-2xl"></h1>
-    {product ? (
-      <ProductFormNew defaultValues={...product} createMode={false} viewMode={false} editMode={true}  />
-    ) : (
-      <p>Loading...</p>
-    )}
+    {product && 
+      <ProductFormNew defaultValues={...product} createMode={false} viewMode={false} editMode={true}  />}
+
   </div>
   );
 }

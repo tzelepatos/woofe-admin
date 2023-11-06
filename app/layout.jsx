@@ -8,6 +8,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
 import { useSession } from "next-auth/react";
+import { ViewModeProvider } from "@/app/context/TableViewModeContext";
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);
@@ -25,7 +26,7 @@ export default async function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <ViewModeProvider>{children}</ViewModeProvider>
             <Toaster />
           </ThemeProvider>
         </NextAuthProvider>

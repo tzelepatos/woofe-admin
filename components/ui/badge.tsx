@@ -1,5 +1,10 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import {
+  servicesGroomingConstBadge,
+  servicesServicesConstBadge,
+  servicesSuppliesConstBadge,
+} from "@/app/models/Services";
 
 import { cn } from "@/lib/utils";
 
@@ -15,18 +20,12 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
         outline: "text-foreground",
-        // Grooming
-        Nails: "bg-groomingPink1 border-transparent shadow hover:bg-pink-300",
-        Bath: "bg-groomingPink2 border-transparent shadow hover:bg-pink-300",
-        Haircut: "bg-groomingPink3 border-transparent shadow hover:bg-pink-300",
-        Teeth: "bg-groomingPink4 border-transparent shadow hover:bg-pink-300",
-        Ears: "bg-groomingPink5 border-transparent shadow hover:bg-pink-300",
-        "Anal Glands":
-          "bg-groomingPink6 border-transparent shadow hover:bg-pink-300",
-        Paws: "bg-groomingPink7 border-transparent shadow hover:bg-pink-300",
-        Face: "bg-groomingPink8 border-transparent shadow hover:bg-pink-300",
-        Eyes: "bg-groomingPink9 border-transparent shadow hover:bg-pink-300",
-        Balls: "bg-groomingPink10 border-transparent shadow hover:bg-pink-300",
+        // Grooming,
+        ...servicesGroomingConstBadge,
+        //Services
+        ...servicesServicesConstBadge,
+        //Supplies
+        ...servicesSuppliesConstBadge,
       },
     },
     defaultVariants: {

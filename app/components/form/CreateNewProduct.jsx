@@ -1,5 +1,3 @@
-"use client";
-
 //compoments
 import { Icons } from "@/components/ui/icons";
 import {
@@ -21,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const options = ["Grooming", "Services", "Supplies"];
 
-const CreateNewProduct = ({ form, viewMode, editMode }) => {
+const CreateNewProduct = ({ form, viewMode, editMode, onCategoryChange }) => {
   return (
     <div className="space-y-6  text-background bg-jimOrange container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
       <h1 className="flex items-center justify-start text-foreground text-lg xl:text-2xl">
@@ -99,8 +97,16 @@ const CreateNewProduct = ({ form, viewMode, editMode }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
-                <Select
+                {/* <Select
                   onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  disabled={viewMode}
+                > */}
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    onCategoryChange(value); // Set selected category
+                  }}
                   defaultValue={field.value}
                   disabled={viewMode}
                 >
