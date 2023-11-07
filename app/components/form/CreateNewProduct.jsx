@@ -8,18 +8,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Textarea } from "@/components/ui/textarea";
 
-const options = ["Grooming", "Services", "Supplies"];
-
-const CreateNewProduct = ({ form, viewMode, editMode, onCategoryChange }) => {
+const CreateNewProduct = ({ form, viewMode, editMode }) => {
   return (
     <div className="space-y-6  text-background bg-jimOrange container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
       <h1 className="flex items-center justify-start text-foreground text-lg xl:text-2xl">
@@ -91,18 +83,14 @@ const CreateNewProduct = ({ form, viewMode, editMode, onCategoryChange }) => {
         </div>
         <div className="flex flex-col  justify-between gap-4 ">
           {/* category */}
-          <FormField
+          {/* <FormField
             control={form.control}
             name="category"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
+
                 {/* <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  disabled={viewMode}
-                > */}
-                <Select
                   onValueChange={(value) => {
                     field.onChange(value);
                     onCategoryChange(value); // Set selected category
@@ -110,6 +98,7 @@ const CreateNewProduct = ({ form, viewMode, editMode, onCategoryChange }) => {
                   defaultValue={field.value}
                   disabled={viewMode}
                 >
+                  
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a Category" />
@@ -126,11 +115,11 @@ const CreateNewProduct = ({ form, viewMode, editMode, onCategoryChange }) => {
                       </SelectItem>
                     ))}
                   </SelectContent>
-                </Select>
-                <FormMessage />
+                </Select> */}
+          {/* <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           {/*Price */}
           <FormField
             control={form.control}

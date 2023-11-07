@@ -33,7 +33,7 @@ export default function Slider(products) {
   };
 
   return (
-    <div className="sm:w-[350px] sm:h-[220px] w-[300px] h-[200px] m-auto relative group">
+    <div className="sm:w-[385px] sm:h-[250px] w-[300px] h-[200px] m-auto relative group">
       {slides.length > 0 && (
         <div
           style={{ backgroundImage: `url(${slides[currentIndex]})` }}

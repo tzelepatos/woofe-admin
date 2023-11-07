@@ -32,13 +32,8 @@ import PlaceInfo from "./form/PlaceInfo";
 import ContactInfo from "./form/ContactInfo";
 
 function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
-  const [selectedCategory, setSelectedCategory] = useState("Grooming");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-  };
 
   //tags
   const form = useForm({
@@ -107,7 +102,6 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
               createMode={createMode}
               viewMode={viewMode}
               editMode={editMode}
-              onCategoryChange={handleCategoryChange}
             />
 
             {/* services */}
@@ -117,7 +111,6 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
               createMode={createMode}
               viewMode={viewMode}
               editMode={editMode}
-              selectedCategory={selectedCategory}
             />
           </div>
 

@@ -4,10 +4,16 @@ export const defaultValues = {
   productName: "Grooming Store-" + Math.random().toString(36).substr(2, 9),
 
   description: "A Brand new Grooming Store that..",
-  category: "Grooming",
+
   price: "6.00",
-  newPrice: "5.00",
-  services: [],
+  newPrice: "",
+  // services: [],
+  services: {
+    grooming: [],
+    services: [],
+    supplies: [],
+  },
+
   info: "Info about the store..",
   images: [],
   address: "plataiwn125",
@@ -93,10 +99,6 @@ export const ProductFormSchema = z.object({
       message: "Product must not be longer than 30 characters.",
     }),
 
-  category: z.string({
-    required_error: "Please select a Category.",
-  }),
-
   description: z
     .string()
     .max(160, {
@@ -119,15 +121,14 @@ export const ProductFormSchema = z.object({
     .max(999999, {
       message: "Only a millionaire will pay that much.",
     })
-    .min(1, {
-      message: "Price must be at least 1€.",
-    }),
-
-  services: z
-    .any()
 
     .optional(),
 
+  services: z.object({
+    grooming: z.array(z.string()),
+    services: z.array(z.string()),
+    supplies: z.array(z.string()),
+  }),
   images: z.any().optional(),
 
   address: z

@@ -1,5 +1,5 @@
 // Grooming map
-export const servicesConst = [
+export const servicesGroomingValues = [
   "Nails",
   "Bath",
   "Haircut",
@@ -12,7 +12,7 @@ export const servicesConst = [
   "Balls",
 ];
 // Grooming map colors
-export const serviceColorMap = {
+export const servicesGroomingColorMap = {
   Nails: "bg-groomingPink1",
   Bath: "bg-groomingPink2",
   Haircut: "bg-groomingPink3",

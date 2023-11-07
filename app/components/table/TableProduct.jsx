@@ -42,7 +42,7 @@ export const TableProduct = ({
     "#",
     "Product name",
     "Price",
-    "Category",
+
     "Images",
     "Services",
     "Created At",
@@ -175,12 +175,12 @@ export const TableProduct = ({
                 </TableCell>
 
                 <TableCell>€{product.price}</TableCell>
-                <TableCell>{product.category}</TableCell>
+
                 <TableCell>{product.images.length}</TableCell>
                 <TableCell>
-                  <span title={product.services.join(", ")}>
+                  {/* <span title={product.services.join(", ")}>
                     ({product.services.length})
-                  </span>
+                  </span> */}
                 </TableCell>
                 <TableCell>
                   {product.createdAt.slice(0, 10)}

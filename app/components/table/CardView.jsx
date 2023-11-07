@@ -33,7 +33,7 @@ export default function CardView({
         #{startIndex + index + 1}
       </p>
       {/* <div className="flex justify-around items-center pt-6 pb-6 gap-4 flex-col sm:flex-row"> */}
-      <div className="flex items-center pt-6 pb-6 gap-4 flex-col  h-full justify-between">
+      <div className="border-2 flex items-center pt-6 pb-6 gap-4 flex-col  h-full justify-between">
         {/* slider */}
         <div className="">
           <Slider products={product.images} />
@@ -42,7 +42,7 @@ export default function CardView({
         <div className="text-xs sm:text-base flex flex-col  w-full   space-y-2 h-full justify-between">
           <div className="">
             <Link href={"/products/view/" + product._id}>
-              <div className="flex justify-between  ">
+              <div className="flex justify-start  ">
                 <h1 className={`font-bold ${categoryColorClass}`}>
                   {product.category}
                 </h1>
@@ -53,21 +53,20 @@ export default function CardView({
             </Link>
             <h1 className="font-bold   ">{product.productName}</h1>
           </div>
-          {/* <div>Description</div> */} <p className="text-xs ">Services:</p>
-          <div className="flex flex-wrap gap-1 border-b-2 h-full pb-2 ">
-            {product.services.map((service, index) => (
-              <div>
-                <Badge
-                  className="text-background "
-                  key={index}
-                  variant={service}
-                >
-                  {service}
-                </Badge>
-              </div>
-            ))}
+
+          <div className="h-full">
+            <p className="text-xs ">Services:</p>
+            <div className="flex flex-wrap  gap-1  ">
+              {product.services.map((service, index) => (
+                <div className="">
+                  <Badge className="text-white " key={index} variant={service}>
+                    {service}
+                  </Badge>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="">
+          <div className="border-t-2 border-jimGray pt-2 space-y-2">
             <p className="text-xs ">
               Created: {"  "}
               {product.createdAt.slice(0, 10)}
@@ -75,8 +74,36 @@ export default function CardView({
               {product.createdAt.slice(11, 19)}
             </p>
             {/* price-buttons */}
-            <div className="flex justify-between  items-center">
-              <h1 className="font-bold text-3xl  ">{product.price}€</h1>
+            <div className="flex justify-between  items-end border-2 ">
+              {/* if there is newPrice h1 newprice */}
+              <h1 className="font-bold text-2xl ">
+                {product.newPrice > 0 ? (
+                  <>
+                    <span className="mr-2 " style={{ fontSize: "1.2em" }}>
+                      {product.newPrice}€
+                    </span>
+                    <span
+                      className="relative inline-block"
+                      style={{ color: "red", fontSize: "0.8em" }}
+                    >
+                      {product.price}€
+                      <span
+                        style={{
+                          position: "absolute",
+                          height: "1px",
+                          width: "100%",
+                          backgroundColor: "red",
+                          transform: "rotate(-10deg)",
+                          top: "50%",
+                          left: "0",
+                        }}
+                      ></span>
+                    </span>
+                  </>
+                ) : (
+                  <div className=" font-bold text-3xl">{product.price}€</div>
+                )}
+              </h1>
               <div className="flex space-x-2">
                 <Link href={"/products/edit/" + product._id}>
                   <span title="Edit">

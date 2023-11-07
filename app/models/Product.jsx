@@ -7,9 +7,15 @@ const groomingSchema = new Schema(
     productName: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: String },
-    category: { type: String },
+
     newPrice: { type: String },
-    services: [String],
+    // services: [String],
+    services: {
+      grooming: [String],
+      services: [String],
+      supplies: [String],
+    },
+
     info: { type: String },
     images: [String],
 
