@@ -107,6 +107,13 @@ export const ProductFormSchema = z.object({
     .min(10, {
       message: "Description must be at least 10 characters.",
     }),
+  info: z
+    .string()
+    .max(160, {
+      message: "Description must not be longer than 160 characters.",
+    })
+
+    .optional(),
 
   price: z.coerce
     .number()

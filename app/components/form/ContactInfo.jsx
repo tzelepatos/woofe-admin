@@ -20,7 +20,7 @@ const ContactInfo = ({ form, viewMode }) => {
         <Icons.info className="ml-2 h-5 w-5" />
       </h1>
       {/* phoneNumber */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
         <FormField
           disabled={viewMode}
           control={form.control}
@@ -53,7 +53,7 @@ const ContactInfo = ({ form, viewMode }) => {
       </div>
 
       {/* email  */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
         <FormField
           disabled={viewMode}
           control={form.control}

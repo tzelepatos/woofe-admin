@@ -33,11 +33,11 @@ export default function Slider(products) {
   };
 
   return (
-    <div className="sm:w-[385px] sm:h-[250px] w-[300px] h-[200px] m-auto relative group">
+    <div className="w-full  h-[220px] sm:h-xl m-auto relative group">
       {slides.length > 0 && (
         <div
           style={{ backgroundImage: `url(${slides[currentIndex]})` }}
-          className="w-full h-full rounded-2xl bg-center bg-cover duration-500 border-2 border-background relative"
+          className="w-full h-full rounded-2xl bg-center bg-cover duration-500 border-2 border-background relative "
         >
           <div className="absolute bottom-2 left-0 right-0 flex justify-center">
             {slides.map((slide, slideIndex) => (

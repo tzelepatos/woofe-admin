@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 import { FormDescription } from "@/components/ui/form";
 
 import {
-  servicesConst,
-  serviceColorMap,
+  servicesGroomingValues,
+  servicesGroomingColorMap,
   servicesServices,
   serviceServiceColorMap,
   servicesSupplies,
@@ -75,12 +75,12 @@ const ServicesTags = ({
   };
 
   const servicesSum = {
-    Grooming: [...servicesConst],
+    Grooming: [...servicesGroomingValues],
     Services: [...servicesServices],
     Supplies: [...servicesSupplies],
   };
   let colorMapSum = {
-    ...serviceColorMap,
+    ...servicesGroomingColorMap,
     ...serviceServiceColorMap,
     ...serviceSuppliesColorMap,
   };
@@ -118,8 +118,8 @@ const ServicesTags = ({
       {/* Grooming */}{" "}
       <div>
         <div className=" flex items-center justify-start">
-          <p className="flex items-center justify-start text-foreground text-md xl:text-lg pb-2">
-            Grooming <CategoryIcon selectedCategory="Grooming" />
+          <p className="flex items-center justify-start text-foreground text-md xl:text-lg pb-2 font-semibold">
+            Grooming <CategoryIcon selectedCategory="grooming" />
           </p>{" "}
           <Switch
             className=""
@@ -160,8 +160,8 @@ const ServicesTags = ({
       {/* services */}
       <div>
         <div className=" flex items-center justify-start gap-2">
-          <p className="flex items-center justify-start text-foreground text-md xl:text-lg pb-2">
-            Services <CategoryIcon selectedCategory="Services" />
+          <p className="flex items-center justify-start text-foreground text-md xl:text-lg pb-2 font-semibold">
+            Services <CategoryIcon selectedCategory="services" />
           </p>{" "}
           <Switch
             className=""
@@ -202,8 +202,8 @@ const ServicesTags = ({
       {/* supplies */}
       <div>
         <div className=" flex items-center justify-start">
-          <p className="flex items-center justify-start text-foreground text-md xl:text-lg pb-2">
-            Supplies <CategoryIcon selectedCategory="Supplies" />
+          <p className="flex items-center justify-start text-foreground text-md xl:text-lg pb-2 font-semibold">
+            Supplies <CategoryIcon selectedCategory="supplies" />
           </p>{" "}
           <Switch
             className=""

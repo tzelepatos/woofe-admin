@@ -40,7 +40,7 @@ const PlaceInfo = ({ form, viewMode, editMode }) => {
       />
 
       {/* //city */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
         <FormField
           disabled={viewMode}
           control={form.control}
@@ -81,7 +81,7 @@ const PlaceInfo = ({ form, viewMode, editMode }) => {
           )}
         />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
         {/* latitude */}
         {/* <FormLabel>Google Maps Coordinates</FormLabel> */}
         <FormField

@@ -16,16 +16,17 @@ export default function CardView({
   startIndex,
   deleteProduct,
 }) {
+  // console.log("product", product);
   //categorySelector
   let categoryColorClass = "";
 
-  if (product.category === "Grooming") {
-    categoryColorClass = "text-groomingPink"; // Apply grooming color
-  } else if (product.category === "Services") {
-    categoryColorClass = "text-groomingGreen"; // Apply services color
-  } else if (product.category === "Supplies") {
-    categoryColorClass = "text-jimOrange"; // Apply supplies color
-  }
+  // if (product.services.grooming === "Grooming") {
+  //   categoryColorClass = "text-groomingPink"; // Apply grooming color
+  // } else if (product.category === "Services") {
+  //   categoryColorClass = "text-groomingGreen"; // Apply services color
+  // } else if (product.category === "Supplies") {
+  //   categoryColorClass = "text-jimOrange"; // Apply supplies color
+  // }
 
   return (
     <div className="relative max-w-md   bg-jimGrayLight container border border-accent rounded-2xl shadow-md hover:border-jimGray hover:shadow-lg">
@@ -33,37 +34,54 @@ export default function CardView({
         #{startIndex + index + 1}
       </p>
       {/* <div className="flex justify-around items-center pt-6 pb-6 gap-4 flex-col sm:flex-row"> */}
-      <div className="border-2 flex items-center pt-6 pb-6 gap-4 flex-col  h-full justify-between">
+      <div className=" flex items-center  gap-4 flex-col  h-full justify-between py-[32px]">
         {/* slider */}
-        <div className="">
+        <div className=" w-full ">
           <Slider products={product.images} />
         </div>
         {/* info */}
         <div className="text-xs sm:text-base flex flex-col  w-full   space-y-2 h-full justify-between">
           <div className="">
             <Link href={"/products/view/" + product._id}>
-              <div className="flex justify-start  ">
-                <h1 className={`font-bold ${categoryColorClass}`}>
-                  {product.category}
-                </h1>
-                <div>
-                  <CategoryIcon selectedCategory={product.category} />
-                </div>
-              </div>
+              <h1 className="font-bold   ">{product.productName}</h1>
             </Link>
-            <h1 className="font-bold   ">{product.productName}</h1>
           </div>
 
-          <div className="h-full">
-            <p className="text-xs ">Services:</p>
-            <div className="flex flex-wrap  gap-1  ">
-              {product.services.map((service, index) => (
-                <div className="">
-                  <Badge className="text-white " key={index} variant={service}>
-                    {service}
-                  </Badge>
-                </div>
-              ))}
+          <div className="h-full ">
+            <div className="gap-2 space-y-4">
+              {Object.values(product.services).some(
+                (serviceArray) => serviceArray.length > 0
+              ) ? (
+                Object.keys(product.services).map((serviceType) => (
+                  <div key={serviceType} className="">
+                    <div className="capitalize font-semibold flex ">
+                      {product.services[serviceType].length > 0 && (
+                        <>
+                          {serviceType}
+                          <CategoryIcon
+                            selectedCategory={serviceType}
+                            className={"w-6 h-6"}
+                          />
+                        </>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-1" key={serviceType}>
+                      {/* This is the label */}
+                      {product.services[serviceType].map((service, index) => (
+                        <div key={index}>
+                          <Badge className="text-white" variant={service}>
+                            {service}
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="italic    text-slate-500">
+                  "You have no services. Go to edit and add some"
+                </p>
+              )}
             </div>
           </div>
           <div className="border-t-2 border-jimGray pt-2 space-y-2">
@@ -74,12 +92,15 @@ export default function CardView({
               {product.createdAt.slice(11, 19)}
             </p>
             {/* price-buttons */}
-            <div className="flex justify-between  items-end border-2 ">
+            <div className="flex justify-between  items-end  ">
               {/* if there is newPrice h1 newprice */}
-              <h1 className="font-bold text-2xl ">
+              <div className="font-bold text-2xl items-end flex  ">
                 {product.newPrice > 0 ? (
                   <>
-                    <span className="mr-2 " style={{ fontSize: "1.2em" }}>
+                    <span
+                      className="mr-2 items-end"
+                      style={{ fontSize: "1.2em" }}
+                    >
                       {product.newPrice}€
                     </span>
                     <span
@@ -103,7 +124,7 @@ export default function CardView({
                 ) : (
                   <div className=" font-bold text-3xl">{product.price}€</div>
                 )}
-              </h1>
+              </div>
               <div className="flex space-x-2">
                 <Link href={"/products/edit/" + product._id}>
                   <span title="Edit">

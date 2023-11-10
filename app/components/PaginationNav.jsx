@@ -24,10 +24,12 @@ const PaginationNav = ({ totalPages, page, postPerPage, totalPosts }) => {
     router.push(`/products?page=${page}&postPerPage=${value}`);
   };
   return (
-    <div className="flex items-center justify-between px-2 border-red">
-      <div className="flex  text-sm font-medium ">{totalPosts} Products</div>
-      <div>
-        <p className="text-sm font-medium">Rows per page</p>
+    <div className="flex items-center justify-between p-2 ">
+      <div className="lg:text-sm  text-xs font-medium ">
+        {totalPosts} Products
+      </div>
+      <div className="flex items-center gap-4">
+        <p className="text-sm font-medium lg:flex hidden">Rows per page</p>
         <Select value={postPerPage} onValueChange={handleSelectChange}>
           <SelectTrigger className="h-8 w-[70px]">
             <SelectValue />
@@ -42,7 +44,7 @@ const PaginationNav = ({ totalPages, page, postPerPage, totalPosts }) => {
         </Select>
       </div>
       <div className="flex items-center space-x-2">
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+        <div className="flex pr-2 items-center justify-center lg:text-sm  text-xs font-medium">
           Page {page} of {totalPages}
         </div>
 

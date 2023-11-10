@@ -50,6 +50,9 @@ export async function GET(Request) {
   const url = new URL(Request.url);
   const page = url.searchParams.get("page");
   const perPage = url.searchParams.get("postPerPage");
+  const query = url.searchParams.get("query");
+
+  // console.log("Received parameters:", { page, perPage, query });
 
   if (!page) {
     // console.log("No page number found. Returning all posts");
@@ -57,9 +60,24 @@ export async function GET(Request) {
   }
 
   const postPerPage = perPage ? parseInt(perPage, 10) : 5; // Use perPage from URL, or default to 5 if not provided
-  const totalPosts = await GroomingModel.countDocuments();
+  let findQuery = {}; // The query object to filter based on the search parameter
+
+  if (query) {
+    // Escape special characters in the query
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    findQuery = {
+      $or: [
+        { productName: { $regex: new RegExp(escapedQuery, "i") } },
+        { description: { $regex: new RegExp(escapedQuery, "i") } },
+        // Add more fields to search if needed
+      ],
+    };
+  }
+  const totalPosts = await GroomingModel.countDocuments(findQuery);
+
   const totalPages = Math.ceil(totalPosts / postPerPage);
-  const posts = await GroomingModel.find()
+  const posts = await GroomingModel.find(findQuery)
     .skip((page - 1) * postPerPage)
     .limit(postPerPage);
 

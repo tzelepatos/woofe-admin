@@ -1,17 +1,24 @@
 import React from "react";
 import { Icons } from "@/components/ui/icons";
-const CategoryIcon = ({ selectedCategory }) => {
+
+const CategoryIcon = ({ selectedCategory, className }) => {
   let iconComponent = null;
 
   switch (selectedCategory) {
-    case "Grooming":
-      return (iconComponent = <Icons.grooming className="ml-2 " />);
+    case "grooming":
+      return (iconComponent = (
+        <Icons.grooming className={`ml-2 ${className}`} />
+      ));
 
-    case "Services":
-      return (iconComponent = <Icons.services className="ml-2 " />);
+    case "services":
+      return (iconComponent = (
+        <Icons.services className={`ml-2 ${className}`} />
+      ));
 
-    case "Supplies":
-      return (iconComponent = <Icons.supplies className="ml-2 " />);
+    case "supplies":
+      return (iconComponent = (
+        <Icons.supplies className={`ml-2 ${className}`} />
+      ));
 
     default:
       // Handle default case

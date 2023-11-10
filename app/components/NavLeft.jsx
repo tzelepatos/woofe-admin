@@ -13,8 +13,8 @@ const NavLeft = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="p-8 bg-jimGrayLight min-h-screen ">
-      <nav className="flex flex-col space-y-6">
+    <aside className="p-8 bg-jimGrayLight min-h-full ">
+      <nav className="flex flex-col space-y-6 ">
         <Link
           href={"/home"}
           className={`${

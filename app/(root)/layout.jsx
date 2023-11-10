@@ -6,7 +6,8 @@ export default function LayoutMain({ children }) {
   return (
     <>
       <Navbar />
-      <div className="bg-jimGrayLight min-h-screen flex p-2">
+      {/* bg-jimGrayLight p-2*/}
+      <div className=" min-h-screen flex ">
         <div className="hidden md:block">
           <NavLeft />
         </div>

@@ -1,7 +1,6 @@
 import "@/app/globals.css";
-import { Inter } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import { NextAuthProvider } from "@/app/api/auth/[...nextauth]/Provider";
-const inter = Inter({ subsets: ["latin"] });
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -9,6 +8,8 @@ import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
 import { useSession } from "next-auth/react";
 import { ViewModeProvider } from "@/app/context/TableViewModeContext";
+
+const ubuntu = Ubuntu({ weight: "400", subsets: ["latin"], display: "swap" });
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);
@@ -18,7 +19,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={ubuntu.className}>
         <NextAuthProvider>
           <ThemeProvider
             attribute="class"

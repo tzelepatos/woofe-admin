@@ -24,6 +24,7 @@ import AlertAction from "@/app/components/AlertAction";
 import PaginationNav from "@/app/components/PaginationNav";
 import { TableViewModeContext } from "@/app/context/TableViewModeContext";
 import { useTableViewModeContext } from "@/app/context/TableViewModeContext";
+import SearchBar from "@/app/components/SearchBar";
 
 export const TableProduct = ({
   products,
@@ -42,6 +43,7 @@ export const TableProduct = ({
     "#",
     "Product name",
     "Price",
+    "New Price",
 
     "Images",
     "Services",
@@ -93,19 +95,16 @@ export const TableProduct = ({
 
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center ">
         {/* add new product */}
+
         <Link href={"/products/newproduct"}>
-          <Button
-            className="mb-5"
-            variant="signIn"
-            size="addNewProduct"
-            type="button"
-          >
+          <Button variant="signIn" size="addNewProduct" type="button">
             <Icons.add className="mr-2 h- w-6" />
             Add New Product
           </Button>
         </Link>
+
         {/* viewButtons */}
 
         <div className="flex space-x-2 p-3 ">
@@ -137,14 +136,19 @@ export const TableProduct = ({
           </span>
         </div>
       </div>
-      {/* paginationControls */}
-      <PaginationNav
-        page={page}
-        totalPages={totalPages}
-        postPerPage={postPerPage}
-        totalPosts={totalPosts}
-      />
 
+      {/* paginationControls */}
+      <div className="pb-4">
+        <PaginationNav
+          page={page}
+          totalPages={totalPages}
+          postPerPage={postPerPage}
+          totalPosts={totalPosts}
+        />
+        <div className="py-2 pr-2">
+          <SearchBar />
+        </div>
+      </div>
       {viewMode === "list" ? (
         <Table className="overflow-auto justify-end">
           {/* <TableCaption></TableCaption> */}
@@ -175,12 +179,23 @@ export const TableProduct = ({
                 </TableCell>
 
                 <TableCell>€{product.price}</TableCell>
-
+                <TableCell>€{product.newPrice}</TableCell>
                 <TableCell>{product.images.length}</TableCell>
                 <TableCell>
-                  {/* <span title={product.services.join(", ")}>
-                    ({product.services.length})
-                  </span> */}
+                  <span className="flex flex-col capitalize">
+                    {Object.keys(product.services).map(
+                      (serviceType) =>
+                        product.services[serviceType].length > 0 && (
+                          <span
+                            key={serviceType}
+                            className="group"
+                            title={product.services[serviceType].join(", ")}
+                          >
+                            {serviceType}
+                          </span>
+                        )
+                    )}
+                  </span>
                 </TableCell>
                 <TableCell>
                   {product.createdAt.slice(0, 10)}
@@ -188,8 +203,8 @@ export const TableProduct = ({
                   {product.createdAt.slice(11, 19)}
                 </TableCell>
 
-                <TableCell className="flex justify-center ">
-                  <div className="flex space-x-2">
+                <TableCell c>
+                  <div className="flex space-x-2 justify-center items-center">
                     <Link href={"/products/edit/" + product._id}>
                       <span title="Edit">
                         <Button
