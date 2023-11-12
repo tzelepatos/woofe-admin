@@ -14,7 +14,7 @@ const ADMIN_EMAIL = "tzelepatos@gmail.com";
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 
-  adapter: MongoDBAdapter(clientPromise),
+  // adapter: MongoDBAdapter(clientPromise),
 
   providers: [
     GoogleProvider({
@@ -79,6 +79,33 @@ export const authOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    async signIn({ user, profile }) {
+      console.log("signIn profile: ", profile);
+      console.log("signIn user: ", user);
+      try {
+        mongoose.connect(process.env.MONGODB_URI);
+        const userEmail = profile ? profile.email : user.email;
+        const userName = profile ? profile.name : user.name;
+        const userImage = profile ? profile.picture : user.image;
+        const userRole = userEmail === ADMIN_EMAIL ? "admin" : "user";
+        const userExists = await UserModel.exists({ email: userEmail });
+
+        if (!userExists) {
+          const newUser = await UserModel.create({
+            name: userName,
+            email: userEmail,
+            image: userImage,
+            role: userRole,
+            provider: profile ? "google" : "credentials",
+          });
+          console.log("user: ", newUser);
+        }
+        return true;
+      } catch (error) {
+        console.error("signIn error:", error);
+        return false;
+      }
+    },
     async jwt({ token, user, trigger, session }) {
       if (user) {
         token.role = user.role;
@@ -88,9 +115,19 @@ export const authOptions = {
       }
       return token;
     },
-    async session({ session, token }) {
-      session.user.role = token.role;
+    // async session({ session, token }) {
+    //   session.user.role = token.role;
 
+    //   return session;
+    // },
+    async session({ session }) {
+      mongoose.connect(process.env.MONGODB_URI);
+      const sessionUser = await UserModel.findOne({
+        email: session.user.email,
+      });
+      session.user.id = sessionUser._id;
+      session.user.role = sessionUser.role;
+      session.user.provider = sessionUser.provider;
       return session;
     },
   },

@@ -109,6 +109,7 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
               className="hidden"
             ></Input>
             <Button
+              type="button"
               variant="signIn"
               size="cancel"
               onClick={handleButtonClick}

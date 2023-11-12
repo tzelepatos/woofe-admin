@@ -12,6 +12,7 @@ import logoDark from "@/assets/images/Logo-dark.svg";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/app/components/ModeToggle";
 import { Icons } from "@/components/ui/icons";
+import UserInfo from "@/app/components/UserInfo";
 
 import { SheetNav } from "@/app/components/SheetNav";
 
@@ -45,10 +46,9 @@ export default function Navbar() {
             />
           )}
         </Link>
-      </div>
+      </div>{" "}
       <div className="flex gap-2">
         <ModeToggle />
-
         {status === "authenticated" ? (
           <Button
             onClick={() => signOut()}

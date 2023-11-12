@@ -141,7 +141,7 @@ export const ProductFormSchema = z.object({
   address: z
     .string()
     .min(5, { message: "You must add at least 5 characters on address" })
-    .max(25, { message: "You can add up to 25 characters on address" }),
+    .max(40, { message: "You can add up to 40 characters on address" }),
   city: z
     .string()
     .trim()

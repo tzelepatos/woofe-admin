@@ -1,5 +1,5 @@
 "use client";
-
+import React, { useState } from "react";
 //shadcn
 import { Icons } from "@/components/ui/icons";
 import {
@@ -10,8 +10,30 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import ModalMaps from "./ModalMaps";
 
 const PlaceInfo = ({ form, viewMode, editMode }) => {
+  const [address, setAddress] = useState({
+    address: "",
+    city: "",
+    zipCode: "",
+    lat: "",
+    lng: "",
+  });
+
+  console.log("form", form);
+
+  const handleUpdateClick = () => {
+    form.setValue("address", address.address);
+    form.setValue("city", address.city);
+    form.setValue("zipCode", address.zipCode);
+    form.setValue("latitude", address.lat);
+    form.setValue("longitude", address.lng);
+  };
+
+  console.log("placeinfo address", address);
+  const [showMap, setShowMap] = useState(false);
   return (
     <div className="space-y-4 bg-jimGray container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
       <h1 className="flex items-center justify-start  text-foreground text-md xl:text-2xl">
@@ -81,7 +103,24 @@ const PlaceInfo = ({ form, viewMode, editMode }) => {
           )}
         />
       </div>
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+      <div className="grid md:grid-cols-3  grid-cols-1 gap-4 items-end">
+        <div className="flex flex-col gap-2 items-start">
+          <FormLabel className="font-bold">Select from Google Maps</FormLabel>
+          <Button
+            disabled={viewMode}
+            type="button"
+            variant="signIn"
+            size="cancel"
+            className="text-sm sm:text-base w-full "
+            onClick={(event) => {
+              event.preventDefault();
+              setShowMap(true);
+            }}
+          >
+            Open Map
+          </Button>
+        </div>
+
         {/* latitude */}
         {/* <FormLabel>Google Maps Coordinates</FormLabel> */}
         <FormField
@@ -122,6 +161,17 @@ const PlaceInfo = ({ form, viewMode, editMode }) => {
             </FormItem>
           )}
         />
+      </div>
+      <div>
+        {showMap && (
+          <ModalMaps
+            onClose={() => setShowMap(false)}
+            address={address}
+            setAddress={setAddress}
+            handleUpdateClick={handleUpdateClick}
+            viewMode={viewMode}
+          />
+        )}
       </div>
     </div>
   );
