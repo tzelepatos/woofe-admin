@@ -15,14 +15,14 @@ import ModalMaps from "./ModalMaps";
 
 const PlaceInfo = ({ form, viewMode, editMode }) => {
   const [address, setAddress] = useState({
-    address: "",
-    city: "",
-    zipCode: "",
-    lat: "",
-    lng: "",
+    address: form.formState.defaultValues.address || "",
+    city: form.formState.defaultValues.city || "",
+    zipCode: form.formState.defaultValues.zipCode || "",
+    lat: parseFloat(form.formState.defaultValues.latitude) || 0,
+    lng: parseFloat(form.formState.defaultValues.longitude) || 0,
   });
 
-  console.log("form", form);
+  // console.log("form", form);
 
   const handleUpdateClick = () => {
     form.setValue("address", address.address);
@@ -32,7 +32,7 @@ const PlaceInfo = ({ form, viewMode, editMode }) => {
     form.setValue("longitude", address.lng);
   };
 
-  console.log("placeinfo address", address);
+  // console.log("placeinfo address", address);
   const [showMap, setShowMap] = useState(false);
   return (
     <div className="space-y-4 bg-jimGray container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg">
@@ -107,7 +107,6 @@ const PlaceInfo = ({ form, viewMode, editMode }) => {
         <div className="flex flex-col gap-2 items-start">
           <FormLabel className="font-bold">Select from Google Maps</FormLabel>
           <Button
-            disabled={viewMode}
             type="button"
             variant="signIn"
             size="cancel"
@@ -170,6 +169,7 @@ const PlaceInfo = ({ form, viewMode, editMode }) => {
             setAddress={setAddress}
             handleUpdateClick={handleUpdateClick}
             viewMode={viewMode}
+            form={form}
           />
         )}
       </div>

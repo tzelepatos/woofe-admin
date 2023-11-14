@@ -144,6 +144,7 @@ export const TableProduct = ({
           totalPages={totalPages}
           postPerPage={postPerPage}
           totalPosts={totalPosts}
+          type="products"
         />
         <div className="flex sm:justify-end py-2 pr-2 justify-center ">
           <SearchBar />

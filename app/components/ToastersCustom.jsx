@@ -153,3 +153,29 @@ export const showSuccessToastSignUp = (userInfo) => {
     description: `User "${userInfo.email}" has been created successfully.`,
   });
 };
+
+export const showDeletedSuccesfullToastUser = (id) => {
+  toast({
+    action: (
+      <ToastAction altText="success">
+        <Icons.success className=" h-5 w-5 font-bold" />
+      </ToastAction>
+    ),
+    variant: "success",
+    title: "User deleted.",
+    description: `The User "${id}" has been deleted successfully.`,
+  });
+};
+
+export const showDeletedFailToastUser = (error) => {
+  toast({
+    action: (
+      <ToastAction altText="destructive">
+        <Icons.failed className=" h-5 w-5 font-bold" />
+      </ToastAction>
+    ),
+    variant: "destructive",
+    title: "Something happened...",
+    description: `Error:  "${error}" .`,
+  });
+};

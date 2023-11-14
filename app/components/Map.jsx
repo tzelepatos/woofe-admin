@@ -12,9 +12,19 @@ import {
 
 const libraries = ["places"];
 
-const Map = ({ address, setAddress, handleUpdateClick, onClose, viewMode }) => {
+const Map = ({
+  address,
+  setAddress,
+  handleUpdateClick,
+  onClose,
+  viewMode,
+  form,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState({
+    lat: parseFloat(form.formState.defaultValues.latitude),
+    lng: parseFloat(form.formState.defaultValues.longitude),
+  });
   const autocompleteRef = useRef(null);
   const [autocompleteKey, setAutocompleteKey] = useState(0);
   // laod script for google map
@@ -22,6 +32,9 @@ const Map = ({ address, setAddress, handleUpdateClick, onClose, viewMode }) => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+
+  const lat = parseFloat(form.formState.defaultValues.latitude);
+  const lng = parseFloat(form.formState.defaultValues.longitude);
 
   const handleUpdateAndClose = () => {
     setIsLoading(true);
@@ -35,7 +48,7 @@ const Map = ({ address, setAddress, handleUpdateClick, onClose, viewMode }) => {
   if (!isLoaded) return <div>Loading....</div>;
 
   // static lat and lng
-  const center = { lat: 38.0147488, lng: 23.6784637 };
+  const center = { lat, lng };
 
   // handle place change on search
   const handlePlaceChanged = async () => {
@@ -68,7 +81,7 @@ const Map = ({ address, setAddress, handleUpdateClick, onClose, viewMode }) => {
         lng: place.geometry.location.lng(),
       });
 
-      console.log("place:", place);
+      // console.log("place:", place);
     } else if (place) {
       // The selected item is not a place, use the Geocoding API
       const response = await fetch(
@@ -92,7 +105,7 @@ const Map = ({ address, setAddress, handleUpdateClick, onClose, viewMode }) => {
           lng: location.lng,
         });
       } else {
-        console.log("The selected item is not a place.");
+        // console.log("The selected item is not a place.");
       }
     }
   };
@@ -109,7 +122,7 @@ const Map = ({ address, setAddress, handleUpdateClick, onClose, viewMode }) => {
         <Autocomplete
           key={autocompleteKey}
           onLoad={(autocomplete) => {
-            console.log("Autocomplete loaded:", autocomplete);
+            // console.log("Autocomplete loaded:", autocomplete);
             autocompleteRef.current = autocomplete;
           }}
           onPlaceChanged={handlePlaceChanged}

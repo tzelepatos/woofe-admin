@@ -34,13 +34,13 @@ const NavLeft = () => {
           Products
         </Link>
         <Link
-          href={"/categories"}
+          href={"/users"}
           className={`${
-            pathname === "/categories" ? activeLink : inactiveLink
+            pathname === "/users" ? activeLink : inactiveLink
           } ${hoverLink}`}
         >
-          <Icons.categories />
-          Categories
+          <Icons.users />
+          Users
         </Link>
         <Link
           href={"/orders"}

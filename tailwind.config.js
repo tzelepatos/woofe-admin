@@ -61,6 +61,27 @@ module.exports = {
         // servicesGreen12: "#2abe1b",
         // servicesGreen13: "#46b761",
 
+        //19 oranges
+        // suppliesOrange1: "#f7941d",
+        // suppliesOrange2: "#fa8801",
+        // suppliesOrange3: "#df8e2d",
+        // suppliesOrange4: "#df7a00",
+        // suppliesOrange5: "#f7ad1d",
+        // suppliesOrange6: "#f77e1d",
+        // suppliesOrange7: "#ffae00",
+        // suppliesOrange8: "#ffa800",
+        // suppliesOrange9: "#f79d1d",
+        // suppliesOrange10: "#f76a1d",
+        // suppliesOrange11: "#fea53a",
+        // suppliesOrange12: "#df8300",
+        // suppliesOrange13: "#ff7300",
+        // suppliesOrange14: "#e59d13",
+        // suppliesOrange15: "#fa9620",
+        // suppliesOrange16: "#fa8201",
+        // suppliesOrange17: "#ec8c03",
+        // suppliesOrange18: "#ffa800",
+        // suppliesOrange19: "#e97a1f",
+
         //19 colors supplies orange
         suppliesOrange1: "hsl(var(--suppliesOrange1))",
         suppliesOrange2: "hsl(var(--suppliesOrange2))",

@@ -88,6 +88,7 @@ export const authOptions = {
         const userName = profile ? profile.name : user.name;
         const userImage = profile ? profile.picture : user.image;
         const userRole = userEmail === ADMIN_EMAIL ? "admin" : "user";
+
         const userExists = await UserModel.exists({ email: userEmail });
 
         if (!userExists) {
@@ -97,6 +98,7 @@ export const authOptions = {
             image: userImage,
             role: userRole,
             provider: profile ? "google" : "credentials",
+            phone: "",
           });
           console.log("user: ", newUser);
         }

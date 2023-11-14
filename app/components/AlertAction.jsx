@@ -12,17 +12,24 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
+import { deleteUser } from "./../lib/actions";
 
 export default function AlertAction({
   actionType,
   productId,
   deleteProduct,
   isLoading,
+  deleteUser,
+  userId,
 }) {
   // console.log("alert loadinmg ", isLoading);
   const handleDelete = () => {
     if (actionType === "delete") {
-      deleteProduct(productId);
+      if (typeof deleteProduct === "function") {
+        deleteProduct(productId);
+      } else {
+        deleteUser(userId);
+      }
     }
   };
 

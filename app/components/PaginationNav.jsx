@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import {
@@ -17,16 +18,17 @@ import {
 } from "@/components/ui/select";
 
 import { useRouter } from "next/navigation";
-const PaginationNav = ({ totalPages, page, postPerPage, totalPosts }) => {
+const PaginationNav = ({ totalPages, page, postPerPage, totalPosts, type }) => {
   const router = useRouter();
 
+
   const handleSelectChange = (value) => {
-    router.push(`/products?page=${page}&postPerPage=${value}`);
+    router.push(`/${type}?page=${page}&postPerPage=${value}`);
   };
   return (
     <div className="flex items-center justify-between p-2 ">
       <div className="lg:text-sm  text-xs font-medium ">
-        {totalPosts} Products
+        {totalPosts} {type}
       </div>
       <div className="flex items-center gap-4">
         <p className="text-sm font-medium lg:flex hidden">Rows per page</p>
@@ -51,7 +53,7 @@ const PaginationNav = ({ totalPages, page, postPerPage, totalPosts }) => {
         {/* first */}
         <Link
           href={{
-            pathname: "/products",
+            pathname: `/${type}`,
             query: {
               page: 1,
               postPerPage: postPerPage,
@@ -70,7 +72,7 @@ const PaginationNav = ({ totalPages, page, postPerPage, totalPosts }) => {
         {/* back */}
         <Link
           href={{
-            pathname: "/products",
+            pathname: `/${type}`,
             query: {
               page: page > 1 ? page - 1 : 1,
               postPerPage: postPerPage,
@@ -90,7 +92,7 @@ const PaginationNav = ({ totalPages, page, postPerPage, totalPosts }) => {
 
         <Link
           href={{
-            pathname: "/products",
+            pathname: `/${type}`,
             query: {
               page: parseInt(page) === totalPages ? page : parseInt(page) + 1,
               postPerPage: parseInt(postPerPage),
@@ -110,7 +112,7 @@ const PaginationNav = ({ totalPages, page, postPerPage, totalPosts }) => {
         {/* last */}
         <Link
           href={{
-            pathname: "/products",
+            pathname: `/${type}`,
             query: {
               page: totalPages,
               postPerPage: postPerPage,

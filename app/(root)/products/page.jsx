@@ -4,7 +4,6 @@ import SearchBar from "@/app/components/SearchBar";
 //imports
 import axios from "axios";
 import { redirect } from "next/navigation";
-import { fetchProductssBySearch } from "@/app/lib/fetchProductssBySearch";
 
 //for dev only
 const axiosInstance = axios.create({

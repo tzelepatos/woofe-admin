@@ -92,6 +92,11 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
         <form
           id="product-form"
           onSubmit={form.handleSubmit(onSubmit)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+            }
+          }}
           // className="grid  grid-cols-1 md:grid-cols-2 gap-4 "
           className=" flex flex-col gap-4 pr-2 pl-2 items-stretch "
         >

@@ -10,6 +10,7 @@ const ModalMaps = ({
   setAddress,
   handleUpdateClick,
   viewMode,
+  form,
 }) => {
   const modalRef = useRef(null);
 
@@ -32,6 +33,7 @@ const ModalMaps = ({
             handleUpdateClick={handleUpdateClick}
             onClose={onClose}
             viewMode={viewMode}
+            form={form}
           />
 
           <button
