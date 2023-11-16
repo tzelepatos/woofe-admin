@@ -1,10 +1,11 @@
+"use client";
 import "@/app/globals.css";
 import Navbar from "@/app/components/NavBar";
 import NavLeft from "@/app/components/NavLeft";
 
 export default function LayoutMain({ children }) {
   return (
-    <>
+    <section>
       <Navbar />
       {/* bg-jimGrayLight p-2*/}
       <div className=" min-h-screen flex ">
@@ -16,6 +17,6 @@ export default function LayoutMain({ children }) {
           {children}
         </div>
       </div>
-    </>
+    </section>
   );
 }

@@ -8,13 +8,16 @@ import Link from "next/link";
 import { Icons } from "@/components/ui/icons";
 import AlertAction from "@/app/components/AlertAction";
 import { deleteUser } from "@/app/lib/actions";
+import { useRouter } from "next/navigation";
 import {
   showDeletedSuccesfullToastUser,
   showDeletedFailToastUser,
 } from "@/app/components/ToastersCustom";
+import { getUserImage } from "@/app/components/users/ActionsUser";
 
 export default function CardViewUser({ users, startIndex }) {
   const [deleting, setDeleting] = useState(false);
+  const router = useRouter();
 
   const handleDelete = async (id) => {
     setDeleting(true);
@@ -23,6 +26,7 @@ export default function CardViewUser({ users, startIndex }) {
 
     if (result.success) {
       showDeletedSuccesfullToastUser(id);
+      router.refresh();
     } else if (result.error) {
       showDeletedFailToastUser(result.error);
     }
@@ -33,7 +37,7 @@ export default function CardViewUser({ users, startIndex }) {
       {users.map((user, index) => (
         <div
           key={index}
-          className="relative container flex items-center p-2 gap-2 mb-4  bg-jimGrayLight  text-foreground max-w-md border border-accent rounded-2xl shadow-md hover:border-jimGray hover:shadow-lg" // Added margin-bottom (mb-4)
+          className=" relative container flex items-center p-4 gap-2 mb-4  bg-jimGrayLight  text-foreground max-w-md border border-accent rounded-2xl shadow-md hover:border-jimGray hover:shadow-lg" // Added margin-bottom (mb-4)
         >
           <p className="absolute left-2 top-0 h-5 w-5 text-xs">
             {startIndex + index + 1}
@@ -41,10 +45,15 @@ export default function CardViewUser({ users, startIndex }) {
           <div className=" ">
             <Image
               className="rounded-full shadow-xl border-2 border-background "
-              src={user.image || avatar}
+              src={
+                user.provider === "credentials"
+                  ? getUserImage(user.image)
+                  : user.image
+              }
               width={120}
               height={120}
               alt={"User avatar"}
+              priority
             />
           </div>
 

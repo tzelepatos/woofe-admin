@@ -138,22 +138,3 @@ img {
 h1 {
   @apply text-foreground  mb-2 text-xl;
 }
-table.basic {
-  @apply w-full;
-}
-table.basic thead tr td {
-  @apply bg-orange-100;
-}
-table.basic tr td {
-  @apply border border-orange-200 p-1;
-}
-table.basic a {
-  @apply bg-orange-300 text-white text-sm py-1 px-2 rounded-md inline-flex mr-1;
-}
-
-.btn-red {
-  @apply bg-red-700 text-white px-4 py-1  p-2  rounded-md hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300;
-}
-.btn-default {
-  @apply bg-gray-500 text-white px-4 py-1 p-2  rounded-md hover:bg-gray-400 active:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-200;
-}

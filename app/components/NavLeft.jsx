@@ -36,7 +36,9 @@ const NavLeft = () => {
         <Link
           href={"/users"}
           className={`${
-            pathname === "/users" ? activeLink : inactiveLink
+            pathname.includes("/users") || pathname.includes("/newuser")
+              ? activeLink
+              : inactiveLink
           } ${hoverLink}`}
         >
           <Icons.users />

@@ -7,6 +7,10 @@ const userSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: false },
     //extra fields
+    address: {
+      type: String,
+      required: false,
+    },
     phone: {
       type: String,
     },
@@ -14,6 +18,7 @@ const userSchema = new Schema(
     role: { type: String, required: false, default: "user" },
     image: { type: String, required: false, default: "" },
     provider: { type: String, required: false, default: "credentials" },
+    userInfo: { type: String, required: false, default: "" },
     createdAt: {
       type: Date,
       default: Date.now,

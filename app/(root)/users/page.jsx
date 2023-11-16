@@ -17,17 +17,17 @@ export default async function UserPage({ searchParams }) {
   const { count, users } = await fetchUsers(query, page, postPerPage);
   const usersPlainObject = JSON.parse(JSON.stringify(users));
 
-  if (query && page === 1) {
-    redirect(`/users?page=${page}&postPerPage=${postPerPage}&query=${query}`);
-  }
-  if (page === 1) {
-    redirect(`/users?page=${page}&postPerPage=${postPerPage}`);
-  }
+  // if (query && page === 1) {
+  //   redirect(`/users?page=${page}&postPerPage=${postPerPage}&query=${query}`);
+  // }
+  // if (page === 1) {
+  //   redirect(`/users?page=${page}&postPerPage=${postPerPage}`);
+  // }
   return (
     <div>
       {/* add new product */}
 
-      <Link href={"/users/newuser"}>
+      <Link href={"/newuser"}>
         <Button variant="signIn" size="addNewProduct" type="button">
           <Icons.add className=" w-6" />
           Add New User
