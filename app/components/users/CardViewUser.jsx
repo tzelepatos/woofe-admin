@@ -9,15 +9,24 @@ import { Icons } from "@/components/ui/icons";
 import AlertAction from "@/app/components/AlertAction";
 import { deleteUser } from "@/app/lib/actions";
 import { useRouter } from "next/navigation";
+import Modal from "@/app/components/users/Modal";
+import { UserForm } from "@/app/components/users/UserForm";
 import {
   showDeletedSuccesfullToastUser,
   showDeletedFailToastUser,
 } from "@/app/components/ToastersCustom";
 import { getUserImage } from "@/app/components/users/ActionsUser";
 
-export default function CardViewUser({ users, startIndex }) {
+export default function CardViewUser({
+  users,
+  startIndex,
+  showModalEditUser,
+  page,
+  postPerPage,
+}) {
   const [deleting, setDeleting] = useState(false);
   const router = useRouter();
+  const [editingUser, setEditingUser] = useState(null);
 
   const handleDelete = async (id) => {
     setDeleting(true);
@@ -36,7 +45,7 @@ export default function CardViewUser({ users, startIndex }) {
     <div className="pt-4 grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-8">
       {users.map((user, index) => (
         <div
-          key={index}
+          key={user._id}
           className=" relative container flex items-center p-4 gap-2 mb-4  bg-jimGrayLight  text-foreground max-w-md border border-accent rounded-2xl shadow-md hover:border-jimGray hover:shadow-lg" // Added margin-bottom (mb-4)
         >
           <p className="absolute left-2 top-0 h-5 w-5 text-xs">
@@ -64,19 +73,34 @@ export default function CardViewUser({ users, startIndex }) {
                 {user.name || "Update your name"}
               </div>
               <div className="flex space-x-2 ">
-                {/* <Link href={"/products/edit/" + product._id}> */}
-                <span title="Edit">
-                  <Button
-                    className=""
-                    variant="logIn"
-                    size="icon2"
-                    type="button"
+                {/* link + modal */}
+                <div>
+                  <Link
+                    href={
+                      `/users?page=${page}&postPerPage=${postPerPage}&editUser=true?` +
+                      user._id
+                    }
+                    key={user._id}
                   >
-                    <Icons.edit className=" h-4 w-4" />
-                    {/* Edit */}
-                  </Button>
-                </span>
-                {/* </Link> */}
+                    <span title="Edit">
+                      <Button
+                        key={index}
+                        className=""
+                        variant="logIn"
+                        size="icon2"
+                        type="button"
+                        onClick={() => setEditingUser(user._id)}
+                      >
+                        <Icons.edit className=" h-4 w-4" />
+                      </Button>
+                    </span>
+                  </Link>
+                  {showModalEditUser && editingUser === user._id && (
+                    <Modal>
+                      <UserForm edit={true} user={user} />
+                    </Modal>
+                  )}
+                </div>
 
                 <AlertAction
                   actionType="delete"

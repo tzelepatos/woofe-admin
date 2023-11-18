@@ -20,6 +20,10 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const PaginationUser = ({ count, page, postPerPage }) => {
+  // console.log("count", count);
+  // console.log("page", page);
+  // console.log("postPerPage", postPerPage);
+
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -45,7 +49,11 @@ const PaginationUser = ({ count, page, postPerPage }) => {
       <div className="lg:text-sm  text-xs font-medium ">{count} users</div>
       <div className="flex items-center gap-4">
         <p className="text-sm font-medium lg:flex hidden">Rows per page</p>
-        <Select value={postPerPage} onValueChange={handleSelectChange}>
+        <Select
+          // defaultValue="10"
+          value={postPerPage}
+          onValueChange={handleSelectChange}
+        >
           <SelectTrigger className="h-8 w-[70px]">
             <SelectValue />
           </SelectTrigger>

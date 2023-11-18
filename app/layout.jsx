@@ -1,4 +1,4 @@
-import "@/app/globals.css";
+import "./globals.css";
 import { Ubuntu } from "next/font/google";
 import { NextAuthProvider } from "@/app/api/auth/[...nextauth]/Provider";
 import { ThemeProvider } from "@/components/ui/theme-provider";

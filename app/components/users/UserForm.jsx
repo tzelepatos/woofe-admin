@@ -1,7 +1,5 @@
 import React from "react";
 import { addUser } from "@/app/lib/actions";
-import avatar from "@/assets/images/AVATAR.svg"; // Import the avatar image directly
-import Image from "next/image";
 
 //shadcn
 import { Icons } from "@/components/ui/icons";
@@ -18,9 +16,10 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { SubmitButton } from "@/app/components/users/SubmitButton";
+import { CloseButtonModal } from "@/app/components/users/CloseButtonModal";
 import { UserImage } from "./UserImage";
 
-export const UserForm = () => {
+export const UserForm = ({ edit, user }) => {
   return (
     <div>
       <form
@@ -28,33 +27,14 @@ export const UserForm = () => {
         className="max-w-lg  space-y-6  text-background bg-jimGray container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg"
       >
         <h1 className="flex items-center justify-start text-foreground text-lg xl:text-2xl">
-          Create a&nbsp;
-          <strong>New User</strong>
+          {edit ? "Edit" : "Create a"}&nbsp;
+          <strong>{edit ? "Existing" : "New"} User</strong>
           <Icons.users className="ml-2 h-5 w-5" />
         </h1>
         <div className="flex items-center  justify-between  gap-4">
           {/* photo */}
-          {/* 
-          <div className=" ">
-            <label htmlFor="image">
-            <Image
-              className="rounded-full shadow-xl border-2 border-background cursor-pointer object-cover"
-              src={avatar}
-              width={180}
-              height={150}
-              alt={"User avatar"}
-            />
-            </label>
-            <Input
-              type="file"
-              id="image"
-              // name="image"
-              accept="image/*"
-              className="hidden"
-             
-            />
-          </div> */}
-          <UserImage name="image" />
+
+          <UserImage name="image" user={user} edit={edit} />
 
           {/* name */}
           <div className="  space-y-4 w-full ">
@@ -69,6 +49,7 @@ export const UserForm = () => {
                 placeholder="name"
                 id="name"
                 required
+                {...(edit && user && { defaultValue: user.name })}
               />
             </div>
             {/* password */}
@@ -85,6 +66,8 @@ export const UserForm = () => {
                 placeholder="password"
                 name="password"
                 required
+                disabled={edit && user.provider != "credentials"}
+                {...(edit && user && { defaultValue: user.password })}
               />
             </div>
           </div>
@@ -103,12 +86,18 @@ export const UserForm = () => {
               name="email"
               placeholder="Email"
               required
+              {...(edit && user && { defaultValue: user.email })}
             />
           </div>
 
           {/* role */}
           <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Select name="role" id="role" defaultValue="user">
+            <Select
+              name="role"
+              id="role"
+              defaultValue="user"
+              {...(edit && user && { defaultValue: user.role })}
+            >
               <Label htmlFor="role" className="text-foreground  font-semibold">
                 Role
               </Label>
@@ -136,6 +125,7 @@ export const UserForm = () => {
               placeholder="phone"
               name="phone"
               className="bg-background text-foreground"
+              {...(edit && user && { defaultValue: user.phone })}
             />
           </div>
           {/* address */}
@@ -151,6 +141,7 @@ export const UserForm = () => {
               name="address"
               id="address"
               placeholder="Address"
+              {...(edit && user && { defaultValue: user.address })}
             ></Input>
           </div>
         </div>
@@ -165,10 +156,13 @@ export const UserForm = () => {
             id="userInfo"
             rows={3}
             placeholder="Info"
+            {...(edit && user && { defaultValue: user.info })}
           ></Textarea>
         </div>
-
-        <SubmitButton type="create" />
+        <div className="flex items-center justify-between">
+          <SubmitButton type={edit ? "edit" : "create"} />
+          <CloseButtonModal />
+        </div>
       </form>
     </div>
   );
