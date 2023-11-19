@@ -1,5 +1,7 @@
+"use client";
+import { useState } from "react";
 import React from "react";
-import { addUser } from "@/app/lib/actions";
+import { addUser, updateUser } from "@/app/lib/actions";
 
 //shadcn
 import { Icons } from "@/components/ui/icons";
@@ -18,23 +20,68 @@ import { Label } from "@/components/ui/label";
 import { SubmitButton } from "@/app/components/users/SubmitButton";
 import { CloseButtonModal } from "@/app/components/users/CloseButtonModal";
 import { UserImage } from "./UserImage";
+import {
+  showSuccesfullToastUserUpdate,
+  showDeletedFailToastUser,
+  showSuccesfullToastUserAdd,
+} from "@/app/components/ToastersCustom";
+import { useRouter } from "next/navigation";
 
 export const UserForm = ({ edit, user }) => {
+  const router = useRouter();
+
+  async function submitAction(formData) {
+    let result;
+    if (edit) {
+      result = await updateUser(formData);
+    } else {
+      result = await addUser(formData);
+    }
+
+    if (result.success) {
+      if (edit) {
+        showSuccesfullToastUserUpdate(user._id);
+      } else {
+        const userName = formData.get("name");
+        showSuccesfullToastUserAdd(userName);
+      }
+
+      router.back();
+    } else if (result.error) {
+      showDeletedFailToastUser(result.error);
+    }
+  }
+
   return (
     <div>
       <form
-        action={addUser}
+        action={submitAction}
         className="max-w-lg  space-y-6  text-background bg-jimGray container border border-accent rounded-2xl p-4 hover:border-jimGray hover:shadow-lg"
       >
-        <h1 className="flex items-center justify-start text-foreground text-lg xl:text-2xl">
-          {edit ? "Edit" : "Create a"}&nbsp;
-          <strong>{edit ? "Existing" : "New"} User</strong>
-          <Icons.users className="ml-2 h-5 w-5" />
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="flex items-center justify-start text-foreground text-lg xl:text-2xl">
+            {edit ? "Edit" : "Create a"}&nbsp;
+            <strong>{edit ? "Existing" : "New"} User</strong>
+            <Icons.users className="ml-2 h-5 w-5" />
+          </h1>
+          {edit && user.provider !== "credentials" && (
+            <Icons.googleLogo></Icons.googleLogo>
+          )}
+        </div>
         <div className="flex items-center  justify-between  gap-4">
           {/* photo */}
 
           <UserImage name="image" user={user} edit={edit} />
+
+          {/* only for update hidden */}
+          <Input
+            className="hidden "
+            name="id"
+            type="text"
+            placeholder="id"
+            id="id"
+            {...(edit && user && { defaultValue: user._id })}
+          />
 
           {/* name */}
           <div className="  space-y-4 w-full ">
@@ -49,6 +96,7 @@ export const UserForm = ({ edit, user }) => {
                 placeholder="name"
                 id="name"
                 required
+                disabled={edit && user.provider != "credentials"}
                 {...(edit && user && { defaultValue: user.name })}
               />
             </div>
@@ -86,6 +134,7 @@ export const UserForm = ({ edit, user }) => {
               name="email"
               placeholder="Email"
               required
+              disabled={edit && user.provider != "credentials"}
               {...(edit && user && { defaultValue: user.email })}
             />
           </div>
@@ -121,7 +170,7 @@ export const UserForm = ({ edit, user }) => {
               Phone number
             </Label>
             <Input
-              type="phone"
+              type="number"
               placeholder="phone"
               name="phone"
               className="bg-background text-foreground"

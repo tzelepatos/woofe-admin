@@ -48,7 +48,9 @@ export const UserImage = ({ name, user, edit }) => {
       />
       <input
         type="hidden"
-        name={name}
+        name={
+          edit ? (user.provider === "credentials" ? name : undefined) : name
+        }
         value={(edit && user.image.name) || imageNames[currentImageIndex].name}
       />
       <div className=" group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-2 text-2xl rounded-full bg-black/20 text-white cursor-pointer">

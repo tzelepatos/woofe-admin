@@ -46,11 +46,62 @@ export const addUser = async (formData) => {
 
     await newUser.save();
     console.log("User created successfully!");
-  } catch (err) {
-    console.log(err);
-    throw new Error("Failed to create user!");
-  }
 
-  revalidatePath("/users");
-  redirect("/users");
+    // Return a success status when the user is created
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    return { error: "Failed to create user!" };
+  } finally {
+    revalidatePath("/users");
+    // redirect("/users");
+  }
+};
+export const updateUser = async (formData) => {
+  const { id, name, email, password, phone, address, role, userInfo, image } =
+    Object.fromEntries(formData);
+
+  console.log("Form Data UPDATE:", formData);
+
+  try {
+    let hashedPassword;
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      hashedPassword = await bcrypt.hash(password, salt);
+    }
+
+    console.log("Updating user with ID:", id);
+
+    const updateFields = {
+      name,
+      email,
+      password: hashedPassword,
+      phone,
+      address,
+      role,
+      userInfo,
+      image,
+    };
+
+    if (!password) {
+      delete updateFields.password;
+    }
+
+    Object.keys(updateFields).forEach(
+      (key) => updateFields[key] === undefined && delete updateFields[key]
+    );
+
+    const result = await UserModel.findByIdAndUpdate(id, updateFields);
+
+    if (result) {
+      // Return a success status when the update is successful
+      return { success: true };
+    } else {
+      // Return an error status when the update fails
+      return { error: "No user found with the provided id!" };
+    }
+  } finally {
+    revalidatePath("/users");
+    // redirect("/users");
+  }
 };
