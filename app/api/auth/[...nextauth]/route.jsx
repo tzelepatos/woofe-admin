@@ -4,9 +4,10 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-import { UserModel } from "@/app/models/User";
+import { UserModel, ActivationModel } from "@/app/models/User";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import { cookies } from "next/headers";
 
 // Define the admin email
 const ADMIN_EMAIL = "tzelepatos@gmail.com";
@@ -50,6 +51,7 @@ export const authOptions = {
         // email: { label: "Email", type: "email" },
         // password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
         const { email, password } = credentials;
 
@@ -62,7 +64,14 @@ export const authOptions = {
             console.log("User not found.");
             return null;
           }
+          // if (!user.emailVerified) {
+          //   throw new Error("User not activated. Please check your email.");
+          // }
+
+          console.log("Provided password:", password);
+          console.log("Stored password:", user.password);
           const isValid = await bcrypt.compare(password, user.password);
+
           if (!isValid) {
             console.log("Password incorrect.");
             return null;
@@ -84,6 +93,7 @@ export const authOptions = {
       console.log("signIn user: ", user);
       try {
         mongoose.connect(process.env.MONGODB_URI);
+        const userId = profile ? profile.id : user.id;
         const userEmail = profile ? profile.email : user.email;
         const userName = profile ? profile.name : user.name;
         const userImage = profile ? profile.picture : user.image;
@@ -93,6 +103,7 @@ export const authOptions = {
 
         if (!userExists) {
           const newUser = await UserModel.create({
+            _id: userId,
             name: userName,
             email: userEmail,
             image: userImage,
@@ -100,8 +111,9 @@ export const authOptions = {
             provider: profile ? "google" : "credentials",
             phone: "",
           });
-          console.log("user: ", newUser);
+          console.log("newUser: ", newUser);
         }
+        cookies().set("user", user.id, { secure: true });
         return true;
       } catch (error) {
         console.error("signIn error:", error);
@@ -109,27 +121,55 @@ export const authOptions = {
       }
     },
     async jwt({ token, user, trigger, session }) {
+      // console.log("jwt token: ", token);
+      // console.log("jwt user: ", user);
+      // console.log("jwt trigger: ", trigger);
+      // console.log("jwt session: ", session);
       if (user) {
         token.role = user.role;
+        token.id = user.id;
       }
-      if (trigger === "update" && session?.name) {
-        token.name = session.name;
+      if (trigger === "update") {
+        // console.log("session trigger: ", trigger);
+        if (session?.name) {
+          token.name = session.name;
+          // console.log("token.name update: ", token.name);
+        }
+        if (session?.image) {
+          token.image = session.image;
+          // console.log("token.image update: ", token.image);
+        }
+        if (session?.role) {
+          token.role = session.role;
+          // console.log("token.role update: ", token.role);
+        }
+        // Connect to the database
+        mongoose.connect(process.env.MONGODB_URI);
+
+        // Find the user in the database by ID and update the name, image, and role
+        await UserModel.findByIdAndUpdate(token.id, {
+          name: token.name,
+          image: token.image,
+          role: token.role,
+        });
       }
+
       return token;
     },
-    // async session({ session, token }) {
-    //   session.user.role = token.role;
 
-    //   return session;
-    // },
-    async session({ session }) {
+    async session({ session, token }) {
+      // console.log("session token: ", token);
+      // console.log("session session: ", session);
       mongoose.connect(process.env.MONGODB_URI);
       const sessionUser = await UserModel.findOne({
         email: session.user.email,
       });
+      session.user.name = token.name || sessionUser.name;
       session.user.id = sessionUser._id;
-      session.user.role = sessionUser.role;
+      session.user.role = token.role || sessionUser.role;
       session.user.provider = sessionUser.provider;
+      session.user.image = token.image || sessionUser.image;
+
       return session;
     },
   },

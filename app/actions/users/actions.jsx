@@ -30,13 +30,10 @@ export const addUser = async (formData) => {
   console.log(formData);
 
   try {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     const newUser = new UserModel({
       name,
       email,
-      password: hashedPassword,
+      password,
       phone,
       address,
       role,
@@ -61,13 +58,18 @@ export const updateUser = async (formData) => {
   const { id, name, email, password, phone, address, role, userInfo, image } =
     Object.fromEntries(formData);
 
-  console.log("Form Data UPDATE:", formData);
+  // console.log("Form Data UPDATE:", formData);
 
   try {
-    let hashedPassword;
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      hashedPassword = await bcrypt.hash(password, salt);
+    const user = await UserModel.findById(id);
+    let hashedPassword = user.password;
+
+    if (password && password.trim() !== "") {
+      const isMatch = user.password === password;
+      if (!isMatch) {
+        const salt = await bcrypt.genSalt(10);
+        hashedPassword = await bcrypt.hash(password, salt);
+      }
     }
 
     console.log("Updating user with ID:", id);
@@ -102,6 +104,7 @@ export const updateUser = async (formData) => {
     }
   } finally {
     revalidatePath("/users");
+
     // redirect("/users");
   }
 };

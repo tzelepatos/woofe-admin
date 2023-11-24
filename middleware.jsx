@@ -9,5 +9,8 @@ export const config = {
     "/products/:path*",
     "/settings:path*",
     "/contact:path*",
+    "/users/:path*",
   ],
 };
+
+

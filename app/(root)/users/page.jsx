@@ -1,7 +1,7 @@
 //components
 import CardViewUser from "app/components/users/CardViewUser";
 import PaginationUser from "app/components/users/PaginationUser";
-import { fetchUsers } from "app/lib/fetchUsers";
+import { fetchUsers } from "app/actions/users/fetchUsers";
 import SearchBar from "@/app/components/SearchBar";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
@@ -10,6 +10,7 @@ import Modal from "@/app/components/users/Modal";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { UserForm } from "@/app/components/users/UserForm";
+import { cookies } from "next/headers";
 
 export default async function UserPage({ searchParams }) {
   const showModalNewUser = searchParams?.createUser;
@@ -36,6 +37,10 @@ export default async function UserPage({ searchParams }) {
       redirect(`/users?page=${page}&postPerPage=${postPerPage}`);
     }
   }
+
+  const cookieStore = cookies();
+  const cookieId = cookieStore.get("user");
+
   return (
     <div>
       <>
@@ -63,6 +68,7 @@ export default async function UserPage({ searchParams }) {
         showModalEditUser={showModalEditUser}
         page={page}
         postPerPage={postPerPage}
+        cookieId={cookieId}
       />
     </div>
   );

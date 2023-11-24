@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { sendEmail } from "@/app/(root)/contact/_actions";
+import { sendEmail } from "@/app/actions/contact/_actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Icons } from "@/components/ui/icons";
 import { useForm } from "react-hook-form";

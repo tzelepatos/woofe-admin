@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -13,12 +14,13 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/app/components/ModeToggle";
 import { Icons } from "@/components/ui/icons";
 import UserInfo from "@/app/components/UserInfo";
-
 import { SheetNav } from "@/app/components/SheetNav";
 
 export default function Navbar() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const { theme } = useTheme();
+
+  // console.log("seesion navbar", session);
 
   return (
     <div className=" p-4 flex justify-between items-center shadow-md h-20 bg-jimGray border-b border-black ">
@@ -47,7 +49,10 @@ export default function Navbar() {
           )}
         </Link>
       </div>{" "}
-      <div className="flex gap-2">
+      <div className="flex gap-4 items-center ">
+        <div className=" ">
+          <UserInfo session={session} />
+        </div>
         <ModeToggle />
         {status === "authenticated" ? (
           <Button

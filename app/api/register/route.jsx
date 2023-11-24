@@ -31,16 +31,17 @@ export async function POST(request) {
       status: 400,
     });
   }
-  const hashedPassword = await bcrypt.hash(password, 10);
+
   try {
     const user = await UserModel.create({
       email: email,
-      password: hashedPassword,
+      password: password,
     });
-
+    // Log the created user
+    console.log("Created user register:", user);
     return new Response(JSON.stringify(user), { status: 200 });
   } catch (error) {
-    console.error(error);
+    console.error("error creating user register", error);
     return new Response("Error processing request", { status: 500 });
   }
 }

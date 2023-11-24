@@ -6,6 +6,7 @@ import React from "react";
 import Image from "next/image";
 
 //shadcn
+import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/ui/icons";
 import {
   imageNames,
@@ -14,7 +15,7 @@ import {
   getUserImage,
 } from "@/app/components/users/ActionsUser";
 
-export const UserImage = ({ name, user, edit }) => {
+export const UserImage = ({ name, user, edit, setImage }) => {
   const initialImageIndex = imageNames.findIndex(
     (image) => image.src === getUserImage(user?.image)
   );
@@ -24,12 +25,16 @@ export const UserImage = ({ name, user, edit }) => {
 
   const handleNext = (event) => {
     event.preventDefault();
-    setCurrentImageIndex(getNextImageIndex(currentImageIndex));
+    const nextImageIndex = getNextImageIndex(currentImageIndex);
+    setCurrentImageIndex(nextImageIndex);
+    setImage(imageNames[nextImageIndex].name);
   };
 
   const handlePrevious = (event) => {
     event.preventDefault();
-    setCurrentImageIndex(getPreviousImageIndex(currentImageIndex));
+    const previousImageIndex = getPreviousImageIndex(currentImageIndex);
+    setCurrentImageIndex(previousImageIndex);
+    setImage(imageNames[previousImageIndex].name);
   };
 
   return (
@@ -46,7 +51,7 @@ export const UserImage = ({ name, user, edit }) => {
         height={150}
         alt={"User avatar"}
       />
-      <input
+      <Input
         type="hidden"
         name={
           edit ? (user.provider === "credentials" ? name : undefined) : name

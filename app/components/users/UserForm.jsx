@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import React from "react";
-import { addUser, updateUser } from "@/app/lib/actions";
+import { addUser, updateUser } from "@/app/actions/users/actions";
 
 //shadcn
 import { Icons } from "@/components/ui/icons";
@@ -29,6 +29,13 @@ import { useRouter } from "next/navigation";
 
 export const UserForm = ({ edit, user }) => {
   const router = useRouter();
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [role, setRole] = useState("");
+  // console.log("user", user);
+  // console.log("name", name);
+  // console.log("image", image);
+  // console.log("role", role);
 
   async function submitAction(formData) {
     let result;
@@ -71,7 +78,7 @@ export const UserForm = ({ edit, user }) => {
         <div className="flex items-center  justify-between  gap-4">
           {/* photo */}
 
-          <UserImage name="image" user={user} edit={edit} />
+          <UserImage name="image" user={user} edit={edit} setImage={setImage} />
 
           {/* only for update hidden */}
           <Input
@@ -90,6 +97,7 @@ export const UserForm = ({ edit, user }) => {
                 Username
               </Label>
               <Input
+                onChange={(e) => setName(e.target.value)}
                 className="bg-background text-foreground"
                 name="name"
                 type="text"
@@ -142,6 +150,7 @@ export const UserForm = ({ edit, user }) => {
           {/* role */}
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Select
+              onValueChange={setRole}
               name="role"
               id="role"
               defaultValue="user"
@@ -209,7 +218,13 @@ export const UserForm = ({ edit, user }) => {
           ></Textarea>
         </div>
         <div className="flex items-center justify-between">
-          <SubmitButton type={edit ? "edit" : "create"} />
+          <SubmitButton
+            type={edit ? "edit" : "create"}
+            name={name}
+            image={image}
+            role={role}
+            user={user}
+          />
           <CloseButtonModal />
         </div>
       </form>

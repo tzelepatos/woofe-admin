@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Icons } from "@/components/ui/icons";
 import AlertAction from "@/app/components/AlertAction";
-import { deleteUser } from "@/app/lib/actions";
+import { deleteUser } from "@/app/actions/users/actions";
 import { useRouter } from "next/navigation";
 import Modal from "@/app/components/users/Modal";
 import { UserForm } from "@/app/components/users/UserForm";
@@ -16,6 +16,7 @@ import {
   showDeletedFailToastUser,
 } from "@/app/components/ToastersCustom";
 import { getUserImage } from "@/app/components/users/ActionsUser";
+import { signOut, useSession } from "next-auth/react";
 
 export default function CardViewUser({
   users,
@@ -23,10 +24,15 @@ export default function CardViewUser({
   showModalEditUser,
   page,
   postPerPage,
+  cookieId,
 }) {
+  const { data: session } = useSession();
+
   const [deleting, setDeleting] = useState(false);
   const router = useRouter();
   const [editingUser, setEditingUser] = useState(null);
+
+  console.log("session", session);
 
   const handleDelete = async (id) => {
     setDeleting(true);
@@ -40,6 +46,7 @@ export default function CardViewUser({
       showDeletedFailToastUser(result.error);
     }
   };
+  console.log("cookieId", cookieId);
 
   return (
     <div className="pt-4 grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-8">
@@ -48,9 +55,18 @@ export default function CardViewUser({
           key={user._id}
           className=" relative container flex items-center p-4 gap-2 mb-4  bg-jimGrayLight  text-foreground max-w-md border border-accent rounded-2xl shadow-md hover:border-jimGray hover:shadow-lg" // Added margin-bottom (mb-4)
         >
-          <p className="absolute left-2 top-0 h-5 w-5 text-xs">
-            {startIndex + index + 1}
+          {/* if cookieId === user._id */}
+          <p className="absolute left-2 top-1 text-xs flex gap-1">
+            {cookieId.value === user._id && (
+              <>
+                <Icons.dot className="text-green-500 w-3" />
+                Online
+              </>
+            )}
           </p>
+          {/* <p className="absolute left-2 top-0 h-5 w-5 text-xs">
+            {startIndex + index + 1}
+          </p> */}
           <div className=" ">
             <Image
               className="rounded-full shadow-xl border-2 border-background "

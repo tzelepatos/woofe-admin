@@ -1,6 +1,6 @@
-import UserInfo from "@/app/components/UserInfo";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { cookies } from "next/headers";
 
 //components
 import { fetchProducts } from "@/app/actions/products/actions";

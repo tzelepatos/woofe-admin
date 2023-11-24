@@ -1,4 +1,4 @@
-import { fetchUsers } from "app/lib/fetchUsers";
+import { fetchUsers } from "app/actions//users/fetchUsers";
 
 export async function getUsersAndCalculatePercentage() {
   // Fetch users

@@ -1,5 +1,4 @@
 import { Schema, models, model } from "mongoose";
-import { boolean } from "zod";
 
 const groomingSchema = new Schema(
   {
@@ -52,12 +51,15 @@ const groomingSchema = new Schema(
       min: 0,
       max: 5,
     },
+    // Reference to UserModel
+    user: { type: Schema.Types.ObjectId, ref: "UserModel", required: true },
 
     createdAt: {
       type: Date,
       default: Date.now,
     },
   },
+
   { timestamps: true }
 );
 //models CapitalLetters

@@ -1,10 +1,8 @@
 "use server";
-
 import { Resend } from "resend";
 import ContactFormEmail from "@/app/emails/contact-form-email";
+// import VerificatrionEmail from "../../emails/verificatiion-email";
 // import NotionMagicLinkEmail from "@/app/emails/magic-link-email";
-
-import { z } from "zod";
 import { ContactFormSchema } from "@/app/models/ContactFormSchema";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -31,5 +29,26 @@ export async function sendEmail(data) {
 
   if (result.error) {
     return { success: false, error: result.error.format() };
+  }
+}
+
+export async function sendActivationEmail(userId, activationToken) {
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return { success: false, error: "User not found." };
+    }
+
+    const data = await resend.emails.send({
+      from: "Woof-e Verification email  <onboarding@resend.dev>",
+      to: [user.email],
+      subject: "Account activation",
+      text: `Please click the following link to activate your account: https://yourwebsite.com/activate?token=${activationToken}`,
+      react: VerificatrionEmail({ email, activationToken }),
+    });
+
+    return { success: true, data };
+  } catch (error) {
+    return { success: false, error };
   }
 }

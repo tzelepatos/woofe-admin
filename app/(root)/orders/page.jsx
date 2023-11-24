@@ -1,17 +1,18 @@
-import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/ui/icons";
-import Link from "next/link";
+import UserInfo from "@/app/components/UserInfo";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { cookies } from "next/headers";
 
-export default function Orders() {
+export default async function Orders() {
+  const session = await getServerSession({ ...authOptions });
+  const cookieStore = cookies();
+  const theme = cookieStore.get("_id")?.value;
+  // console.log("session", session);
+
+  // console.log("theme", theme);
   return (
     <>
-   Orders
-   <Link href="/users/newuser">
-        <Button variant="signIn" size="addNewProduct" type="button">
-          <Icons.add className=" w-6" />
-          Add New User
-        </Button>
-      </Link>
+      <UserInfo session={session} />
     </>
   );
 }

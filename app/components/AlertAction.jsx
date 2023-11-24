@@ -12,7 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
-import { deleteUser } from "./../lib/actions";
+import { deleteUser } from "@/app/actions/users/actions";
 
 export default function AlertAction({
   actionType,

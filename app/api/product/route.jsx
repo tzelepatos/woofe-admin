@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-
+import { getServerSession } from "next-auth/next";
 import { GroomingModel } from "@/app/models/Product";
+import { UserModel } from "@/app/models/User";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-// Connect to the MongoDB database when the server starts
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
@@ -14,12 +15,30 @@ mongoose
 
 //POST
 export async function POST(request) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+    });
+  }
+  const userId = session.user.id;
   // Extracting the body from the request
   const jsonbody = await request.json();
 
   // Creating a new document using the GroomingModel
   try {
-    await GroomingModel.create({ ...jsonbody });
+    const newProduct = await GroomingModel.create({
+      ...jsonbody,
+      user: userId,
+    });
+
+    // Update the user to include the associated product
+    const user = await UserModel.findById(userId);
+    if (user) {
+      user.products.push(newProduct._id);
+      await user.save();
+    }
+
     return new Response(JSON.stringify(jsonbody), { status: 200 });
   } catch (error) {
     console.error("Error creating product:", error);
