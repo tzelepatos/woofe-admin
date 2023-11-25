@@ -24,20 +24,7 @@ export default function ViewPage({ params }) {
     });
   }, [idUrl]);
   
-  //den doulevei sto update
-  // function fetchIdUrl() {
-  //   axios.get(`/api/product?id=${idUrl}`).then((response) => {
-  //     const fetchedProducts = response.data;
-  //     const selectedProduct = fetchedProducts.find(
-  //       (product) => product._id === idUrl
-  //     );
-  //     setProduct(selectedProduct);
-  //   });
-  // }
 
-  // if (idUrl) {
-  //   fetchIdUrl();
-  // }
 
   return (
     <div>

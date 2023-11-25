@@ -32,21 +32,21 @@ export default function CardViewUser({
   const router = useRouter();
   const [editingUser, setEditingUser] = useState(null);
 
-  console.log("session", session);
+  // console.log("session", session);
 
-  const handleDelete = async (id) => {
-    setDeleting(true);
-    const result = await deleteUser(id);
-    setDeleting(false);
+  // const handleDelete = async (id) => {
+  //   setDeleting(true);
+  //   const result = await deleteUser(id);
+  //   setDeleting(false);
 
-    if (result.success) {
-      showDeletedSuccesfullToastUser(id);
-      router.refresh();
-    } else if (result.error) {
-      showDeletedFailToastUser(result.error);
-    }
-  };
-  console.log("cookieId", cookieId);
+  //   if (result.success) {
+  //     showDeletedSuccesfullToastUser(id);
+  //     router.refresh();
+  //   } else if (result.error) {
+  //     showDeletedFailToastUser(result.error);
+  //   }
+  // };
+  // console.log("cookieId", cookieId);
 
   return (
     <div className="pt-4 grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-8">
@@ -121,7 +121,7 @@ export default function CardViewUser({
                 <AlertAction
                   actionType="delete"
                   userId={user._id}
-                  deleteUser={handleDelete}
+                  // deleteUser={handleDelete}
                 />
               </div>
             </div>

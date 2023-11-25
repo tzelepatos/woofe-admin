@@ -1,5 +1,6 @@
 "use server";
 import { UserModel } from "@/app/models/User";
+import { GroomingModel } from "@/app/models/product";
 import mongoose from "mongoose";
 
 export const fetchUsers = async (query, page, postPerPage) => {
@@ -25,11 +26,11 @@ export const fetchUsers = async (query, page, postPerPage) => {
   }
 };
 export const fetchUser = async (id) => {
-  console.log("Fetching user with id:", id);
+  // console.log("Fetching user with id:", id);
   try {
     mongoose.connect(process.env.MONGODB_URI);
     const user = await UserModel.findById(id);
-    console.log("Fetched user:", user);
+    // console.log("Fetched user:", user);
 
     return JSON.parse(JSON.stringify(user.toObject()));
   } catch (err) {
@@ -38,3 +39,14 @@ export const fetchUser = async (id) => {
     throw new Error("Failed to fetch user!");
   }
 };
+
+export async function fetchUserEmailFromProduct(product) {
+  if (!product.user) {
+    console.log("Product does not have a user.");
+    return ""; // Return default value
+  }
+
+  const user = await fetchUser(product.user);
+
+  return user.email;
+}

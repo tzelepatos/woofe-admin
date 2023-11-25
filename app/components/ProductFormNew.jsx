@@ -21,7 +21,7 @@ import {
   showUpdateToast,
   showSuccessToast,
   showFailToast,
-} from "@/app/Components/ToastersCustom";
+} from "@/app/components/ToastersCustom";
 import AlertAction from "@/app/components/AlertAction";
 import { ProductFormSchema } from "@/app/models/ProductFormSchema ";
 import UploadImages from "@/app/components/form/UploadImages";

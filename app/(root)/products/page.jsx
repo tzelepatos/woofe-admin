@@ -4,26 +4,9 @@ import SearchBar from "@/app/components/SearchBar";
 //imports
 import axios from "axios";
 import { redirect } from "next/navigation";
+import { fetchProducts } from "@/app/actions/products/actions";
 
-//for dev only
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
-});
-async function fetchProducts(page, postPerPage, query) {
-  try {
-    const response = await axiosInstance.get(`/api/product`, {
-      params: {
-        page: page,
-        postPerPage: postPerPage,
-        query: query,
-      },
-    });
-    // console.log("response", response);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
-  }
-}
+
 
 export default async function Products({ searchParams }) {
   const query = searchParams?.query || "";

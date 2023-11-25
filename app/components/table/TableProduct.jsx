@@ -1,5 +1,5 @@
 "use client";
-
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,7 @@ import PaginationNav from "@/app/components/PaginationNav";
 import { TableViewModeContext } from "@/app/context/TableViewModeContext";
 import { useTableViewModeContext } from "@/app/context/TableViewModeContext";
 import SearchBar from "@/app/components/SearchBar";
+import { fetchUserEmailFromProduct } from "@/app/actions/users/fetchUsers";
 
 export const TableProduct = ({
   products,
@@ -35,6 +36,7 @@ export const TableProduct = ({
 }) => {
   const { viewMode, toggleView } =
     useTableViewModeContext(TableViewModeContext);
+  const [userEmail, setUserEmail] = useState(null);
 
   const router = useRouter();
   const startIndex = (page - 1) * postPerPage;
@@ -44,13 +46,19 @@ export const TableProduct = ({
     "Product name",
     "Price",
     "New Price",
-
     "Images",
     "Services",
-    "Created At",
+    "Created At-By",
     "Actions",
   ];
 
+  useEffect(() => {
+    if (products.length > 0) {
+      fetchUserEmailFromProduct(products[0])
+        .then((email) => setUserEmail(email))
+        .catch((error) => console.error(error));
+    }
+  }, [products]);
   //delete
   async function deleteProduct(productId) {
     try {
@@ -199,12 +207,15 @@ export const TableProduct = ({
                   </span>
                 </TableCell>
                 <TableCell>
-                  {product.createdAt.slice(0, 10)}
-                  {" - "}
-                  {product.createdAt.slice(11, 19)}
+                  <div>
+                    {product.createdAt.slice(0, 10)}
+                    {" - "}
+                    {product.createdAt.slice(11, 19)}
+                  </div>
+                  <div>{userEmail}</div>
                 </TableCell>
 
-                <TableCell c>
+                <TableCell>
                   <div className="flex space-x-2 justify-center items-center">
                     <Link href={"/products/edit/" + product._id}>
                       <span title="Edit">
@@ -240,6 +251,7 @@ export const TableProduct = ({
               index={index}
               startIndex={startIndex}
               deleteProduct={deleteProduct}
+              userEmail={userEmail}
             />
           ))}
         </div>

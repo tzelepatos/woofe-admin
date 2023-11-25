@@ -19,7 +19,7 @@ export default function AlertAction({
   productId,
   deleteProduct,
   isLoading,
-  deleteUser,
+
   userId,
 }) {
   // console.log("alert loadinmg ", isLoading);

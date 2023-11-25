@@ -15,6 +15,7 @@ export default function CardView({
   index,
   startIndex,
   deleteProduct,
+  userEmail,
 }) {
   // console.log("product", product);
   //categorySelector
@@ -91,6 +92,7 @@ export default function CardView({
               {" - "}
               {product.createdAt.slice(11, 19)}
             </p>
+            <p className="text-xs  ">By: {userEmail}</p>
             {/* price-buttons */}
             <div className="flex justify-between  items-end  ">
               {/* if there is newPrice h1 newprice */}

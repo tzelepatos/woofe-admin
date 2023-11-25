@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import {
   showFailUserNamePassword,
   showSuccessToastSignUp,
-} from "@/app/Components/ToastersCustom";
+} from "@/app/components/ToastersCustom";
 
 export function UserAuthForm({ className, ...props }) {
   const router = useRouter();

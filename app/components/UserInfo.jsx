@@ -17,7 +17,7 @@ export default function UserInfo({ session }) {
           src={
             session?.user.provider === "credentials"
               ? getUserImage(session.user.image)
-              : session?.user.image
+              : session?.user.image || avatar
           }
           width={45}
           height={40}

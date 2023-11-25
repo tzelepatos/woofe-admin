@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import {
   showFailUserNamePassword,
   showSuccessToastLogin,
-} from "@/app/Components/ToastersCustom";
+} from "@/app/components/ToastersCustom";
 import { useRouter } from "next/navigation";
 
 export function UserAuthForm({ className, ...props }) {
