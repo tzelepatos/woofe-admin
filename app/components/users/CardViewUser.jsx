@@ -16,7 +16,8 @@ import {
   showDeletedFailToastUser,
 } from "@/app/components/ToastersCustom";
 import { getUserImage } from "@/app/components/users/ActionsUser";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import ProductsByUser from "@/app/components/users/ProductsByUser";
 
 export default function CardViewUser({
   users,
@@ -25,6 +26,7 @@ export default function CardViewUser({
   page,
   postPerPage,
   cookieId,
+  showModalProductsByUser,
 }) {
   const { data: session } = useSession();
 
@@ -89,6 +91,37 @@ export default function CardViewUser({
                 {user.name || "Update your name"}
               </div>
               <div className="flex space-x-2 ">
+                {/* products */}
+                <div>
+                  <Link
+                    href={
+                      `/users?page=${page}&postPerPage=${postPerPage}&productsByUser=true?` +
+                      user._id
+                    }
+                    key={user._id}
+                  >
+                    <span title="Products">
+                      <Button
+                        key={index}
+                        className=""
+                        variant="logIn"
+                        size="icon2"
+                        type="button"
+                        onClick={() => setEditingUser(user._id)}
+                      >
+                        <Icons.product
+                          className=" h-4 w-4 "
+                          style={{ opacity: 0.5 }}
+                        />
+                      </Button>
+                    </span>
+                  </Link>
+                  {showModalProductsByUser && editingUser === user._id && (
+                    <Modal>
+                      <ProductsByUser edit={true} user={user} />
+                    </Modal>
+                  )}
+                </div>
                 {/* link + modal */}
                 <div>
                   <Link

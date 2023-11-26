@@ -108,3 +108,28 @@ export const updateUser = async (formData) => {
     // redirect("/users");
   }
 };
+
+export async function fetchUserProducts(userId, page, postPerPage, query) {
+  try {
+    console.log("fetchUserProducts called with:", {
+      userId,
+      page,
+      postPerPage,
+      query,
+    });
+
+    const skip = (page - 1) * postPerPage;
+    const user = await UserModel.findById(userId).populate("products");
+    const products = user.products.slice(skip, skip + postPerPage);
+
+    const totalPosts = user.products.length;
+    console.log("Total posts:", totalPosts);
+
+    const totalPages = Math.ceil(totalPosts / postPerPage);
+    console.log("Total pages:", totalPages);
+
+    return { products, totalPages, totalPosts };
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+  }
+}

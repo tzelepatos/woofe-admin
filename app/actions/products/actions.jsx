@@ -1,4 +1,6 @@
 import axios from "axios";
+import { GroomingModel } from "@/app/models/Product";
+import mongoose from "mongoose";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
@@ -18,6 +20,7 @@ export async function fetchProducts(page, postPerPage, query) {
     console.error("Error fetching data:", error.message);
   }
 }
+
 export function calculateProductStats(products) {
   // Get the date for one month ago
   const oneMonthAgo = new Date();

@@ -15,6 +15,7 @@ import { cookies } from "next/headers";
 export default async function UserPage({ searchParams }) {
   const showModalNewUser = searchParams?.createUser;
   const showModalEditUser = searchParams?.editUser;
+  const showModalProductsByUser = searchParams?.productsByUser;
 
   const query = searchParams?.query || "";
   const page = searchParams.page || 1;
@@ -39,7 +40,7 @@ export default async function UserPage({ searchParams }) {
   }
 
   const cookieStore = cookies();
-  const cookieId = cookieStore.get("user");
+  const cookieId = cookieStore?.get("user");
 
   return (
     <div>
@@ -69,6 +70,7 @@ export default async function UserPage({ searchParams }) {
         page={page}
         postPerPage={postPerPage}
         cookieId={cookieId}
+        showModalProductsByUser={showModalProductsByUser}
       />
     </div>
   );

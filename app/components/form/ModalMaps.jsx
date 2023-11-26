@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
 
 import Map from "@/app/components/Map";
 
@@ -14,6 +15,16 @@ const ModalMaps = ({
 }) => {
   const modalRef = useRef(null);
 
+  useEffect(() => {
+    // Disable scroll on the background page when the modal is open
+    document.body.style.overflow = "hidden";
+
+    // Re-enable scroll when the modal is closed
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
   return (
     <AnimatePresence>
       <motion.div
@@ -21,7 +32,7 @@ const ModalMaps = ({
         animate={{ opacity: 1, scale: 1 }} // Transition to full size and opacity
         exit={{ opacity: 0, scale: 0.5 }} // Exit with small size and opacity
         transition={{ duration: 0.2, ease: "easeOut" }} // Adjust duration and ease
-        className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 "
+        className=" fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 overflow-auto"
       >
         <div
           className="md:w-2/3 w-full  relative bg-jimGrayLight rounded-xl  "

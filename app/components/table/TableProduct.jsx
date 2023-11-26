@@ -33,14 +33,16 @@ export const TableProduct = ({
   totalPages,
   totalPosts,
   postPerPage,
+  emails,
 }) => {
   const { viewMode, toggleView } =
     useTableViewModeContext(TableViewModeContext);
-  const [userEmail, setUserEmail] = useState(null);
+  // const [userEmail, setUserEmail] = useState(null);
+
+  // console.log("products", products);
 
   const router = useRouter();
   const startIndex = (page - 1) * postPerPage;
-
   const tableHeaders = [
     "#",
     "Product name",
@@ -52,13 +54,18 @@ export const TableProduct = ({
     "Actions",
   ];
 
-  useEffect(() => {
-    if (products.length > 0) {
-      fetchUserEmailFromProduct(products[0])
-        .then((email) => setUserEmail(email))
-        .catch((error) => console.error(error));
-    }
-  }, [products]);
+  // console.log("userEmail", userEmail);
+
+  // useEffect(() => {
+  //   const fetchEmails = async () => {
+  //     const emails = await Promise.all(
+  //       products.map((product) => fetchUserEmailFromProduct(product))
+  //     );
+  //     setUserEmail(emails);
+  //   };
+
+  //   fetchEmails();
+  // }, [products]);
   //delete
   async function deleteProduct(productId) {
     try {
@@ -212,7 +219,8 @@ export const TableProduct = ({
                     {" - "}
                     {product.createdAt.slice(11, 19)}
                   </div>
-                  <div>{userEmail}</div>
+                  {/* <div>{userEmail && userEmail[index]}</div> */}
+                  <div>{emails[index]}</div>
                 </TableCell>
 
                 <TableCell>
@@ -251,7 +259,7 @@ export const TableProduct = ({
               index={index}
               startIndex={startIndex}
               deleteProduct={deleteProduct}
-              userEmail={userEmail}
+              userEmail={emails}
             />
           ))}
         </div>

@@ -9,7 +9,13 @@ export function CloseButtonModal() {
     router.back();
   }, [router]);
   return (
-    <Button variant="destructive" size="lg" type="button" onClick={onDismiss}>
+    <Button
+      type="button"
+      variant="signIn"
+      size="cancel"
+      className="text-sm sm:text-base bg-red-500 "
+      onClick={onDismiss}
+    >
       Close
     </Button>
   );

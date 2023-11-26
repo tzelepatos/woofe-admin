@@ -181,7 +181,7 @@ const Map = ({
           center={currentLocation || center}
           mapContainerStyle={{
             width: "100%",
-            height: "600px",
+            height: "400px",
             margin: "auto",
             borderRadius: "10px",
           }}

@@ -12,6 +12,16 @@ export default function Modal({ children }) {
     router.back();
   }, [router]);
 
+  useEffect(() => {
+    // Disable scroll on the background page when the modal is open
+    document.body.style.overflow = "hidden";
+
+    // Re-enable scroll when the modal is closed
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
   // const onClick = useCallback(
   //   (e) => {
   //     if (
