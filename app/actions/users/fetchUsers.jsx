@@ -52,7 +52,7 @@ export async function fetchUserEmailFromProduct(product) {
 }
 
 export async function fetchProductsByUserId(userId) {
-  console.log("fetchProductsByUserId called with userId:", userId);
+  // console.log("fetchProductsByUserId called with userId:", userId);
 
   try {
     mongoose.connect(process.env.MONGODB_URI);
@@ -73,12 +73,12 @@ export async function fetchProductsByUserId(userId) {
 }
 export async function fetchUserProducts(userId, page, postPerPage, query) {
   try {
-    console.log("fetchUserProducts called with:", {
-      userId,
-      // page,
-      // postPerPage,
-      // query,
-    });
+    // console.log("fetchUserProducts called with:", {
+    //   userId,
+    //   // page,
+    //   // postPerPage,
+    //   // query,
+    // });
 
     const skip = (page - 1) * postPerPage;
     let findQuery = { user: userId };

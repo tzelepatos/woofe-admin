@@ -27,7 +27,7 @@ import {
 } from "@/app/components/ToastersCustom";
 import { useRouter } from "next/navigation";
 
-export const UserForm = ({ edit, user }) => {
+export const UserForm = ({ edit, user, userRole }) => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
@@ -142,7 +142,9 @@ export const UserForm = ({ edit, user }) => {
               name="email"
               placeholder="Email"
               required
-              disabled={edit && user.provider != "credentials"}
+              disabled={
+                (edit && user.provider != "credentials") || userRole === "user"
+              }
               {...(edit && user && { defaultValue: user.email })}
             />
           </div>
@@ -150,6 +152,7 @@ export const UserForm = ({ edit, user }) => {
           {/* role */}
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Select
+              disabled={userRole === "user"}
               onValueChange={setRole}
               name="role"
               id="role"

@@ -86,11 +86,15 @@ export default function CardView({
             </div>
           </div>
           <div className="border-t-2 border-jimGray pt-2 space-y-2">
-            <p className="text-xs ">
-              Created: {"  "}
-              {product.createdAt.slice(0, 10)}
-              {" - "}
-              {product.createdAt.slice(11, 19)}
+            <p className="text-xs flex">
+              Created:{" "}
+              <div className="ml-1">
+                {new Date(product.createdAt).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </div>
             </p>
             <p className="text-xs  ">By: {userEmail[index]}</p>
             {/* price-buttons */}

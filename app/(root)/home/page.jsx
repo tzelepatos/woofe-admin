@@ -10,15 +10,39 @@ import {
   countProductTypes,
 } from "@/app/actions/products/actions";
 import { getUsersAndCalculatePercentage } from "@/app/actions/home/actions";
+import { fetchUserProducts } from "@/app/actions/users/fetchUsers";
 
 export default async function Home() {
-  const session = await getServerSession({ ...authOptions });
+  const session = await getServerSession(authOptions);
+  const userRole = session?.user?.role;
+  const userId = session?.user?.id;
 
   //Users
-  const { count, users, usersWithCredentials, percentageCreatedLastMonth } =
-    await getUsersAndCalculatePercentage();
+  let count, users, usersWithCredentials, percentageCreatedLastMonth;
+  if (userRole === "admin") {
+    // Fetch all users and calculate percentage for admin
+    ({ count, users, usersWithCredentials, percentageCreatedLastMonth } =
+      await getUsersAndCalculatePercentage());
+  } else {
+    // Provide only the logged-in user's data for non-admin users
+    count = 1;
+    users = [userId];
+    usersWithCredentials = [userId];
+    percentageCreatedLastMonth = 0;
+  }
+
   //Products
-  const products = await fetchProducts();
+  let products;
+  if (userRole === "admin") {
+    let data = await fetchProducts();
+    products = JSON.parse(JSON.stringify(data)); //array of objects
+  } else {
+    let data = await fetchUserProducts(userId);
+    products = JSON.parse(JSON.stringify(data.posts));
+  }
+
+  // console.log("PL", products);
+
   const percentageCreatedLastMonthProducts = calculateProductStats(products);
   const { groomingCount, serviceCount, supplyCount, noServiceCount } =
     countProductTypes(products);
@@ -31,6 +55,7 @@ export default async function Home() {
       </h2>
       <div className="flex flex-col lg:flex-row gap-4    ">
         <div className=" flex  w-full">
+          {/* users */}
           <CardInfo
             title="Users"
             count={count}
@@ -43,14 +68,15 @@ export default async function Home() {
           ></CardInfo>
         </div>
         <div className="flex  w-full">
+          {/* products */}
           <CardInfo
             title="Products"
-            count={products.length}
+            count={products.length || products.posts.length}
             subCount1={groomingCount}
             subCount1Text="Grooming"
             subCount2={serviceCount}
             subCount2Text=" Services"
-            subCount3={groomingCount}
+            subCount3={supplyCount}
             subCount3Text=" Supplies"
             subCount4={noServiceCount}
             subCount4Text=" No Service"
@@ -59,6 +85,7 @@ export default async function Home() {
           ></CardInfo>
         </div>
         <div className="flex  w-full">
+          {/* orders */}
           <CardInfo
             title="Orders"
             count={count}

@@ -27,6 +27,7 @@ export default function CardViewUser({
   postPerPage,
   cookieId,
   showModalProductsByUser,
+  userRole,
 }) {
   const { data: session } = useSession();
 
@@ -51,21 +52,22 @@ export default function CardViewUser({
   // console.log("cookieId", cookieId);
 
   return (
-    <div className="pt-4 grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-8">
+    // <div className="pt-4 flex justify-center flex-wrap border-2">
+    <div className="pt-4 grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-8 ">
       {users.map((user, index) => (
         <div
           key={user._id}
-          className=" relative container flex items-center p-4 gap-2 mb-4  bg-jimGrayLight  text-foreground max-w-md border border-accent rounded-2xl shadow-md hover:border-jimGray hover:shadow-lg" // Added margin-bottom (mb-4)
+          className=" relative container flex items-center p-4 gap-2 mb-4  bg-jimGrayLight  text-foreground max-w-md border border-accent rounded-2xl shadow-md hover:border-jimGray hover:shadow-lg "
         >
           {/* if cookieId === user._id */}
-          <p className="absolute left-2 top-1 text-xs flex gap-1">
+          {/* <p className="absolute left-2 top-1 text-xs flex gap-1">
             {cookieId.value === user._id && (
               <>
                 <Icons.dot className="text-green-500 w-3" />
                 Online
               </>
             )}
-          </p>
+          </p> */}
           {/* <p className="absolute left-2 top-0 h-5 w-5 text-xs">
             {startIndex + index + 1}
           </p> */}
@@ -146,16 +148,17 @@ export default function CardViewUser({
                   </Link>
                   {showModalEditUser && editingUser === user._id && (
                     <Modal>
-                      <UserForm edit={true} user={user} />
+                      <UserForm edit={true} user={user} userRole={userRole} />
                     </Modal>
                   )}
                 </div>
-
-                <AlertAction
-                  actionType="delete"
-                  userId={user._id}
-                  // deleteUser={handleDelete}
-                />
+                {userRole !== "user" && (
+                  <AlertAction
+                    actionType="delete"
+                    userId={user._id}
+                    // deleteUser={handleDelete}
+                  />
+                )}
               </div>
             </div>
             <div className=" text-xs sm:text-base">

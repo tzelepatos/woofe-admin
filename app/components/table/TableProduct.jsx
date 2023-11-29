@@ -215,9 +215,11 @@ export const TableProduct = ({
                 </TableCell>
                 <TableCell>
                   <div>
-                    {product.createdAt.slice(0, 10)}
-                    {" - "}
-                    {product.createdAt.slice(11, 19)}
+                    {new Date(product.createdAt).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
                   </div>
                   {/* <div>{userEmail && userEmail[index]}</div> */}
                   <div>{emails[index]}</div>

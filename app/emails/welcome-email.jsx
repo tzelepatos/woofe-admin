@@ -11,14 +11,14 @@ import {
   Text,
   Hr,
 } from "@react-email/components";
-
 import * as React from "react";
 
-const ContactFormEmail = ({ name, email, message }) => (
+const welcomeEmail = ({ name, email }) => (
   <Html>
     <Head />
-    <Preview>Contact Form</Preview>
-    <h1>Contact Form</h1>
+    <Preview>
+      The sales intelligence platform that helps you uncover qualified leads.
+    </Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
@@ -28,12 +28,27 @@ const ContactFormEmail = ({ name, email, message }) => (
           style={logo}
         />
         <br />
-        <Text>name : {name}</Text>
-        <Text>
-          email : <strong>{email}</strong>
+        <Text style={paragraph}>Dear {name || email},</Text>
+        <Text style={paragraph}>
+          Woofe welcomes you with open paws! 🐾 We're thrilled to have you and
+          your furry friend join our grooming pet platform. Get ready for
+          tail-wagging experiences and pampering sessions!
         </Text>
-        <br />
-        <Text style={paragraph}>{message}</Text>
+        <Text style={paragraph}>
+          Explore our user-friendly platform, book grooming appointments with
+          ease, and treat your pet to a spa day they deserve. Woofe is here to
+          make pet grooming a breeze!
+        </Text>
+        <Text style={paragraph}>
+          If you have any questions or need assistance, our team is just a bark
+          away. Happy grooming!
+        </Text>
+        <Section style={btnContainer}></Section>
+        <Text style={paragraph}>
+          Best regards,
+          <br />
+          The Woofe Team
+        </Text>
         <Hr style={hr} />
         <Text style={footer}> &copy;2024 Tsoumelekis. All rights reserved</Text>
       </Container>
@@ -41,7 +56,7 @@ const ContactFormEmail = ({ name, email, message }) => (
   </Html>
 );
 
-export default ContactFormEmail;
+export default welcomeEmail;
 
 const main = {
   backgroundColor: "#ffffff",

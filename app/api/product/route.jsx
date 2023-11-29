@@ -89,6 +89,7 @@ export async function GET(Request) {
       $or: [
         { productName: { $regex: new RegExp(escapedQuery, "i") } },
         { description: { $regex: new RegExp(escapedQuery, "i") } },
+
         // Add more fields to search if needed
       ],
     };
