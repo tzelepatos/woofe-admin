@@ -31,6 +31,9 @@ module.exports = {
       screens: {
         "3xl": "2000px",
       },
+      blur: {
+        xs: "2px",
+      },
       colors: {
         // jimOrange: "#f7941d",
         // jimGray: "#e3e3e3",
