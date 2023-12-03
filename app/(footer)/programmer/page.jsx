@@ -5,11 +5,12 @@ import dogProgrammer from "@/assets/images/footer/dogProgrammer.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Tabs from "./TabsFooter";
 
 const ProgrammerPage = () => {
   return (
-    <div className="  flex items-center justify-end  relative">
-      <Image
+    <div className="  flex items-center justify-start  ">
+      {/* <Image
         style={{ display: "flex", flexDirection: "column" }}
         className=" absolute z-0 top-0 sm:opacity-80 border-2 rounded-bl-full  opacity-10 blur-xs"
         src={dogProgrammer}
@@ -17,31 +18,28 @@ const ProgrammerPage = () => {
         alt="programmerImage"
         quality={100}
         priority={true}
-      />
+      /> */}
       <div className=" p-8  text-foreground z-40">
         <div className=" pb-8  justify-start">
-          <div className="flex gap-4 items-center">
-            <h1 className="sm:text-6xl text-4xl font-bold mb-4 text-jimOrange ">
+          <div className=" gap-4 items-center">
+            <h1 className="sm:text-8xl text-6xl font-bold mb-4 text-jimOrange  ">
               Join Our Woofe Tech Team
             </h1>
-            {/* <Image
-              className=" border-2 rounded-full"
-              src={programmerImage}
-              width={200}
-              height={100}
-              alt="programmerImage"
-            ></Image> */}
+            <p className="sm:text-xl text-lg flex  ">
+              Joining our tech team means tackling unique challenges at the
+              intersection of technology and pet care..
+            </p>
           </div>
         </div>
 
         {/* Why Woofe Tech? */}
-        <h2 className="text-2xl font-bold mt-8 mb-4 flex items-center justify-start ">
+        {/* <h2 className="text-2xl font-bold mt-8 mb-4 flex items-center justify-start ">
           Why Woofe Tech?
-        </h2>
+        </h2> */}
         {/* both */}
         <div className="grid lg:grid-cols-2 lg:grid-rows-2 grid-col-2 gap-4 ">
           {/* 1st */}
-          <div className="row-span-1 col-span-1 flex border-2 px-8 py-8 rounded-lg  bg-jimGrayLight  hover:shadow-xl hover:bg-primary/20">
+          {/* <div className="row-span-1 col-span-1 flex border-2 px-8 py-8 rounded-lg  bg-jimGrayLight  hover:shadow-xl hover:bg-primary/20">
             <div className="space-y-2 ">
               <h2 className="text-2xl font-bold ">
                 A Paws-itively Unique Challenge
@@ -54,9 +52,9 @@ const ProgrammerPage = () => {
                 fresh set of exciting problems to solve.
               </p>
             </div>
-          </div>
+          </div> */}
           {/* 2nd */}
-          <div className="col-start-1 flex border-foreground border-2 px-8 py-8 rounded-lg  bg-jimOrange  hover:shadow-xl hover:bg-orange-400">
+          {/* <div className="col-start-1 flex border-foreground border-2 px-8 py-8 rounded-lg  bg-jimOrange  hover:shadow-xl hover:bg-orange-400">
             <div className="space-y-2 ">
               <h2 className="text-2xl font-bold ">
                 Collaboration with Canine Enthusiasts
@@ -69,11 +67,13 @@ const ProgrammerPage = () => {
                 tails.
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
 
+        <Tabs />
+
         {/* What We're Looking For */}
-        <h2 className="text-2xl font-bold mt-8 mb-4 pt-12">
+        {/* <h2 className="text-2xl font-bold mt-8 mb-4 pt-12">
           What We're Looking For
         </h2>
 
@@ -141,7 +141,7 @@ const ProgrammerPage = () => {
               </Link>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

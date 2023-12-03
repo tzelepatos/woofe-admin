@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useSession } from "next-auth/react";
 import { ViewModeProvider } from "@/app/context/TableViewModeContext";
 
-const ubuntu = Ubuntu({ weight: "400", subsets: ["latin"], display: "swap" });
+const ubuntu = Ubuntu({ weight: "300", subsets: ["latin"], display: "swap" });
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions);
