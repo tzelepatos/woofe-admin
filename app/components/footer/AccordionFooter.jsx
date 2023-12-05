@@ -11,14 +11,14 @@ export default function AccordionFooter({ iconMapping, footerText }) {
     <Accordion type="single" collapsible className="w-full pb-2">
       {Object.values(footerText).map((column, index) => (
         <AccordionItem key={index} value={`item-${index + 1}`}>
-          <AccordionTrigger className="text-foreground font-semibold text-lg">
+          <AccordionTrigger className="text-jimOrange font-semibold text-lg">
             {column.title}
           </AccordionTrigger>
           <AccordionContent>
             {column.items.map((item, index) => (
               <div
                 key={index}
-                className=" mb-2 hover:underline text-jimOrange "
+                className=" mb-2 hover:underline text-foreground "
               >
                 <Link href={item.link}>
                   <div className="flex items-center text-md">

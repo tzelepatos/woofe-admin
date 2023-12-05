@@ -32,7 +32,7 @@ export function Footer() {
             {Object.values(footerText).map((column, index) => (
               <div
                 key={index}
-                className="hidden md:block  col-span-1 mb-2 md:mb-0 items-center text-foreground font-semibold p-2"
+                className="hidden md:block  col-span-1 mb-2 md:mb-0 items-center text-jimOrange font-semibold p-2"
               >
                 <h4 className="text-xl font-bold mb-4">{column.title}</h4>
                 <div className="flex">
@@ -43,7 +43,7 @@ export function Footer() {
                         className=" mb-2 md:mb-0  text-foreground font-semibold p-2 sm:text-3xl text-2xl"
                       >
                         <div className="text-jimOrange hover:underline block mb-2 ">
-                          <Link href={item.link} className="text-jimOrange ">
+                          <Link href={item.link} className="text-foreground ">
                             {iconMapping[item.icon]}
                           </Link>
                         </div>
@@ -54,7 +54,7 @@ export function Footer() {
                   column.items.map((item, index) => (
                     <div
                       key={index}
-                      className="text-jimOrange hover:underline block mb-2 "
+                      className="text-foreground hover:underline block mb-2 "
                     >
                       <Link href={item.link}>{item.text}</Link>
                     </div>
@@ -109,16 +109,16 @@ export function Footer() {
             </div>
             <div className="flex space-x-4 ">
               <Link href="/terms">
-                <p className="text-jimOrange hover:underline">Όροι χρήσης</p>
+                <p className="text-foreground hover:underline">Όροι χρήσης</p>
               </Link>
               <Link href="/privacy">
-                <p className="text-jimOrange hover:underline">
+                <p className="text-foreground hover:underline">
                   Πολιτική Απορρήτου
                 </p>
               </Link>
 
               <Link href="/Cookies">
-                <p className="text-jimOrange hover:underline">Cookies</p>
+                <p className="text-foreground hover:underline">Cookies</p>
               </Link>
             </div>
           </div>

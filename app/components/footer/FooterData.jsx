@@ -2,7 +2,7 @@ export const footerText = {
   firstColumn: {
     title: "Συνεργάτες",
     items: [
-      { text: "Θέλεις να πουλάς μέσω Wooff-e;", link: "/Information" },
+      { text: "Θέλεις να πουλάς μέσω Wooff-e;", link: "/advertise" },
       { text: "Είσαι προγραμματιστής?", link: "/programmer" },
       { text: "Διαφήμιση", link: "/products" },
     ],

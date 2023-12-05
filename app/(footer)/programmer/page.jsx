@@ -5,7 +5,7 @@ import dogProgrammer from "@/assets/images/footer/dogProgrammer.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Tabs from "./TabsFooter";
+import Tabs from "@/app/components/footer/programmer/TabsFooterProgrammer";
 
 const ProgrammerPage = () => {
   return (
