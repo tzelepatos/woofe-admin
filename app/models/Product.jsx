@@ -1,6 +1,6 @@
 import { Schema, models, model } from "mongoose";
 
-const productSchema = new Schema(
+const groomingSchema = new Schema(
   {
     //main fields
     productName: { type: String, required: true },
@@ -134,4 +134,4 @@ const productSchema = new Schema(
 );
 //models CapitalLetters
 export const GroomingModel =
-  models?.GroomingModel || model("GroomingModel", productSchema);
+  models?.GroomingModel || model("GroomingModel", groomingSchema);

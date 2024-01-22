@@ -10,6 +10,7 @@ import {
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { fetchAllCategories } from "@/app/actions/products/actions";
 
 export default async function Products({ searchParams }) {
   const session = await getServerSession(authOptions);
@@ -18,6 +19,10 @@ export default async function Products({ searchParams }) {
   const query = searchParams?.query || "";
   const page = searchParams.page || 1;
   const postPerPage = searchParams.postPerPage || 10;
+
+  //categories
+  const categories = await fetchAllCategories();
+  console.log("categories", categories);
 
   let data;
   if (userRole === "admin") {

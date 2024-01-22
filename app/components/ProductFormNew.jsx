@@ -30,6 +30,7 @@ import ServicesTags from "./form/ServicesTags";
 import CreateNewProduct from "./form/CreateNewProduct";
 import PlaceInfo from "./form/PlaceInfo";
 import ContactInfo from "./form/ContactInfo";
+import Categories from "./form/Categories";
 
 function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -110,7 +111,14 @@ function ProductFormNew({ defaultValues, createMode, viewMode, editMode }) {
             />
 
             {/* services */}
-            <ServicesTags
+            {/* <ServicesTags
+              form={form}
+              defaultValues={defaultValues}
+              createMode={createMode}
+              viewMode={viewMode}
+              editMode={editMode}
+            /> */}
+            <Categories
               form={form}
               defaultValues={defaultValues}
               createMode={createMode}
