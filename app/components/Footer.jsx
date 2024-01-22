@@ -19,8 +19,8 @@ const iconMapping = {
 export function Footer() {
   return (
     <>
-      <div className="bg-jimGray py-2 container border-t border-black ">
-        <div className="container mx-auto">
+      <div className="bg-jimGray py-2  border-t border-black max-w-screen">
+        <div className="px-8 mx-auto">
           <div className="md:hidden">
             <AccordionFooter
               iconMapping={iconMapping}
