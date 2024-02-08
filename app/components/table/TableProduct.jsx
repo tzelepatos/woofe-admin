@@ -75,16 +75,27 @@ export const TableProduct = ({
 
       // Check if product has images
       if (product.images && product.images.length > 0) {
-        // Delete each image associated with the product from S3
-        for (const imageLink of product.images) {
-          console.log(`Deleting image ${imageLink}`);
-          const response = await axios.delete("/api/deleteImage", {
-            data: { link: imageLink },
-          });
+        // Delete all images associated with the product from S3
+        console.log(`Deleting all images for product ${productId}`);
+        const response = await axios.delete("/api/deleteImage", {
+          data: { id: productId },
+        });
 
-          console.log(`Image ${imageLink} deleted successfully`);
-        }
+        console.log(`All images for product ${productId} deleted successfully`);
       }
+
+      // Check if product has images
+      // if (product.images && product.images.length > 0) {
+      //   // Delete each image associated with the product from S3
+      //   for (const imageLink of product.images) {
+      //     console.log(`Deleting image ${imageLink}`);
+      //     const response = await axios.delete("/api/deleteImage", {
+      //       data: { link: imageLink },
+      //     });
+
+      //     console.log(`Image ${imageLink} deleted successfully`);
+      //   }
+      // }
 
       // Delete the product from the backend
       const deleteResponse = await axios.delete(`/api/product`, {
@@ -198,10 +209,10 @@ export const TableProduct = ({
                 <TableCell>€{product.newPrice}</TableCell>
                 <TableCell>{product.images.length}</TableCell>
                 <TableCell>
-                  <span className="flex flex-col capitalize">
+                  {/* <span className="flex flex-col capitalize">
                     {Object.keys(product.services).map(
                       (serviceType) =>
-                        product.services[serviceType].length > 0 && (
+                        product?.services[serviceType].length > 0 && (
                           <span
                             key={serviceType}
                             className="group"
@@ -211,7 +222,7 @@ export const TableProduct = ({
                           </span>
                         )
                     )}
-                  </span>
+                  </span> */}
                 </TableCell>
                 <TableCell>
                   <div>

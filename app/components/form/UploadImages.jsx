@@ -7,17 +7,30 @@ import Image from "next/image";
 import {
   showDeletedFailImageToast,
   showDeletedSuccesfullImageToast,
+  showLargeFileUploadError,
 } from "@/app/components/ToastersCustom";
 import FullImageModal from "@/app/components/form/FullImageModal";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 
-const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
+const UploadImages = ({
+  onValueChange,
+  defaultValue,
+  disabled,
+  product,
+  setTempId,
+  tempId,
+}) => {
   const [images, setImages] = useState(defaultValue || []);
   const [isUploading, setIsUploading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
+
+  // console.log("images", images);
+  // console.log("defaultValue", defaultValue);
+
+  // console.log("product name", product._id);
 
   const handleButtonClick = (event) => {
     event.preventDefault(); // Prevent the default button behavior
@@ -26,7 +39,6 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
 
   async function upLoad(event) {
     event.preventDefault();
-    //spinner upload
     setIsUploading(true);
 
     // retrieves the selected files
@@ -36,7 +48,30 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
       //object to represent HTML form data
       const data = new FormData();
       for (const file of files) {
+        // Check the file size (in bytes)
+        if (file.size > 2000000) {
+          // 1MB
+          showLargeFileUploadError();
+          setIsUploading(false);
+          return;
+        }
         data.append("file", file);
+      }
+      // if (files?.length > 0) {
+      //   //object to represent HTML form data
+      //   const data = new FormData();
+      //   for (const file of files) {
+      //     data.append("file", file);
+      //   }
+
+      // Generate a new tempId if product._id is not available
+      if (!product._id) {
+        // const newTempId = "temp_" + new Date().getTime() + Math.random();
+        // setTempId(newTempId); // Update the tempId state
+        // data.append("productId", newTempId);
+        data.append("productId", tempId);
+      } else {
+        data.append("productId", product._id);
       }
 
       const res = await axios.post("/api/upload", data);
@@ -57,12 +92,32 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
     onValueChange(images); // Call onValueChange with the updated images
   }
 
-  function removeUpLoad(event, link) {
+  // function removeUpLoad(event, link) {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+
+  //   axios
+  //     .delete("/api/deleteImage", { data: { link } })
+  //     .then(() => {
+  //       setImages((currentImages) =>
+  //         currentImages.filter((val) => val !== link)
+  //       );
+
+  //       const updatedImages = images.filter((val) => val !== link);
+  //       onValueChange(updatedImages); // Call onValueChange with the updated images
+  //       showDeletedSuccesfullImageToast(link);
+  //     })
+  //     .catch((error) => {
+  //       showDeletedFailImageToast(error);
+  //       console.error("Error deleting image:", error);
+  //     });
+  // }
+  function removeUpLoad(event, link, productId) {
     event.preventDefault();
     event.stopPropagation();
 
     axios
-      .delete("/api/deleteImage", { data: { link } })
+      .delete("/api/deleteImage", { data: { link, productId } })
       .then(() => {
         setImages((currentImages) =>
           currentImages.filter((val) => val !== link)
@@ -121,7 +176,11 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
           </div>
         ) : null}
       </div>
-
+      {!disabled && (
+        <p className="mt-2 italic text-xs mb-2 text-foreground">
+          You can upload multiple images , max 2MB each
+        </p>
+      )}
       {!disabled && images.length > 1 && (
         <p className="mt-2 italic text-xs mb-2 text-slate-500">
           *You can re-order by drag and drop
@@ -143,7 +202,7 @@ const UploadImages = ({ onValueChange, defaultValue, disabled }) => {
               >
                 {!disabled && (
                   <button
-                    onClick={(event) => removeUpLoad(event, link)}
+                    onClick={(event) => removeUpLoad(event, link, product._id)}
                     className="absolute w-4 h-4  -top-1 -right-1 m-2 bg-gray-200 opacity-85 rounded-3xl text-gray-700 hover:text-[#ff8000]"
                   >
                     <Icons.removeUpLoad />

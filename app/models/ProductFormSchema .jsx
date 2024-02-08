@@ -1,4 +1,6 @@
 import * as z from "zod";
+import { CategoriesModel } from "@/app/models/categoriesSchema";
+import { Types } from "mongoose";
 
 export const defaultValues = {
   productName: "Grooming Store-" + Math.random().toString(36).substr(2, 9),
@@ -8,11 +10,11 @@ export const defaultValues = {
   price: "6.00",
   newPrice: "",
   // services: [],
-  services: {
-    grooming: [],
-    services: [],
-    supplies: [],
-  },
+  // services: {
+  //   grooming: [],
+  //   services: [],
+  //   supplies: [],
+  // },
 
   info: "Info about the store..",
   images: [],
@@ -86,6 +88,7 @@ export const defaultValues = {
       openOrClosed: true,
     },
   ],
+  // categories: {},
 };
 
 export const ProductFormSchema = z.object({
@@ -131,11 +134,11 @@ export const ProductFormSchema = z.object({
 
     .optional(),
 
-  services: z.object({
-    grooming: z.array(z.string()),
-    services: z.array(z.string()),
-    supplies: z.array(z.string()),
-  }),
+  // services: z.object({
+  //   grooming: z.array(z.string()),
+  //   services: z.array(z.string()),
+  //   supplies: z.array(z.string()),
+  // }),
   images: z.any().optional(),
 
   address: z
@@ -219,13 +222,5 @@ export const ProductFormSchema = z.object({
 
   openingClosingHours: z.any().optional(),
 
-  // pattern(/^\d{5}-\d{3}$/),
-
-  // mapCordA: z.number().optional(),
-
-  // mapCordB: z.number().optional(),
-
-  // favourite: z.boolean().optional(),
-
-  // openingHours: z.record(z.string()).optional(),
+  categories: z.any().optional(),
 });

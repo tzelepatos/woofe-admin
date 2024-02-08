@@ -72,7 +72,7 @@ const NewTimePicker = ({ form, viewMode, ...field }) => {
           </>
         )}
         <div className="flex flex-wrap gap-2">
-          {openingClosingHours.map((dayData, index) => (
+          {openingClosingHours?.map((dayData, index) => (
             <div key={index}>
               <Popover>
                 <PopoverTrigger asChild>

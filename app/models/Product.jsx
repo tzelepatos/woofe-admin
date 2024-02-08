@@ -8,81 +8,17 @@ const groomingSchema = new Schema(
     price: { type: String },
     newPrice: { type: String },
 
-    services: {
-      grooming: [String],
-      services: [String],
-      supplies: [String],
-    },
+    // services: {
+    //   grooming: [String],
+    //   services: [String],
+    //   supplies: [String],
+    // },
 
-    categories: {
-      grooming: {
-        dog: {
-          haircut: [
-            { type: Schema.Types.ObjectId, ref: "GroomingDogHaircutModel" },
-          ],
-          bath: [{ type: Schema.Types.ObjectId, ref: "GroomingDogBathModel" }],
-          brushing: [
-            { type: Schema.Types.ObjectId, ref: "GroomingDogBrushingModel" },
-          ],
-          nail: [{ type: Schema.Types.ObjectId, ref: "GroomingDogNailModel" }],
-        },
-        cat: {
-          haircut: [
-            { type: Schema.Types.ObjectId, ref: "GroomingCatHaircutModel" },
-          ],
-          bath: [{ type: Schema.Types.ObjectId, ref: "GroomingCatBathModel" }],
-          brushing: [
-            { type: Schema.Types.ObjectId, ref: "GroomingCatBrushingModel" },
-          ],
-          nail: [{ type: Schema.Types.ObjectId, ref: "GroomingCatNailModel" }],
-        },
-        various: {
-          haircut: [
-            { type: Schema.Types.ObjectId, ref: "GroomingVariousHaircutModel" },
-          ],
-          bath: [
-            { type: Schema.Types.ObjectId, ref: "GroomingVariousBathModel" },
-          ],
-          brushing: [
-            {
-              type: Schema.Types.ObjectId,
-              ref: "GroomingVariousBrushingModel",
-            },
-          ],
-          nail: [
-            { type: Schema.Types.ObjectId, ref: "GroomingVariousNailModel" },
-          ],
-        },
-      },
-      services: {
-        dog: [{ type: Schema.Types.ObjectId, ref: "ServiceDogModel" }],
-        cat: [{ type: Schema.Types.ObjectId, ref: "ServiceCatModel" }],
-        fish: [{ type: Schema.Types.ObjectId, ref: "ServiceFishModel" }],
-        bird: [{ type: Schema.Types.ObjectId, ref: "ServiceBirdModel" }],
-        reptile: [{ type: Schema.Types.ObjectId, ref: "ServiceReptileModel" }],
-        smallAnimal: [
-          { type: Schema.Types.ObjectId, ref: "ServiceSmallAnimalModel" },
-        ],
-        exotic: [{ type: Schema.Types.ObjectId, ref: "ServiceExoticModel" }],
-        horse: [{ type: Schema.Types.ObjectId, ref: "ServiceHorseModel" }],
-        insect: [{ type: Schema.Types.ObjectId, ref: "ServiceInsectModel" }],
-        farm: [{ type: Schema.Types.ObjectId, ref: "ServiceFarmAnimalModel" }],
-      },
-      supplies: {
-        dog: [{ type: Schema.Types.ObjectId, ref: "SupplyDogModel" }],
-        cat: [{ type: Schema.Types.ObjectId, ref: "SupplyCatModel" }],
-        fish: [{ type: Schema.Types.ObjectId, ref: "SupplyFishModel" }],
-        bird: [{ type: Schema.Types.ObjectId, ref: "SupplyBirdModel" }],
-        reptile: [{ type: Schema.Types.ObjectId, ref: "SupplyReptileModel" }],
-        smallAnimal: [
-          { type: Schema.Types.ObjectId, ref: "SupplySmallAnimalModel" },
-        ],
-        exotic: [{ type: Schema.Types.ObjectId, ref: "SupplyExoticModel" }],
-        horse: [{ type: Schema.Types.ObjectId, ref: "SupplyHorseModel" }],
-        insect: [{ type: Schema.Types.ObjectId, ref: "SupplyInsectModel" }],
-        farm: [{ type: Schema.Types.ObjectId, ref: "SupplyFarmAnimalModel" }],
-      },
-    },
+    categories: { type: Schema.Types.ObjectId, ref: "CategoriesModel" },
+    // categories: {
+    //   type: Schema.Types.Mixed,
+    //   ref: "CategoriesModel",
+    // },
 
     info: { type: String },
     images: [String],

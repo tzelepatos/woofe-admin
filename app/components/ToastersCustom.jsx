@@ -205,3 +205,15 @@ export const showSuccesfullToastUserAdd = (name) => {
     description: `The User "${name}" has been created successfully.`,
   });
 };
+export const showLargeFileUploadError = () => {
+  toast({
+    action: (
+      <ToastAction altText="destructive">
+        <Icons.failed className=" h-5 w-5 font-bold" />
+      </ToastAction>
+    ),
+    variant: "destructive",
+    title: "Image upload error.",
+    description: `File is too large. Please upload a file smaller than 2MB"`,
+  });
+};

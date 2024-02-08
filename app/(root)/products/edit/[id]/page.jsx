@@ -1,34 +1,27 @@
-"use client";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import ProductFormNew from "/app/components/ProductFormNew.jsx";
-import { Icons } from "@/components/ui/icons";
+import { getSchemaFields, fetchGroomingModelById } from "@/app/actions/server";
 
-export default function EditPage({ params }) {
+export default async function EditPage({ params }) {
   const idUrl = params.id;
- 
-  const [product, setProduct] = useState(null);
 
-  useEffect(() => {
-    if (!idUrl) {
-      return;
-    }
-    axios.get(`/api/product?id=${idUrl}`).then((response) => {
-      const fetchedProducts = response.data;
-      const selectedProduct = fetchedProducts.find(
-        (product) => product._id === idUrl
-      );
-      setProduct(selectedProduct);
-      // console.log("Selected Product:", selectedProduct);
-    });
-  }, [idUrl]);
+  const categories = getSchemaFields();
+  const data = fetchGroomingModelById(idUrl);
+
+  const [product, cat] = await Promise.all([data, categories]);
+  // console.log("product", product);
 
   return (
     <div>
-    <h1 className="text-jimOrange text-2xl"></h1>
-    {product && 
-      <ProductFormNew defaultValues={...product} createMode={false} viewMode={false} editMode={true}  />}
-
-  </div>
+      <h1 className="text-jimOrange text-2xl"></h1>
+      {product && (
+        <ProductFormNew
+          defaultValues={product.groomingModel}
+          createMode={false}
+          viewMode={false}
+          editMode={true}
+          categories={cat}
+        />
+      )}
+    </div>
   );
 }

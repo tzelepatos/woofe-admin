@@ -1,40 +1,7 @@
 import axios from "axios";
 import { GroomingModel } from "@/app/models/Product";
-//gromming
-import { groomingDogHaircutSchema } from "@/app/models/grooming/dog/groomingDogHaircutSchema";
-import { groomingDogBathSchema } from "@/app/models/grooming/dog/groomingDogBathSchema";
-import { groomingDogBrushingSchema } from "@/app/models/grooming/dog/groomingDogBrushingSchema";
-import { groomingDogNailSchema } from "@/app/models/grooming/dog/groomingDogNailSchema";
-import { groomingCatHaircutSchema } from "@/app/models/grooming/cat/groomingCatHaircutSchema";
-import { groomingCatBathSchema } from "@/app/models/grooming/cat/groomingCatBathSchema";
-import { groomingCatBrushingSchema } from "@/app/models/grooming/cat/groomingCatBrushingSchema";
-import { groomingCatNailSchema } from "@/app/models/grooming/cat/groomingCatNailSchema";
-import { groomingVariousHaircutSchema } from "@/app/models/grooming/various/groomingVariousHaircutSchema";
-import { groomingVariousBathSchema } from "@/app/models/grooming/various/groomingVariousBathSchema";
-import { groomingVariousBrushingSchema } from "@/app/models/grooming/various/groomingVariousBrushingSchema";
-import { groomingVariousNailSchema } from "@/app/models/grooming/various/groomingVariousNailSchema";
-//services
-import { servicesBirdSchema } from "@/app/models/services/servicesBirdSchema";
-import { servicesCatSchema } from "@/app/models/services/servicesCatSchema";
-import { servicesDogSchema } from "@/app/models/services/servicesDogSchema";
-import { servicesFishSchema } from "@/app/models/services/servicesFishSchema";
-import { servicesHorseSchema } from "@/app/models/services/servicesHorseSchema";
-import { servicesReptileSchema } from "@/app/models/services/servicesReptileSchema";
-import { servicesSmallAnimalSchema } from "@/app/models/services/servicesSmallAnimalSchema";
-import { servicesExoticSchema } from "@/app/models/services/servicesExoticSchema";
-import { servicesFarmAnimalSchema } from "@/app/models/services/servicesFarmAnimalSchema";
-import { servicesInsectSchema } from "@/app/models/services/servicesInsectSchema";
-//supplies
-import { supplyBirdSchema } from "@/app/models/supplies/supplyBirdSchema";
-import { supplyCatSchema } from "@/app/models/supplies/supplyCatSchema";
-import { supplyDogSchema } from "@/app/models/supplies/supplyDogSchema";
-import { supplyFishSchema } from "@/app/models/supplies/supplyFishSchema";
-import { supplyHorseSchema } from "@/app/models/supplies/supplyHorseSchema";
-import { supplyReptileSchema } from "@/app/models/supplies/supplyReptileSchema";
-import { supplySmallAnimalSchema } from "@/app/models/supplies/supplySmallAnimalSchema";
-import { supplyExoticSchema } from "@/app/models/supplies/supplyExoticSchema";
-import { supplyFarmAnimalSchema } from "@/app/models/supplies/supplyFarmAnimalSchema";
-import { supplyInsectSchema } from "@/app/models/supplies/supplyInsectSchema";
+import mongoose from "mongoose";
+import { CategoriesModel } from "@/app/models/categoriesSchema";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
@@ -116,19 +83,5 @@ export function countProductTypes(products) {
   };
 }
 
-export const fetchAllCategories = async () => {
-  try {
-    const products = await GroomingModel.find()
-      .populate("categories.grooming.dog")
-      .populate("categories.grooming.cat")
-      .populate("categories.grooming.various")
-      .exec();
-
-    const categories = products.map((product) => product.categories);
-
-    return categories;
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    throw error;
-  }
-};
+// const emptyCategory = new CategoriesModel();
+// console.log(emptyCategory);
